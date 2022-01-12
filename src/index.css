@@ -1,0 +1,32 @@
+:root {
+  --primary-main: #b0d4fc;
+  --primary-main-dark: #0659b4;
+  --primary-red: #ff0000;
+  --primary-green: #22be45;
+  --primary-white: #f9fcff;
+  --primary-black: #132e4d;
+  --primary-grey: #d2d6da;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Lato, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+}

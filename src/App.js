@@ -13,11 +13,13 @@ function App() {
       <Header />
 
       <main>
-        <SignIn />
-        {/* <ProductList /> */}
-        {/* <ProductSingle /> */}
-        {/* <Cart /> */}
-        {/* <Wishlist /> */}
+        <div className="container">
+          <SignIn />
+          {/* <ProductList /> */}
+          {/* <ProductSingle /> */}
+          {/* <Cart /> */}
+          {/* <Wishlist /> */}
+        </div>
       </main>
 
       <Footer />

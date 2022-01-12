@@ -1,0 +1,37 @@
+.button {
+  font: inherit;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.1s linear;
+}
+
+.button svg {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button:active {
+  transform: scale(0.96);
+}
+
+.button:hover,
+.button:active {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.05) 0 0);
+}
+
+.button--primary {
+  color: var(--primary-black);
+  background-color: var(--primary-main);
+}
+
+.button--secondary {
+  color: var(--primary-black);
+  border: 1px solid var(--primary-main);
+  background-color: var(--primary-white);
+}

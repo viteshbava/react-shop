@@ -1,9 +1,11 @@
 import React from "react";
+import SectionHeading from "../UI/SectionHeading/SectionHeading";
+import styles from "./SignIn.module.css";
 
 const SignIn = () => {
   return (
     <section>
-      <h1>Sign in</h1>
+      <SectionHeading>Sign in</SectionHeading>
     </section>
   );
 };

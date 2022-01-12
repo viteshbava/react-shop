@@ -30,3 +30,10 @@ a {
 ul {
   list-style-type: none;
 }
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100vh;
+}

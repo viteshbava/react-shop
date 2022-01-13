@@ -1,0 +1,23 @@
+.container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 3rem;
+  margin: 0 auto 1rem;
+  padding: 0 1rem;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 0, 0, 0.2);
+  color: var(--primary-red);
+}
+
+.close {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  right: 0;
+  height: 3rem;
+  width: 3rem;
+  cursor: pointer;
+}

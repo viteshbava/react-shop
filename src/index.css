@@ -1,7 +1,7 @@
 :root {
   --primary-main: #b0d4fc;
   --primary-main-dark: #0659b4;
-  --primary-red: #ff0000;
+  --primary-red: #e00000;
   --primary-green: #22be45;
   --primary-white: #f9fcff;
   --primary-black: #132e4d;
@@ -21,6 +21,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
   font-size: 1rem;
+  color: var(--primary-black);
 }
 
 a {

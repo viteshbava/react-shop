@@ -1,0 +1,22 @@
+.wrapper {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.image {
+  width: 100%;
+  height: 200px;
+  background-color: var(--primary-main);
+}
+
+.heading {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin-top: 0.5rem;
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary-main-dark);
+}

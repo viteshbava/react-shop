@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./Alert.module.css";
-import IconCustom, { ICON } from "../IconCustom/IconCustom";
+import Icon, { ICON_TYPE } from "../Icon/Icon";
 
-const TYPE = {
+const ALERT_TYPE = {
   DANGER: "error",
   SUCCESS: "success",
 };
@@ -10,13 +10,13 @@ const TYPE = {
 const Alert = ({ type, children }) => {
   return (
     <div className={styles.container}>
-      <IconCustom icon={ICON.DANGER} />
+      <Icon icon={ICON_TYPE.DANGER} />
       {children}
-      <IconCustom icon={ICON.TIMES} />
+      <Icon icon={ICON_TYPE.TIMES} />
       <button className={styles.close}></button>
     </div>
   );
 };
 
 export default Alert;
-export { TYPE };
+export { ALERT_TYPE };

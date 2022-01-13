@@ -1,13 +1,7 @@
 import React from "react";
 import styles from "./Header.module.css";
 import Button, { BTN_TYPE } from "../UI/Button/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSignInAlt,
-  faSignOutAlt,
-  faHeart,
-  faShoppingCart,
-} from "@fortawesome/free-solid-svg-icons";
+import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 
 const Header = () => {
   return (
@@ -16,19 +10,19 @@ const Header = () => {
         <div className={styles.logo}>React Shop</div>
         <nav>
           <Button style={BTN_TYPE.SECONDARY}>
-            <FontAwesomeIcon icon={faSignOutAlt} />
+            <Icon icon={ICON_TYPE.SIGNOUT} />
             Sign out
           </Button>
           <Button style={BTN_TYPE.SECONDARY}>
-            <FontAwesomeIcon icon={faHeart} />
+            <Icon icon={ICON_TYPE.HEART_FULL} />
             Wishlist (2)
           </Button>
           <Button style={BTN_TYPE.PRIMARY}>
-            <FontAwesomeIcon icon={faShoppingCart} />
+            <Icon icon={ICON_TYPE.CART} />
             Cart (3)
           </Button>
           <Button style={BTN_TYPE.PRIMARY}>
-            <FontAwesomeIcon icon={faSignInAlt} />
+            <Icon icon={ICON_TYPE.SIGNIN} />
             Sign in
           </Button>
         </nav>

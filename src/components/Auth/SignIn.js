@@ -11,7 +11,7 @@ const SignIn = () => {
     <section>
       <SectionHeading>Sign in</SectionHeading>
       <div className={styles["form-container"]}>
-        <Alert>Sorry, that email or password is incorrect</Alert>
+        <Alert>Sorry, that username or password is incorrect.</Alert>
         <form>
           <Input
             label="Username"

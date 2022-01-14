@@ -11,7 +11,7 @@ const Alert = ({ type, children }) => {
   return (
     <div className={styles.container}>
       <Icon icon={ICON_TYPE.DANGER} />
-      {children}
+      <span className={styles.message}>{children}</span>
       <Icon icon={ICON_TYPE.TIMES} />
       <button className={styles.close}></button>
     </div>

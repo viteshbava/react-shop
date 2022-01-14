@@ -9,6 +9,7 @@ import {
 import { faHeart as faHeartEmpty } from "@fortawesome/free-regular-svg-icons";
 import { ReactComponent as Danger } from "./Danger.svg";
 import { ReactComponent as Times } from "./Times.svg";
+import styles from "./Icon.module.css";
 
 const ICON_TYPE = {
   DANGER: "danger",
@@ -48,7 +49,7 @@ const Icon = ({ className, icon }) => {
     default:
       console.error("Invalid icon type!");
   }
-  return <span className={className}>{iconReturn}</span>;
+  return <span className={`${styles.wrapper} ${className}`}>{iconReturn}</span>;
 };
 
 export default Icon;

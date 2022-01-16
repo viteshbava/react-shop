@@ -3,6 +3,7 @@ import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import Control, { CONTROL_TYPE } from "../UI/Control/Control";
+import Button, { BTN_TYPE } from "../UI/Button/Button";
 import styles from "./ProductSingle.module.css";
 
 const ProductSingle = () => {
@@ -37,9 +38,16 @@ const ProductSingle = () => {
           <Control
             label="Quantity"
             type={CONTROL_TYPE.SELECT}
-            options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            options={[1, 2, 3, 4, 5]}
             attributes={{ id: "quantity" }}
           />
+          <div className={styles["action-wrapper"]}>
+            <Button style={BTN_TYPE.SECONDARY}>Add to Wishlist</Button>
+            <Button>
+              <Icon icon={ICON_TYPE.CART} />
+              Add to Cart
+            </Button>
+          </div>
         </div>
       </div>
       {/* <AddToCartSummary /> */}

@@ -51,7 +51,6 @@ const ProductSingle = () => {
         </div>
       </div>
       <AddToCartSummary />
-      &times;
     </section>
   );
 };

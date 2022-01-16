@@ -1,0 +1,45 @@
+.wrapper {
+  position: relative;
+  width: 50%;
+  padding: 1.5rem;
+}
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.header button {
+  right: 0;
+  top: 0;
+  position: absolute;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-size: 2.5rem;
+  padding: 1.5rem 1.5rem 0 1.5rem;
+  cursor: pointer;
+}
+
+.header button:hover {
+  color: var(--primary-main-dark);
+}
+
+.body {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.cart-subtotal-label {
+  font-weight: bold;
+}
+
+.cart-subtotal-value {
+  font-weight: bold;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1rem;
+}

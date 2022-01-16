@@ -1,6 +1,6 @@
 import React from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
-import Input from "../UI/Input/Input";
+import Control, { CONTROL_TYPE } from "../UI/Control/Control";
 import Button, { BTN_TYPE } from "../UI/Button/Button";
 import styles from "./SignIn.module.css";
 import Alert from "../UI/Alert/Alert";
@@ -13,18 +13,20 @@ const SignIn = () => {
       <div className={styles["form-container"]}>
         <Alert>Sorry, that username or password is incorrect.</Alert>
         <form>
-          <Input
+          <Control
+            type={CONTROL_TYPE.INPUT}
             label="Username"
-            input={{
+            attributes={{
               type: "text",
               id: "username",
               placeholder: "Enter username ...",
               // onChange: descriptionChangeHandler,
             }}
           />
-          <Input
+          <Control
+            type={CONTROL_TYPE.INPUT}
             label="Password"
-            input={{
+            attributes={{
               type: "password",
               id: "password",
               placeholder: "Enter password ...",

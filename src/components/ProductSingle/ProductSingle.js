@@ -2,7 +2,7 @@ import React from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
-import QuantitySelect from "../UI/QuantitySelect/QuantitySelect";
+import Control, { CONTROL_TYPE } from "../UI/Control/Control";
 import styles from "./ProductSingle.module.css";
 
 const ProductSingle = () => {
@@ -34,7 +34,11 @@ const ProductSingle = () => {
             tincidunt. Enim, ultricies tellus id mi egestas. Amet posuere neque,
             lorem sapien. Et facilisi orci ac ipsum magnis.{" "}
           </p>
-          <QuantitySelect />
+          <Control
+            label="Quantity"
+            type={CONTROL_TYPE.SELECT}
+            attributes={{ id: "quantity" }}
+          />
         </div>
       </div>
       {/* <AddToCartSummary /> */}

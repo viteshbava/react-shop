@@ -9,7 +9,7 @@ const CONTROL_TYPE = {
   SELECT: "select",
 };
 
-const Control = ({ className, type, label, attributes }) => {
+const Control = ({ className, type, label, options, attributes }) => {
   let wrapperStyles = styles["control-wrapper"];
   if (className) wrapperStyles += ` ${className}`;
 
@@ -24,10 +24,11 @@ const Control = ({ className, type, label, attributes }) => {
     case CONTROL_TYPE.SELECT:
       control = (
         <select className={styles["control__select"]} {...attributes}>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
+          {options.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
+          ))}
         </select>
       );
       break;

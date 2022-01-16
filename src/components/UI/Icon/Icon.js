@@ -22,7 +22,6 @@ const ICON_TYPE = {
 };
 
 const Icon = ({ className, icon }) => {
-  console.log(className);
   let iconReturn;
   switch (icon) {
     case ICON_TYPE.DANGER:

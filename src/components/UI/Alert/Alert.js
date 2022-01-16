@@ -10,10 +10,9 @@ const ALERT_TYPE = {
 const Alert = ({ type, children }) => {
   return (
     <div className={styles.container}>
-      <Icon icon={ICON_TYPE.DANGER} />
+      <Icon className={styles["danger-icon"]} icon={ICON_TYPE.DANGER} />
       <span className={styles.message}>{children}</span>
-      <Icon icon={ICON_TYPE.TIMES} />
-      <button className={styles.close}></button>
+      <button className={styles.close}>&times;</button>
     </div>
   );
 };

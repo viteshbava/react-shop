@@ -8,12 +8,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartEmpty } from "@fortawesome/free-regular-svg-icons";
 import { ReactComponent as Danger } from "./Danger.svg";
-import { ReactComponent as Times } from "./Times.svg";
 import styles from "./Icon.module.css";
 
 const ICON_TYPE = {
   DANGER: "danger",
-  TIMES: "times",
   SIGNIN: "signin",
   SIGNOUT: "signout",
   HEART_FULL: "heart_full",
@@ -26,9 +24,6 @@ const Icon = ({ className, icon }) => {
   switch (icon) {
     case ICON_TYPE.DANGER:
       iconReturn = <Danger />;
-      break;
-    case ICON_TYPE.TIMES:
-      iconReturn = <Times />;
       break;
     case ICON_TYPE.SIGNIN:
       iconReturn = <FontAwesomeIcon icon={faSignInAlt} />;

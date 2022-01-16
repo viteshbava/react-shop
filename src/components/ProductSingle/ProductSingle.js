@@ -50,7 +50,8 @@ const ProductSingle = () => {
           </div>
         </div>
       </div>
-      {/* <AddToCartSummary /> */}
+      <AddToCartSummary />
+      &times;
     </section>
   );
 };

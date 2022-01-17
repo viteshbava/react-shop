@@ -1,6 +1,9 @@
 header {
   border-bottom: 1px solid var(--primary-grey);
   background-color: var(--primary-white);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .wrapper {

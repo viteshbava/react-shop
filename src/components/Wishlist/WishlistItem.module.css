@@ -63,22 +63,3 @@
   color: var(--primary-main-dark);
   margin-bottom: 0.5rem;
 }
-
-.item-details__footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.quantity {
-  width: 6rem;
-  margin-bottom: 0;
-}
-
-.subtotal {
-  font-size: 1.25rem;
-}
-
-.subtotal__value {
-  font-weight: bold;
-}

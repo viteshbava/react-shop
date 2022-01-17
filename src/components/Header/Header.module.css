@@ -1,9 +1,18 @@
 header {
   border-bottom: 1px solid var(--primary-grey);
-  background-color: var(--primary-white);
+  background-color: var(--primary-main-light);
   position: sticky;
   top: 0;
   z-index: 1000;
+}
+
+header button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  color: var(--primary-main-dark);
+  font-size: 2rem;
 }
 
 .wrapper {
@@ -19,6 +28,25 @@ header {
   color: var(--primary-main-dark);
 }
 
-nav > * {
+.nav-desktop > * {
   margin-left: 1rem;
+}
+
+.nav-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    justify-content: center;
+  }
+  .nav-desktop {
+    display: none;
+  }
+  .nav-mobile {
+    display: block;
+  }
+  .logo {
+    font-size: 2rem;
+  }
 }

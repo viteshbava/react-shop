@@ -2,6 +2,7 @@
 
 import React from "react";
 import styles from "./Control.module.css";
+import Chevron from "./Chevron.svg";
 
 const CONTROL_TYPE = {
   INPUT: "input",
@@ -22,8 +23,13 @@ const Control = ({ className, type, label, options, attributes }) => {
       console.error("Have not built the text area type yet!");
       break;
     case CONTROL_TYPE.SELECT:
+      const backgroundImage = { backgroundImage: `url(${Chevron})` };
       control = (
-        <select className={styles["control__select"]} {...attributes}>
+        <select
+          style={backgroundImage}
+          className={styles["control__select"]}
+          {...attributes}
+        >
           {options.map((opt) => (
             <option key={opt} value={opt}>
               {opt}
@@ -36,7 +42,6 @@ const Control = ({ className, type, label, options, attributes }) => {
       console.error("Invalid control type!");
       break;
   }
-
   return (
     <div className={wrapperStyles}>
       <label className={styles["control__label"]} htmlFor={attributes.id}>

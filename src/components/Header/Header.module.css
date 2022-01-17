@@ -11,29 +11,75 @@ header button {
   outline: none;
   border: none;
   cursor: pointer;
-  color: var(--primary-main-dark);
-  font-size: 2rem;
+  color: inherit;
+  font-size: inherit;
 }
 
 .wrapper {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  height: 5rem;
+  flex-wrap: wrap;
+  padding: 1rem 0;
 }
 
 .logo {
+  flex: 3;
+  text-align: left;
   font-size: 2.5rem;
   font-weight: bold;
   color: var(--primary-main-dark);
 }
 
-.nav-desktop > * {
+.nav-desktop ul {
+  display: flex;
+}
+
+.nav-desktop ul li {
   margin-left: 1rem;
 }
 
-.nav-mobile {
+.nav-mobile-left,
+.nav-mobile-right {
   display: none;
+  flex: 1;
+  color: var(--primary-main-dark);
+  font-size: 2rem;
+}
+
+.nav-mobile-right {
+  text-align: right;
+}
+
+.nav-mobile-right__cart-icon {
+  position: relative;
+}
+
+.nav-mobile-right__qty-badge {
+  position: absolute;
+  right: -1.5rem;
+  top: -0.75rem;
+}
+
+.nav-mobile-collapse {
+  margin-top: 1rem;
+  flex-basis: 100%;
+  color: var(--primary-black);
+}
+
+.nav-mobile-collapse button {
+  width: 100%;
+  padding: 1rem 0;
+  text-align: left;
+}
+
+.nav-mobile-collapse li:not(:last-of-type) {
+  border-bottom: var(--primary-grey) solid 1px;
+}
+
+.nav-mobile-collapse button svg {
+  color: var(--primary-main-dark);
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
 }
 
 @media (max-width: 768px) {
@@ -43,10 +89,12 @@ header button {
   .nav-desktop {
     display: none;
   }
-  .nav-mobile {
+  .nav-mobile-left,
+  .nav-mobile-right {
     display: block;
   }
   .logo {
+    text-align: center;
     font-size: 2rem;
   }
 }

@@ -4,19 +4,19 @@
   align-items: center;
   width: 100%;
   margin: 0 auto 1rem;
+  padding: 1rem;
   border-radius: 0.5rem;
   background-color: rgba(255, 0, 0, 0.2);
   color: var(--primary-red);
 }
 
-.danger-icon {
-  margin-left: 1rem;
+.message {
+  margin: 0 1rem;
 }
 
 .close {
   background-color: transparent;
   border: none;
-  padding: 1rem;
   cursor: pointer;
   font-size: 2rem;
   color: var(--primary-red);

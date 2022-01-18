@@ -49,6 +49,7 @@
 
 .product-name {
   font-size: 1.25rem;
+  margin-right: 2rem;
 }
 
 .product-id {
@@ -81,4 +82,20 @@
 
 .subtotal__value {
   font-weight: bold;
+}
+
+@media (max-width: 576px) {
+  .item-details__footer {
+    display: block;
+  }
+  .quantity {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-name {
+    font-size: 1rem;
+  }
 }

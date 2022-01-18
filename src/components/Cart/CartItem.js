@@ -4,7 +4,7 @@ import styles from "./CartItem.module.css";
 
 const CartItem = ({ url }) => {
   return (
-    <div className={styles["item-wrapper"]}>
+    <li className={styles["item-wrapper"]}>
       <div className={styles["image-wrapper"]}>
         <img className={styles.image} src={url} alt="Product Image" />
       </div>
@@ -32,7 +32,7 @@ const CartItem = ({ url }) => {
           </p>
         </div>
       </div>
-    </div>
+    </li>
   );
 };
 

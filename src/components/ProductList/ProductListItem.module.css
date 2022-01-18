@@ -37,3 +37,18 @@
   font-weight: bold;
   color: var(--primary-main-dark);
 }
+
+@media (max-width: 1024px) {
+  .image-wrapper {
+    height: 10rem;
+  }
+  .heading {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: 1rem;
+  }
+}

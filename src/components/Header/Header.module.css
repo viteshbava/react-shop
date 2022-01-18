@@ -61,6 +61,7 @@ header button {
 }
 
 .nav-mobile-collapse {
+  display: none;
   margin-top: 1rem;
   flex-basis: 100%;
   color: var(--primary-black);
@@ -96,5 +97,8 @@ header button {
   .logo {
     text-align: center;
     font-size: 2rem;
+  }
+  .nav-mobile-collapse {
+    display: block;
   }
 }

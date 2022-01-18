@@ -3,7 +3,7 @@ import styles from "./WishlistItem.module.css";
 
 const WishlistItem = ({ url }) => {
   return (
-    <div className={styles["item-wrapper"]}>
+    <li className={styles["item-wrapper"]}>
       <div className={styles["image-wrapper"]}>
         <img className={styles.image} src={url} alt="Product Image" />
       </div>
@@ -19,7 +19,7 @@ const WishlistItem = ({ url }) => {
         </p>
         <p className={styles.price}>$109.95</p>
       </div>
-    </div>
+    </li>
   );
 };
 

@@ -17,8 +17,8 @@ function App() {
           {/* <SignIn /> */}
           {/* <ProductList /> */}
           {/* <ProductSingle /> */}
-          <Cart />
-          {/* <Wishlist /> */}
+          {/* <Cart /> */}
+          <Wishlist />
         </div>
       </main>
 

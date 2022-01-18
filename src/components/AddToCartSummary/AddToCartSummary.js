@@ -8,7 +8,7 @@ const AddToCartSummary = () => {
   return (
     <Card className={styles.wrapper}>
       <div className={styles.header}>
-        <h2>1 item(s) added to your cart</h2>
+        <h2 className={styles.heading}>1 item(s) added to your cart</h2>
         <button className={styles.close}>&times;</button>
       </div>
       <div className={styles.body}>

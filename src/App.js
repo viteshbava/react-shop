@@ -15,9 +15,9 @@ function App() {
       <main>
         <div className="container">
           {/* <SignIn /> */}
-          <ProductList />
+          {/* <ProductList /> */}
           {/* <ProductSingle /> */}
-          {/* <Cart /> */}
+          <Cart />
           {/* <Wishlist /> */}
         </div>
       </main>

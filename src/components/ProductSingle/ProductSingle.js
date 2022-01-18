@@ -19,7 +19,7 @@ const ProductSingle = () => {
           />
           <img className={styles.image} src={url} alt="Product Image" />
         </div>
-        <div>
+        <div className={styles["details-wrapper"]}>
           <p className={styles.category}>Cameras & Phones</p>
           <p className={styles["product-id"]}>
             Product ID: <span>123456</span>

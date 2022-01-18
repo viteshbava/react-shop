@@ -56,3 +56,13 @@
   grid-template-columns: 1fr 1fr;
   column-gap: 1rem;
 }
+
+@media (max-width: 768px) {
+  .grid-wrapper {
+    grid-template-columns: 1fr;
+  }
+  .action-wrapper {
+    grid-template-columns: 1fr;
+    row-gap: 1rem;
+  }
+}

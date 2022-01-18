@@ -1,4 +1,5 @@
 import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import SignIn from "./components/Auth/SignIn";
@@ -10,19 +11,22 @@ import Wishlist from "./components/Wishlist/Wishlist";
 function App() {
   return (
     <>
-      <Header />
-
-      <main>
-        <div className="container">
-          {/* <SignIn /> */}
-          {/* <ProductList /> */}
-          {/* <ProductSingle /> */}
-          {/* <Cart /> */}
-          <Wishlist />
-        </div>
-      </main>
-
-      <Footer />
+      <Router>
+        <Header />
+        <main>
+          <div className="container">
+            <Routes>
+              <Route exact path="/" element={<ProductList />} />
+              <Route exact path="/signin" element={<SignIn />} />
+              <Route path="/product" element={<ProductSingle />} />
+              <Route exact path="/cart" element={<Cart />} />
+              <Route exact path="/wishlist" element={<Wishlist />} />
+              <Route>404 Not Found!</Route>
+            </Routes>
+          </div>
+        </main>
+        <Footer />
+      </Router>
     </>
   );
 }

@@ -52,19 +52,19 @@ const Header = () => {
               </Button>
             </li>
             <li>
-              <Button style={BTN_TYPE.SECONDARY}>
+              <Button type="link" href="/wishlist" style={BTN_TYPE.SECONDARY}>
                 <Icon icon={ICON_TYPE.HEART_FULL} />
                 Wishlist (2)
               </Button>
             </li>
             <li>
-              <Button style={BTN_TYPE.PRIMARY}>
+              <Button type="link" href="/cart" style={BTN_TYPE.PRIMARY}>
                 <Icon icon={ICON_TYPE.CART} />
                 Cart (3)
               </Button>
             </li>
             {/* <li>
-              <Button style={BTN_TYPE.PRIMARY}>
+              <Button type="link" href="/signin" style={BTN_TYPE.PRIMARY}>
                 <Icon icon={ICON_TYPE.SIGNIN} />
                 Sign in
               </Button>

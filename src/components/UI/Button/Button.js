@@ -12,15 +12,24 @@ const Button = ({
   onClick,
   children,
   type,
+  href,
 }) => {
   let btnStyles = styles.button;
   if (style) btnStyles = `${btnStyles} ${styles[`button--${style}`]}`;
   if (className) btnStyles = `${btnStyles} ${className}`;
-  return (
-    <button type={type} className={btnStyles} onClick={onClick}>
-      {children}
-    </button>
-  );
+  if (type === "link") {
+    return (
+      <a href={href} className={btnStyles} onClick={onClick}>
+        {children}
+      </a>
+    );
+  } else {
+    return (
+      <button type={type} className={btnStyles} onClick={onClick}>
+        {children}
+      </button>
+    );
+  }
 };
 
 export default Button;

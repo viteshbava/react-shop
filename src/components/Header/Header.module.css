@@ -15,6 +15,10 @@ header button {
   font-size: inherit;
 }
 
+header a:visited {
+  color: inherit;
+}
+
 .wrapper {
   display: flex;
   align-items: center;
@@ -62,22 +66,23 @@ header button {
 
 .nav-mobile-collapse {
   display: none;
-  margin-top: 1rem;
   flex-basis: 100%;
   color: var(--primary-black);
 }
 
-.nav-mobile-collapse button {
+.nav-mobile-collapse li > * {
   width: 100%;
-  padding: 1rem 0;
+  padding-top: 1rem;
   text-align: left;
+  display: inline-block;
 }
 
 .nav-mobile-collapse li:not(:last-of-type) {
+  padding-bottom: 1rem;
   border-bottom: var(--primary-grey) solid 1px;
 }
 
-.nav-mobile-collapse button svg {
+.nav-mobile-collapse svg {
   color: var(--primary-main-dark);
   margin-right: 0.5rem;
   font-size: 1.25rem;

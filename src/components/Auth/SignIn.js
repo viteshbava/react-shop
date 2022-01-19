@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import Control, { CONTROL_TYPE } from "../UI/Control/Control";
 import Button, { BTN_TYPE } from "../UI/Button/Button";
@@ -7,6 +7,11 @@ import Alert from "../UI/Alert/Alert";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 
 const SignIn = () => {
+  const usernameRef = useRef();
+
+  // focus username upon initial render
+  useEffect(() => usernameRef.current && usernameRef.current.focus());
+
   return (
     <section>
       <SectionHeading>Sign in</SectionHeading>
@@ -16,6 +21,7 @@ const SignIn = () => {
           <Control
             type={CONTROL_TYPE.INPUT}
             label="Username"
+            focusRef={usernameRef}
             attributes={{
               type: "text",
               id: "username",

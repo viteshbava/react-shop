@@ -16,9 +16,9 @@ const Header = () => {
     <nav className={styles["nav-mobile-collapse"]}>
       <ul>
         <li>
-          <button>
+          <a href="/wishlist">
             <Icon icon={ICON_TYPE.HEART_FULL} /> Wishlist (3)
-          </button>
+          </a>
         </li>
         <li>
           <button>
@@ -41,11 +41,13 @@ const Header = () => {
             />
           </button>
         </nav>
+        <div className={styles.logo}>
+          <a href="/">React Shop</a>
+        </div>
 
-        <div className={styles.logo}>React Shop</div>
         <nav className={styles["nav-desktop"]}>
           <ul>
-            <li>
+            {/* <li>
               <Button style={BTN_TYPE.SECONDARY}>
                 <Icon icon={ICON_TYPE.SIGNOUT} />
                 Sign out
@@ -62,22 +64,22 @@ const Header = () => {
                 <Icon icon={ICON_TYPE.CART} />
                 Cart (3)
               </Button>
-            </li>
-            {/* <li>
+            </li> */}
+            <li>
               <Button type="link" href="/signin" style={BTN_TYPE.PRIMARY}>
                 <Icon icon={ICON_TYPE.SIGNIN} />
                 Sign in
               </Button>
-            </li> */}
+            </li>
           </ul>
         </nav>
         <nav className={styles["nav-mobile-right"]}>
-          <button className={styles["nav-mobile-right__cart-icon"]}>
+          <a className={styles["nav-mobile-right__cart-icon"]} href="/cart">
             <Icon icon={ICON_TYPE.CART} />
             <Badge className={styles["nav-mobile-right__qty-badge"]}>99+</Badge>
-          </button>
+          </a>
         </nav>
-        {showMobileCollapseNav ? navMobileCollapse : <></>}
+        {showMobileCollapseNav && navMobileCollapse}
       </div>
     </header>
   );

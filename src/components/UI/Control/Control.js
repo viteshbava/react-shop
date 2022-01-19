@@ -10,14 +10,20 @@ const CONTROL_TYPE = {
   SELECT: "select",
 };
 
-const Control = ({ className, type, label, options, attributes }) => {
+const Control = ({ className, type, label, options, attributes, focusRef }) => {
   let wrapperStyles = styles["control-wrapper"];
   if (className) wrapperStyles += ` ${className}`;
 
   let control;
   switch (type) {
     case CONTROL_TYPE.INPUT:
-      control = <input className={styles["control__input"]} {...attributes} />;
+      control = (
+        <input
+          ref={focusRef}
+          className={styles["control__input"]}
+          {...attributes}
+        />
+      );
       break;
     case CONTROL_TYPE.TEXTAREA:
       console.error("Have not built the text area type yet!");

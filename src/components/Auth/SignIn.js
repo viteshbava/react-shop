@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useContext } from "react";
 import useInput from "../../hooks/use-input";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import Control, { CONTROL_TYPE } from "../UI/Control/Control";
@@ -6,8 +6,13 @@ import Button, { BTN_TYPE } from "../UI/Button/Button";
 import styles from "./SignIn.module.css";
 import Alert from "../UI/Alert/Alert";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
+import AuthContext from "../../store/auth-context";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+  const [signInFailed, setSignInFailed] = useState(false);
+  const navigate = useNavigate();
+
   const {
     input: username,
     inputValid: usernameValid,
@@ -30,6 +35,8 @@ const SignIn = () => {
 
   const formValid = usernameValid && passwordValid;
 
+  const ctx = useContext(AuthContext);
+
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -38,14 +45,19 @@ const SignIn = () => {
 
     if (!formValid) return;
 
-    console.log("Signing in...");
+    const result = ctx.onLogin(username, password);
+    if (result.success) {
+      navigate("/");
+    } else {
+      setSignInFailed(result);
+    }
   };
 
   return (
     <section>
       <SectionHeading>Sign in</SectionHeading>
       <div className={styles["form-container"]}>
-        <Alert>Sorry, that username or password is incorrect.</Alert>
+        {signInFailed && <Alert>{signInFailed.message}</Alert>}
         <form onSubmit={formSubmitHandler}>
           <Control
             invalid={usernameShowError && true}

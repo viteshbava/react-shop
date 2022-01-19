@@ -7,12 +7,14 @@ const ALERT_TYPE = {
   SUCCESS: "success",
 };
 
-const Alert = ({ type, children }) => {
+const Alert = ({ type, onClose, children }) => {
   return (
     <div className={styles.container}>
       <Icon className={styles["danger-icon"]} icon={ICON_TYPE.DANGER} />
       <span className={styles.message}>{children}</span>
-      <button className={styles.close}>&times;</button>
+      <button onClick={onClose} className={styles.close}>
+        &times;
+      </button>
     </div>
   );
 };

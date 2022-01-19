@@ -7,11 +7,13 @@ import ProductList from "./components/ProductList/ProductList";
 import ProductSingle from "./components/ProductSingle/ProductSingle";
 import Cart from "./components/Cart/Cart";
 import Wishlist from "./components/Wishlist/Wishlist";
+import ScrollToTop from "./utilities/ScrollToTop";
 
 function App() {
   return (
     <>
       <Router>
+        <ScrollToTop />
         <Header />
         <main>
           <div className="container">

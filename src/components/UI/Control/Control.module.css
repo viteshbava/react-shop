@@ -1,17 +1,26 @@
-.control-wrapper {
+.wrapper {
   display: flex;
   flex-direction: column;
   margin-bottom: 0.5rem;
 }
 
-.control__label {
+.label,
+.feedback {
   margin-bottom: 0.5rem;
   color: var(--primary-black);
-  opacity: 0.8;
+  opacity: 0.6;
 }
 
-.control__input,
-.control__select {
+.label {
+  font-weight: bold;
+}
+
+.feedback {
+  margin-top: 0.25rem;
+}
+
+.input,
+.select {
   width: 100%;
   padding: 0.5rem 1.5rem;
   border-radius: 0.5rem;
@@ -20,7 +29,7 @@
   font: inherit;
 }
 
-.control__select {
+.select {
   /* remove default chevron */
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -30,34 +39,42 @@
   background-position: right 1rem top 0.75rem;
 }
 
-.control__input:focus,
-.control__select:focus {
-  box-shadow: 0px 0px 9px 2px var(--primary-grey);
+.input:focus,
+.select:focus {
+  box-shadow: 0px 0px 10px -2px var(--primary-grey);
   outline: none;
 }
 
-.control__input::placeholder {
+.input::placeholder {
   font: inherit;
   color: var(--primary-black);
   opacity: 0.4;
 }
 
-/* .input-wrapper--valid .input__input {
-  border-color: var(--green);
+/* .wrapper--valid .label,
+.wrapper--valid .feedback {
+  color: var(--primary-green);
 }
-.input-wrapper--valid .input__input:focus {
-  box-shadow: 0px 0px 18px -5px var(--green);
+.wrapper--valid input,
+.wrapper--valid textarea,
+.wrapper--valid select {
+  border-color: var(--primary-green);
 }
-.input-wrapper--invalid .input__input {
-  border-color: red;
-}
-.input-wrapper--invalid .input__input:focus {
-  box-shadow: 0px 0px 18px -5px red;
-}
-
-.input__feedback--valid {
-  color: var(--green);
-}
-.input__feedback--invalid {
-  color: red;
+.wrapper--valid input:focus,
+.wrapper--valid textarea:focus {
+  box-shadow: 0px 0px 18px -5px var(--primary-green);
 } */
+
+.wrapper--invalid .label,
+.wrapper--invalid .feedback {
+  color: var(--primary-red);
+}
+.wrapper--invalid input,
+.wrapper--invalid textarea,
+.wrapper--invalid select {
+  border-color: var(--primary-red);
+}
+.wrapper--invalid input:focus,
+.wrapper--invalid textarea:focus {
+  box-shadow: 0px 0px 10px -2px var(--primary-red);
+}

@@ -10,19 +10,25 @@ const CONTROL_TYPE = {
   SELECT: "select",
 };
 
-const Control = ({ className, type, label, options, attributes, focusRef }) => {
-  let wrapperStyles = styles["control-wrapper"];
+const Control = ({
+  className,
+  type,
+  label,
+  options,
+  attributes,
+  focusRef,
+  invalid,
+  feedback,
+}) => {
+  let wrapperStyles = styles["wrapper"];
   if (className) wrapperStyles += ` ${className}`;
+  if (invalid) wrapperStyles += ` ${styles["wrapper--invalid"]}`;
 
   let control;
   switch (type) {
     case CONTROL_TYPE.INPUT:
       control = (
-        <input
-          ref={focusRef}
-          className={styles["control__input"]}
-          {...attributes}
-        />
+        <input ref={focusRef} className={styles["input"]} {...attributes} />
       );
       break;
     case CONTROL_TYPE.TEXTAREA:
@@ -33,7 +39,7 @@ const Control = ({ className, type, label, options, attributes, focusRef }) => {
       control = (
         <select
           style={backgroundImage}
-          className={styles["control__select"]}
+          className={styles["select"]}
           {...attributes}
         >
           {options.map((opt) => (
@@ -50,10 +56,11 @@ const Control = ({ className, type, label, options, attributes, focusRef }) => {
   }
   return (
     <div className={wrapperStyles}>
-      <label className={styles["control__label"]} htmlFor={attributes.id}>
+      <label className={styles["label"]} htmlFor={attributes.id}>
         {label}
       </label>
       {control}
+      <p className={styles.feedback}>{feedback}</p>
     </div>
   );
 };

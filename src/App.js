@@ -20,7 +20,7 @@ function App() {
             <Routes>
               <Route exact path="/" element={<ProductList />} />
               <Route exact path="/signin" element={<SignIn />} />
-              <Route path="/product" element={<ProductSingle />} />
+              <Route path="/product/:id" element={<ProductSingle />} />
               <Route exact path="/cart" element={<Cart />} />
               <Route exact path="/wishlist" element={<Wishlist />} />
               <Route>404 Not Found!</Route>

@@ -3,10 +3,18 @@ import Card from "../UI/Card/Card";
 import styles from "./ProductListItem.module.css";
 import toDollars from "../../utilities/toDollars";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
+import { useNavigate } from "react-router-dom";
+import { URL } from "../../config/config";
 
 const ProductListItem = ({ product }) => {
+  const navigate = useNavigate();
+
+  const productClickHandler = () => {
+    navigate(`/product/${product.id}`);
+  };
+
   return (
-    <li className={styles["grid-flex"]}>
+    <li className={styles["grid-flex"]} onClick={productClickHandler}>
       <Card className={styles.wrapper}>
         <div className={styles["image-wrapper"]}>
           <Icon

@@ -17,14 +17,24 @@ const ProductList = () => {
     );
   }, [getProducts]);
 
+  console.log(products);
+
+  let productList;
+
+  if (products.length > 0) {
+    productList = (
+      <ul className={styles["grid-wrapper"]}>
+        {products.map((p) => (
+          <ProductListItem key={p.id} product={p} />
+        ))}
+      </ul>
+    );
+  }
+
   return (
     <section>
       <SectionHeading>Products</SectionHeading>
-      <ul className={styles["grid-wrapper"]}>
-        {products.map((p) => (
-          <ProductListItem product={p} />
-        ))}
-      </ul>
+      {productList}
     </section>
   );
 };

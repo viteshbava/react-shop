@@ -1,4 +1,12 @@
+.grid-flex {
+  display: flex;
+}
+
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
   padding: 1.5rem;
   text-align: center;
   cursor: pointer;
@@ -27,12 +35,13 @@
 }
 
 .heading {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: normal;
   margin: 1rem 0;
 }
 
 .price {
+  margin-top: auto;
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--primary-main-dark);

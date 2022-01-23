@@ -7,6 +7,8 @@ import {
   faShoppingCart,
   faBars as faHamburger,
   faTimes,
+  faExclamationCircle,
+  faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartEmpty } from "@fortawesome/free-regular-svg-icons";
 import { ReactComponent as Danger } from "./Danger.svg";
@@ -21,6 +23,8 @@ const ICON_TYPE = {
   CART: "cart",
   HAMBURGER: "hamburger",
   TIMES: "times",
+  ERROR: "error",
+  INFO: "info",
 };
 
 const Icon = ({ className, icon }) => {
@@ -49,6 +53,12 @@ const Icon = ({ className, icon }) => {
       break;
     case ICON_TYPE.TIMES:
       iconReturn = <FontAwesomeIcon icon={faTimes} />;
+      break;
+    case ICON_TYPE.ERROR:
+      iconReturn = <FontAwesomeIcon icon={faExclamationCircle} />;
+      break;
+    case ICON_TYPE.INFO:
+      iconReturn = <FontAwesomeIcon icon={faInfoCircle} />;
       break;
     default:
       console.error("Invalid icon type!");

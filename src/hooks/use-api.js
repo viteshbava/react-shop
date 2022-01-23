@@ -1,22 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import useHttp from "./use-http";
 import { URL } from "../config/config";
 
 const useGetProduct = (id) => {
-  const {
-    isLoading,
-    error,
-    results: product,
-  } = callAPI({ url: `${URL.PRODUCTS}/${id}` });
+  const config = useMemo(() => {
+    return { url: `${URL.PRODUCTS}/${id}` };
+  }, [URL.PRODUCTS, id]);
+  const { isLoading, error, results: product } = callAPI(config);
   return { isLoading, error, product };
 };
 
 const useGetProducts = () => {
-  const {
-    isLoading,
-    error,
-    results: products,
-  } = callAPI({ url: URL.PRODUCTS });
+  const config = useMemo(() => {
+    return { url: URL.PRODUCTS };
+  }, [URL.PRODUCTS]);
+  const { isLoading, error, results: products } = callAPI(config);
   return { isLoading, error, products };
 };
 
@@ -25,7 +23,7 @@ const callAPI = (config) => {
   const { isLoading, error, sendRequest } = useHttp();
   useEffect(() => {
     console.log("Calling API...");
-    sendRequest(config, (res) => setResults(res));
+    sendRequest(config, (res) => setResults([]));
   }, [sendRequest, config]);
   return { isLoading, error, results };
 };

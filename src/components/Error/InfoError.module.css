@@ -1,0 +1,18 @@
+.wrapper {
+  text-align: center;
+}
+
+.icon {
+  font-size: 7rem;
+
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+
+.icon--error {
+  color: var(--red-light);
+}
+
+.icon--info {
+  color: var(--primary-main-dark);
+}

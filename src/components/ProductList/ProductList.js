@@ -9,7 +9,7 @@ const ProductList = () => {
 
   let productList;
 
-  if (products.length > 0) {
+  if (products && products.length > 0) {
     productList = (
       <ul className={styles["grid-wrapper"]}>
         {products.map((p) => (

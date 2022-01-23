@@ -3,28 +3,31 @@ import useHttp from "./use-http";
 import { URL } from "../config/config";
 
 const useGetProduct = (id) => {
-  const [product, setProduct] = useState(null);
-  const { isLoading, error, sendRequest: getProduct } = useHttp();
-  useEffect(() => {
-    console.log("Fetching product from API...");
-    getProduct({ url: `${URL.PRODUCTS}/${id}` }, (returnedProduct) =>
-      setProduct(returnedProduct)
-    );
-  }, [getProduct, id]);
-
+  const {
+    isLoading,
+    error,
+    results: product,
+  } = callAPI({ url: `${URL.PRODUCTS}/${id}` });
   return { isLoading, error, product };
 };
 
 const useGetProducts = () => {
-  const [products, setProducts] = useState([]);
-  const { isLoading, error, sendRequest: getProducts } = useHttp();
-  useEffect(() => {
-    console.log("Fetching products from API...");
-    getProducts({ url: URL.PRODUCTS }, (returnedProducts) =>
-      setProducts(returnedProducts)
-    );
-  }, [getProducts]);
+  const {
+    isLoading,
+    error,
+    results: products,
+  } = callAPI({ url: URL.PRODUCTS });
   return { isLoading, error, products };
+};
+
+const callAPI = (config) => {
+  const [results, setResults] = useState(null);
+  const { isLoading, error, sendRequest } = useHttp();
+  useEffect(() => {
+    console.log("Calling API...");
+    sendRequest(config, (res) => setResults(res));
+  }, [sendRequest, config]);
+  return { isLoading, error, results };
 };
 
 export { useGetProduct, useGetProducts };

@@ -5,23 +5,13 @@ import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import Control, { CONTROL_TYPE } from "../UI/Control/Control";
 import Button, { BTN_TYPE } from "../UI/Button/Button";
 import { useParams } from "react-router-dom";
-import { URL } from "../../config/config";
-import useHttp from "../../hooks/use-http";
+import { useGetProduct } from "../../hooks/use-api";
 import toDollars from "../../utilities/toDollars";
 import styles from "./ProductSingle.module.css";
 
 const ProductSingle = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
-
-  const { isLoading, error, sendRequest: getProduct } = useHttp();
-
-  useEffect(() => {
-    console.log("Fetching product from API...");
-    getProduct({ url: `${URL.PRODUCTS}/${id}` }, (returnedProduct) =>
-      setProduct(returnedProduct)
-    );
-  }, [getProduct]);
+  const { isLoading, error, product } = useGetProduct(id);
 
   let productDetails;
   if (product) {

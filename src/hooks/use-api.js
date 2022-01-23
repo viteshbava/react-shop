@@ -23,7 +23,7 @@ const callAPI = (config) => {
   const { isLoading, error, sendRequest } = useHttp();
   useEffect(() => {
     console.log("Calling API...");
-    sendRequest(config, (res) => setResults([]));
+    sendRequest(config, (res) => setResults(res));
   }, [sendRequest, config]);
   return { isLoading, error, results };
 };

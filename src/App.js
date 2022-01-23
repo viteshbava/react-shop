@@ -8,6 +8,7 @@ import ProductSingle from "./components/ProductSingle/ProductSingle";
 import Cart from "./components/Cart/Cart";
 import Wishlist from "./components/Wishlist/Wishlist";
 import ScrollToTop from "./utilities/ScrollToTop";
+import InfoError, { INFO_ERROR_TYPE } from "./components/Error/InfoError";
 
 function App() {
   return (
@@ -23,10 +24,21 @@ function App() {
               <Route path="/product/:id" element={<ProductSingle />} />
               <Route exact path="/cart" element={<Cart />} />
               <Route exact path="/wishlist" element={<Wishlist />} />
-              <Route>404 Not Found!</Route>
+              <Route
+                path="*"
+                element={
+                  <InfoError
+                    type={INFO_ERROR_TYPE.ERROR}
+                    heading="Page Not Found!"
+                    message="Please check the URL."
+                  />
+                }
+              />
+              <Route path="*">404 Not Found!</Route>
             </Routes>
           </div>
         </main>
+
         <Footer />
       </Router>
     </>

@@ -3,6 +3,7 @@ import ProductListItem from "./ProductListItem";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import { useGetProducts } from "../../hooks/use-api";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
+import Spinner from "../UI/Spinner/Spinner";
 import styles from "./ProductList.module.css";
 
 const ProductList = () => {
@@ -14,7 +15,7 @@ const ProductList = () => {
     content = (
       <>
         <SectionHeading>Products</SectionHeading>
-        <p>Loading...</p>
+        <Spinner />
       </>
     );
   } else if (error) {

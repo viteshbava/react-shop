@@ -6,6 +6,8 @@ import Control, { CONTROL_TYPE } from "../UI/Control/Control";
 import Button, { BTN_TYPE } from "../UI/Button/Button";
 import { useParams } from "react-router-dom";
 import { useGetProduct } from "../../hooks/use-api";
+import Spinner from "../UI/Spinner/Spinner";
+import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import toDollars from "../../utilities/toDollars";
 import styles from "./ProductSingle.module.css";
 
@@ -13,10 +15,29 @@ const ProductSingle = () => {
   const { id } = useParams();
   const { isLoading, error, product } = useGetProduct(id);
 
-  let productDetails;
-  if (product) {
+  let content;
+
+  if (isLoading) {
+    content = <Spinner />;
+  } else if (error) {
+    content = (
+      <InfoError
+        type={INFO_ERROR_TYPE.ERROR}
+        heading="Error Fetching Product!"
+        message={error}
+      />
+    );
+  } else if (!product) {
+    content = (
+      <InfoError
+        type={INFO_ERROR_TYPE.ERROR}
+        heading="Unkown Product!"
+        message={`A product with id: ${id} cannot be found.`}
+      />
+    );
+  } else {
     const { title, price, category, description, image } = product;
-    productDetails = (
+    content = (
       <>
         <SectionHeading>{title}</SectionHeading>
         <div className={styles["grid-wrapper"]}>
@@ -53,7 +74,7 @@ const ProductSingle = () => {
 
   return (
     <section>
-      {productDetails}
+      {content}
       {/* <AddToCartSummary /> */}
     </section>
   );

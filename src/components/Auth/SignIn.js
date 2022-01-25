@@ -6,7 +6,7 @@ import Button, { BTN_TYPE } from "../UI/Button/Button";
 import styles from "./SignIn.module.css";
 import Alert from "../UI/Alert/Alert";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
-import AuthContext from "../../store/auth-context";
+import AuthContext from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {

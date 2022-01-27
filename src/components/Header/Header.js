@@ -6,9 +6,12 @@ import Badge from "../UI/Badge/Badge";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import AuthContext from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [showMobileCollapseNav, setShowMobileCollapseNav] = useState(false);
+  const cartIsUpdating = useSelector((state) => state.cart.isUpdating);
+  const cartTotalQty = useSelector((state) => state.cart.totalQuantity);
 
   const ctx = useContext(AuthContext);
   const navigate = useNavigate();
@@ -89,7 +92,7 @@ const Header = () => {
                 <li>
                   <Button type="link" href="/cart" style={BTN_TYPE.PRIMARY}>
                     <Icon icon={ICON_TYPE.CART} />
-                    Cart (3)
+                    Cart ({cartIsUpdating ? "SP!" : cartTotalQty})
                   </Button>
                 </li>
               </>

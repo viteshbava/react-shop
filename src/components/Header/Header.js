@@ -5,7 +5,7 @@ import Button, { BTN_TYPE } from "../UI/Button/Button";
 import Badge from "../UI/Badge/Badge";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import AuthContext from "../../context/auth-context";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Header = () => {
@@ -32,9 +32,9 @@ const Header = () => {
         {ctx.isLoggedIn ? (
           <>
             <li>
-              <a href="/wishlist">
+              <Link to="/wishlist">
                 <Icon icon={ICON_TYPE.HEART_FULL} /> Wishlist (3)
-              </a>
+              </Link>
             </li>
             <li>
               <button onClick={onSignOutHandler}>
@@ -66,7 +66,7 @@ const Header = () => {
           </button>
         </nav>
         <div className={styles.logo}>
-          <a href="/">React Shop</a>
+          <Link to="/">React Shop</Link>
         </div>
 
         <nav className={styles["nav-desktop"]}>
@@ -80,17 +80,13 @@ const Header = () => {
                   </Button>
                 </li>
                 <li>
-                  <Button
-                    type="link"
-                    href="/wishlist"
-                    style={BTN_TYPE.SECONDARY}
-                  >
+                  <Button link="/wishlist" style={BTN_TYPE.SECONDARY}>
                     <Icon icon={ICON_TYPE.HEART_FULL} />
                     Wishlist (2)
                   </Button>
                 </li>
                 <li>
-                  <Button type="link" href="/cart" style={BTN_TYPE.PRIMARY}>
+                  <Button link="/cart" style={BTN_TYPE.PRIMARY}>
                     <Icon icon={ICON_TYPE.CART} />
                     Cart ({cartIsUpdating ? "SP!" : cartTotalQty})
                   </Button>
@@ -98,7 +94,7 @@ const Header = () => {
               </>
             ) : (
               <li>
-                <Button type="link" href="/signin" style={BTN_TYPE.PRIMARY}>
+                <Button link="/signin" style={BTN_TYPE.PRIMARY}>
                   <Icon icon={ICON_TYPE.SIGNIN} />
                   Sign in
                 </Button>

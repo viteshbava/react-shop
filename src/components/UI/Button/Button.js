@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./Button.module.css";
 
 const BTN_TYPE = {
@@ -12,16 +13,17 @@ const Button = ({
   onClick,
   children,
   type,
+  link,
   href,
 }) => {
   let btnStyles = styles.button;
   if (style) btnStyles = `${btnStyles} ${styles[`button--${style}`]}`;
   if (className) btnStyles = `${btnStyles} ${className}`;
-  if (type === "link") {
+  if (link) {
     return (
-      <a href={href} className={btnStyles} onClick={onClick}>
+      <Link to={link} className={btnStyles}>
         {children}
-      </a>
+      </Link>
     );
   } else {
     return (

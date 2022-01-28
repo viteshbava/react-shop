@@ -1,9 +1,9 @@
 import sendHttpRequest from "../utilities/sendHttpRequest";
 
-const ROOT_URL = "https://fakestoreapi.com";
+const BASE_URL = "https://fakestoreapi.com";
 const URL = {
-  PRODUCTS: ROOT_URL + "/products",
-  CARTS: ROOT_URL + "/carts",
+  PRODUCTS: BASE_URL + "/products",
+  CARTS: BASE_URL + "/carts",
 };
 
 const callFakeStoreAPI = {

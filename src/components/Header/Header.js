@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useContext } from "react";
 import styles from "./Header.module.css";
+import NavMobileLeft from "./NavMobileLeft";
 import Button, { BTN_TYPE } from "../UI/Button/Button";
 import Badge from "../UI/Badge/Badge";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
@@ -26,7 +27,7 @@ const Header = () => {
     navigate("/");
   };
 
-  const navMobileCollapse = (
+  const NavMobileCollapse = () => (
     <nav className={styles["nav-mobile-collapse"]}>
       <ul>
         {ctx.isLoggedIn ? (
@@ -53,62 +54,65 @@ const Header = () => {
     </nav>
   );
 
+  const NavDesktop = () => (
+    <nav className={styles["nav-desktop"]}>
+      <ul>
+        {ctx.isLoggedIn ? (
+          <>
+            <li>
+              <Button style={BTN_TYPE.SECONDARY} onClick={onSignOutHandler}>
+                <Icon icon={ICON_TYPE.SIGNOUT} />
+                Sign out
+              </Button>
+            </li>
+            <li>
+              <Button link="/wishlist" style={BTN_TYPE.SECONDARY}>
+                <Icon icon={ICON_TYPE.HEART_FULL} />
+                Wishlist (2)
+              </Button>
+            </li>
+            <li>
+              <Button link="/cart" style={BTN_TYPE.PRIMARY}>
+                <Icon icon={ICON_TYPE.CART} />
+                Cart ({cartIsUpdating ? "SP!" : cartTotalQty})
+              </Button>
+            </li>
+          </>
+        ) : (
+          <li>
+            <Button link="/signin" style={BTN_TYPE.PRIMARY}>
+              <Icon icon={ICON_TYPE.SIGNIN} />
+              Sign in
+            </Button>
+          </li>
+        )}
+      </ul>
+    </nav>
+  );
+
+  const NavMobileRight = () => (
+    <nav className={styles["nav-mobile-right"]}>
+      <a className={styles["nav-mobile-right__cart-icon"]} href="/cart">
+        <Icon icon={ICON_TYPE.CART} />
+        <Badge className={styles["nav-mobile-right__qty-badge"]}>99+</Badge>
+      </a>
+    </nav>
+  );
+
   return (
     <header>
       <div className={`container ${styles.wrapper}`}>
-        <nav className={styles["nav-mobile-left"]}>
-          <button onClick={hamburgerClickHandler}>
-            <Icon
-              icon={
-                showMobileCollapseNav ? ICON_TYPE.TIMES : ICON_TYPE.HAMBURGER
-              }
-            />
-          </button>
-        </nav>
+        <NavMobileLeft
+          className={styles["nav-mobile-left"]}
+          hamburgerClickHandler={hamburgerClickHandler}
+          showMobileCollapseNav={showMobileCollapseNav}
+        />
         <div className={styles.logo}>
           <Link to="/">React Shop</Link>
         </div>
-
-        <nav className={styles["nav-desktop"]}>
-          <ul>
-            {ctx.isLoggedIn ? (
-              <>
-                <li>
-                  <Button style={BTN_TYPE.SECONDARY} onClick={onSignOutHandler}>
-                    <Icon icon={ICON_TYPE.SIGNOUT} />
-                    Sign out
-                  </Button>
-                </li>
-                <li>
-                  <Button link="/wishlist" style={BTN_TYPE.SECONDARY}>
-                    <Icon icon={ICON_TYPE.HEART_FULL} />
-                    Wishlist (2)
-                  </Button>
-                </li>
-                <li>
-                  <Button link="/cart" style={BTN_TYPE.PRIMARY}>
-                    <Icon icon={ICON_TYPE.CART} />
-                    Cart ({cartIsUpdating ? "SP!" : cartTotalQty})
-                  </Button>
-                </li>
-              </>
-            ) : (
-              <li>
-                <Button link="/signin" style={BTN_TYPE.PRIMARY}>
-                  <Icon icon={ICON_TYPE.SIGNIN} />
-                  Sign in
-                </Button>
-              </li>
-            )}
-          </ul>
-        </nav>
-        <nav className={styles["nav-mobile-right"]}>
-          <a className={styles["nav-mobile-right__cart-icon"]} href="/cart">
-            <Icon icon={ICON_TYPE.CART} />
-            <Badge className={styles["nav-mobile-right__qty-badge"]}>99+</Badge>
-          </a>
-        </nav>
-        {showMobileCollapseNav && navMobileCollapse}
+        <NavDesktop />
+        <NavMobileRight />
+        {showMobileCollapseNav && <NavMobileCollapse />}
       </div>
     </header>
   );

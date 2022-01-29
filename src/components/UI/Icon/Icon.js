@@ -63,7 +63,8 @@ const Icon = ({ className, icon }) => {
     default:
       console.error("Invalid icon type!");
   }
-  return <span className={`${styles.wrapper} ${className}`}>{iconReturn}</span>;
+  const spanClasses = styles.wrapper + (className ? ` ${className}` : "");
+  return <span className={spanClasses}>{iconReturn}</span>;
 };
 
 export default Icon;

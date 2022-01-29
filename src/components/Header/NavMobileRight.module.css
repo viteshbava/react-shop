@@ -1,0 +1,9 @@
+.cart-icon {
+  position: relative;
+}
+
+.qty-badge {
+  position: absolute;
+  right: -1.5rem;
+  top: -0.75rem;
+}

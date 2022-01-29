@@ -1,0 +1,7 @@
+.wrapper ul {
+  display: flex;
+}
+
+.wrapper ul li {
+  margin-left: 1rem;
+}

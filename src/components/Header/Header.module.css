@@ -34,14 +34,6 @@ header a:visited {
   color: var(--primary-main-dark);
 }
 
-.nav-desktop ul {
-  display: flex;
-}
-
-.nav-desktop ul li {
-  margin-left: 1rem;
-}
-
 .nav-mobile-left,
 .nav-mobile-right {
   display: none;
@@ -54,38 +46,9 @@ header a:visited {
   text-align: right;
 }
 
-.nav-mobile-right__cart-icon {
-  position: relative;
-}
-
-.nav-mobile-right__qty-badge {
-  position: absolute;
-  right: -1.5rem;
-  top: -0.75rem;
-}
-
 .nav-mobile-collapse {
   display: none;
   flex-basis: 100%;
-  color: var(--primary-black);
-}
-
-.nav-mobile-collapse li > * {
-  width: 100%;
-  padding-top: 1rem;
-  text-align: left;
-  display: inline-block;
-}
-
-.nav-mobile-collapse li:not(:last-of-type) {
-  padding-bottom: 1rem;
-  border-bottom: var(--primary-grey) solid 1px;
-}
-
-.nav-mobile-collapse svg {
-  color: var(--primary-main-dark);
-  margin-right: 0.5rem;
-  font-size: 1.25rem;
 }
 
 @media (max-width: 780px) {

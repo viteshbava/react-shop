@@ -7,8 +7,9 @@ const NavMobileLeft = ({
   hamburgerClickHandler,
   showMobileCollapseNav,
 }) => {
+  const navClasses = styles.wrapper + (className ? ` ${className}` : "");
   return (
-    <nav className={className}>
+    <nav className={navClasses}>
       <button onClick={hamburgerClickHandler}>
         <Icon
           icon={showMobileCollapseNav ? ICON_TYPE.TIMES : ICON_TYPE.HAMBURGER}

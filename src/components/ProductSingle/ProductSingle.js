@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import Control, { CONTROL_TYPE } from "../UI/Control/Control";
 import Button, { BTN_TYPE } from "../UI/Button/Button";
 import { useParams } from "react-router-dom";
-import { useGetProduct } from "../../hooks/use-api";
+import useCallApi from "../../hooks/use-callApi";
+import callFakeStoreAPI from "../../apis/fakeStoreAPI";
 import Spinner from "../UI/Spinner/Spinner";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import toDollars from "../../utilities/toDollars";
@@ -13,7 +13,11 @@ import styles from "./ProductSingle.module.css";
 
 const ProductSingle = () => {
   const { id } = useParams();
-  const { isLoading, error, product } = useGetProduct(id);
+  const {
+    isLoading,
+    error,
+    result: product,
+  } = useCallApi(() => callFakeStoreAPI.getProduct(id));
 
   let content;
 
@@ -24,7 +28,7 @@ const ProductSingle = () => {
       <InfoError
         type={INFO_ERROR_TYPE.ERROR}
         heading="Error Fetching Product!"
-        message={error}
+        message={error.message}
       />
     );
   } else if (!product) {

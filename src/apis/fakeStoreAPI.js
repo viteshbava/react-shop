@@ -14,6 +14,13 @@ const callFakeStoreAPI = {
     return product;
   },
 
+  getProducts: () => {
+    const products = sendHttpRequest({
+      url: URL.PRODUCTS,
+    });
+    return products;
+  },
+
   getCart: (cartId) => {
     const cart = sendHttpRequest({
       url: `${URL.CARTS}/${cartId}`,

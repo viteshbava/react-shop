@@ -1,13 +1,18 @@
-import React from "react";
 import ProductListItem from "./ProductListItem";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
-import { useGetProducts } from "../../hooks/use-api";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import Spinner from "../UI/Spinner/Spinner";
 import styles from "./ProductList.module.css";
 
+import useCallApi from "../../hooks/use-callApi";
+import callFakeStoreAPI from "../../apis/fakeStoreAPI";
+
 const ProductList = () => {
-  const { isLoading, error, products } = useGetProducts();
+  const {
+    isLoading,
+    error,
+    result: products,
+  } = useCallApi(callFakeStoreAPI.getProducts);
 
   let content;
 
@@ -23,7 +28,7 @@ const ProductList = () => {
       <InfoError
         type={INFO_ERROR_TYPE.ERROR}
         heading="Error Fetching Products!"
-        message={error}
+        message={error.message}
       />
     );
   } else if (!products || (products && !products.length)) {

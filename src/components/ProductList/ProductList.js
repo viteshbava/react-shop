@@ -1,18 +1,20 @@
+import { useEffect } from "react";
 import ProductListItem from "./ProductListItem";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import Spinner from "../UI/Spinner/Spinner";
 import styles from "./ProductList.module.css";
 
-import useCallApi from "../../hooks/use-callApi";
-import callFakeStoreAPI from "../../apis/fakeStoreAPI";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../redux/products-actions";
 
 const ProductList = () => {
-  const {
-    isLoading,
-    error,
-    result: products,
-  } = useCallApi(callFakeStoreAPI.getProducts);
+  const { isLoading, error, products } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
 
   let content;
 

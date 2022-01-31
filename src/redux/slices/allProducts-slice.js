@@ -7,7 +7,6 @@ const productsSlice = createSlice({
   initialState: STATE_INIT,
   reducers: {
     setProducts(state, action) {
-      console.log("Updating Products state: setting products!");
       state.products = action.payload || [];
     },
     isLoading(state, action) {

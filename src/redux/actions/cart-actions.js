@@ -1,5 +1,5 @@
-import { cartActions } from "./cart-slice";
-import fakeStoreAPI from "../apis/fakeStoreAPI";
+import { cartActions } from "../slices/cart-slice";
+import fakeStoreAPI from "../../apis/fakeStoreApi";
 
 const fetchCartData = (cartId) => async (dispatch) => {
   dispatch(cartActions.isUpdating(true));

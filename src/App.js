@@ -11,7 +11,7 @@ import Wishlist from "./components/Wishlist/Wishlist";
 import ScrollToTop from "./utilities/ScrollToTop";
 import InfoError, { INFO_ERROR_TYPE } from "./components/Error/InfoError";
 import { useDispatch } from "react-redux";
-import { fetchCartData } from "./redux/cart-actions";
+import { fetchCartData } from "./redux/actions/cart-actions";
 
 function App() {
   const dispatch = useDispatch();

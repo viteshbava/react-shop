@@ -6,7 +6,7 @@ const URL = {
   CARTS: BASE_URL + "/carts",
 };
 
-const callFakeStoreAPI = {
+const fakeStoreApi = {
   getProduct: (productId) => {
     const product = sendHttpRequest({
       url: `${URL.PRODUCTS}/${productId}`,
@@ -29,4 +29,4 @@ const callFakeStoreAPI = {
   },
 };
 
-export default callFakeStoreAPI;
+export default fakeStoreApi;

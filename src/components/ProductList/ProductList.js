@@ -6,7 +6,7 @@ import Spinner from "../UI/Spinner/Spinner";
 import styles from "./ProductList.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../redux/products-actions";
+import { fetchProducts } from "../../redux/actions/product-actions";
 
 const ProductList = () => {
   const { isLoading, error, products } = useSelector((state) => state.products);

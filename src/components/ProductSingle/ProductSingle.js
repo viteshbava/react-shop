@@ -1,23 +1,30 @@
+import { useEffect } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import Control, { CONTROL_TYPE } from "../UI/Control/Control";
 import Button, { BTN_TYPE } from "../UI/Button/Button";
 import { useParams } from "react-router-dom";
-import useCallApi from "../../hooks/use-callApi";
-import callFakeStoreAPI from "../../apis/fakeStoreAPI";
+import callFakeStoreAPI from "../../apis/fakeStoreApi";
 import Spinner from "../UI/Spinner/Spinner";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import toDollars from "../../utilities/toDollars";
+
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProduct } from "../../redux/actions/product-actions";
+
 import styles from "./ProductSingle.module.css";
 
 const ProductSingle = () => {
   const { id } = useParams();
-  const {
-    isLoading,
-    error,
-    result: product,
-  } = useCallApi(() => callFakeStoreAPI.getProduct(id));
+  const { isLoading, error, product } = useSelector(
+    (state) => state.selectedProduct
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProduct(id));
+  }, []);
 
   let content;
 

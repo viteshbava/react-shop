@@ -15,6 +15,9 @@ const selectedProductSlice = createSlice({
     setError(state, action) {
       state.error = action.payload;
     },
+    clearProduct(state, action) {
+      return { ...STATE_INIT };
+    },
   },
 });
 

@@ -11,7 +11,10 @@ import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import toDollars from "../../utilities/toDollars";
 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "../../redux/actions/product-actions";
+import {
+  fetchProduct,
+  clearProduct,
+} from "../../redux/actions/product-actions";
 
 import styles from "./ProductSingle.module.css";
 
@@ -24,6 +27,7 @@ const ProductSingle = () => {
 
   useEffect(() => {
     dispatch(fetchProduct(id));
+    return () => dispatch(clearProduct());
   }, []);
 
   let content;

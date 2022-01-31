@@ -28,4 +28,8 @@ const fetchProduct = (productId) => async (dispatch) => {
   dispatch(selectedProductActions.isLoading(false));
 };
 
-export { fetchProducts, fetchProduct };
+const clearProduct = () => (dispatch) => {
+  dispatch(selectedProductActions.clearProduct());
+};
+
+export { fetchProducts, fetchProduct, clearProduct };

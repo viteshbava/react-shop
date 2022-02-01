@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
@@ -15,6 +15,7 @@ import {
   fetchProduct,
   clearProduct,
 } from "../../redux/actions/product-actions";
+import { addToCart, createCart } from "../../redux/actions/cart-actions";
 
 import styles from "./ProductSingle.module.css";
 
@@ -24,11 +25,17 @@ const ProductSingle = () => {
     (state) => state.selectedProduct
   );
   const dispatch = useDispatch();
+  const qtyRef = useRef();
 
   useEffect(() => {
     dispatch(fetchProduct(id));
     return () => dispatch(clearProduct());
   }, []);
+
+  const addToCartHandler = () => {
+    dispatch(createCart());
+    dispatch(addToCart(product, parseInt(qtyRef.current.value)));
+  };
 
   let content;
 
@@ -76,10 +83,11 @@ const ProductSingle = () => {
                 (_, i) => i + 1
               )}
               attributes={{ id: "quantity" }}
+              focusRef={qtyRef}
             />
             <div className={styles["action-wrapper"]}>
               <Button style={BTN_TYPE.SECONDARY}>Add to Wishlist</Button>
-              <Button>
+              <Button onClick={addToCartHandler}>
                 <Icon icon={ICON_TYPE.CART} />
                 Add to Cart
               </Button>

@@ -1,5 +1,6 @@
 import { cartActions } from "../slices/cart-slice";
 import fakeStoreAPI from "../../apis/fakeStoreApi";
+import store from "../store";
 
 const fetchCart = (cartId) => async (dispatch) => {
   dispatch(cartActions.isLoading(true));
@@ -32,4 +33,23 @@ const fetchCart = (cartId) => async (dispatch) => {
   dispatch(cartActions.isLoading(false));
 };
 
-export { fetchCart };
+const createCart = () => async (dispatch) => {
+  console.log("TO DO: check if we need to create a new cart");
+};
+
+const addToCart = (product, quantity) => async (dispatch) => {
+  console.log("TO DO: show loading state");
+  const { id: cartId } = store.getState().cart;
+  try {
+    const result = await fakeStoreAPI.updateCart(cartId, [
+      { productId: product.id, quantity },
+    ]);
+    dispatch(cartActions.add({ product, quantity }));
+  } catch (err) {
+    console.error(err);
+    // ERROR CODE HERER
+    console.log("TO DO: add to cart error alert");
+  }
+};
+
+export { fetchCart, addToCart, createCart };

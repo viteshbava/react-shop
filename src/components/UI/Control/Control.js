@@ -39,6 +39,7 @@ const Control = ({
       const backgroundImage = { backgroundImage: `url(${Chevron})` };
       control = (
         <select
+          ref={focusRef}
           style={backgroundImage}
           className={styles["select"]}
           {...attributes}

@@ -17,6 +17,9 @@ const fakeStoreApi = {
   getProducts: () => {
     const products = sendHttpRequest({
       url: URL.PRODUCTS,
+      headers: {
+        "content-type": "application/json",
+      },
     });
     return products;
   },
@@ -24,8 +27,23 @@ const fakeStoreApi = {
   getCart: (cartId) => {
     const cart = sendHttpRequest({
       url: `${URL.CARTS}/${cartId}`,
+      headers: {
+        "content-type": "application/json",
+      },
     });
     return cart;
+  },
+
+  updateCart: (cartId, products) => {
+    const result = sendHttpRequest({
+      method: "PUT",
+      url: `${URL.CARTS}/${cartId}`,
+      body: { products },
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    return result;
   },
 };
 

@@ -8,7 +8,6 @@ import styles from "./NavDesktop.module.css";
 
 const NavDesktop = ({ className, onSignOutHandler }) => {
   const ctx = useContext(AuthContext);
-  const cartIsUpdating = useSelector((state) => state.cart.isUpdating);
   const cartTotalQty = useSelector((state) => state.cart.totalQuantity);
 
   const navClasses = styles.wrapper + (className ? ` ${className}` : "");
@@ -33,7 +32,7 @@ const NavDesktop = ({ className, onSignOutHandler }) => {
             <li>
               <Button link="/cart" style={BTN_TYPE.PRIMARY}>
                 <Icon icon={ICON_TYPE.CART} />
-                Cart ({cartIsUpdating ? "SP!" : cartTotalQty})
+                Cart ({cartTotalQty === null ? "SP!" : cartTotalQty})
               </Button>
             </li>
           </>

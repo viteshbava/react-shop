@@ -1,34 +1,43 @@
 import React from "react";
 import Control, { CONTROL_TYPE } from "../UI/Control/Control";
+import toDollars from "../../utilities/toDollars";
+import { cartParams } from "../../config/parameters";
 import styles from "./CartItem.module.css";
 
-const CartItem = ({ url }) => {
+const CartItem = ({ product }) => {
+  const { id, title, price, image, quantity } = product;
+  const subTotal = price * quantity;
   return (
     <li className={styles["item-wrapper"]}>
       <div className={styles["image-wrapper"]}>
-        <img className={styles.image} src={url} alt="Product Image" />
+        <img className={styles.image} src={image} alt="Product Image" />
       </div>
       <div className={styles["item-details"]}>
         <div className={styles["item-details__header"]}>
-          <h3 className={styles["product-name"]}>
-            Extra Stretch Dry Long Sleeve T-Shirt
-          </h3>
+          <h3 className={styles["product-name"]}>{title}</h3>
           <button className={styles.close}>&times;</button>
         </div>
         <p className={styles["product-id"]}>
-          Product ID: <span>123456</span>
+          Product ID: <span>{id}</span>
         </p>
-        <p className={styles.price}>$109.95</p>
+        <p className={styles.price}>{toDollars(price)}</p>
         <div className={styles["item-details__footer"]}>
           <Control
             label="Quantity"
             className={styles.quantity}
             type={CONTROL_TYPE.SELECT}
-            options={[1, 2, 3, 4, 5]}
+            options={Array.from(
+              { length: cartParams.maxQuantity },
+              (_, i) => i + 1
+            )}
             attributes={{ id: "quantity" }}
+            selected={quantity}
           />
           <p className={styles.subtotal}>
-            Subtotal: <span className={styles["subtotal__value"]}>$218.18</span>
+            Subtotal:{" "}
+            <span className={styles["subtotal__value"]}>
+              {toDollars(subTotal)}
+            </span>
           </p>
         </div>
       </div>

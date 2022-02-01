@@ -1,11 +1,17 @@
 import { cartActions } from "../slices/cart-slice";
 import fakeStoreAPI from "../../apis/fakeStoreApi";
 
-const fetchCartData = (cartId) => async (dispatch) => {
-  dispatch(cartActions.isUpdating(true));
+const fetchCart = (cartId) => async (dispatch) => {
+  dispatch(cartActions.isLoading(true));
   try {
     // Fetch cart data
     const response_cart = await fakeStoreAPI.getCart(cartId);
+    // Update total quantity
+    const totalQuantity = response_cart.products.reduce(
+      (total, p) => total + p.quantity,
+      0
+    );
+    dispatch(cartActions.setTotalQuantity(totalQuantity));
     // Fetch product data for each item in cart and store in temp array
     const productDataArr = [];
     for (const product of response_cart.products) {
@@ -20,10 +26,10 @@ const fetchCartData = (cartId) => async (dispatch) => {
     // Update Redux state with cart
     dispatch(cartActions.replaceCart(response_cart));
   } catch (err) {
-    dispatch(cartActions.isUpdating(false));
-    console.error(err.message);
+    dispatch(cartActions.setError(err));
     // ERROR CODE GOES HERE
   }
+  dispatch(cartActions.isLoading(false));
 };
 
-export { fetchCartData };
+export { fetchCart };

@@ -19,6 +19,7 @@ const Control = ({
   focusRef,
   invalid,
   feedback,
+  selected,
 }) => {
   let wrapperStyles = styles["wrapper"];
   if (className) wrapperStyles += ` ${className}`;
@@ -41,6 +42,7 @@ const Control = ({
           style={backgroundImage}
           className={styles["select"]}
           {...attributes}
+          defaultValue={selected}
         >
           {options.map((opt) => (
             <option key={opt} value={opt}>

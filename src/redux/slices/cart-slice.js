@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const STATE_INIT = { isUpdating: false, products: [], totalQuantity: 0 };
+const STATE_INIT = {
+  isLoading: false,
+  error: null,
+  products: [],
+  totalQuantity: 0,
+};
 
 const cartSlice = createSlice({
   name: "cart",
@@ -8,14 +13,9 @@ const cartSlice = createSlice({
   reducers: {
     replaceCart(state, action) {
       console.log("replaceCart: has been replaced!");
-      const totalQuantity = action.payload.products.reduce(
-        (total, p) => total + p.quantity,
-        0
-      );
       return {
+        ...state,
         ...action.payload,
-        totalQuantity,
-        isUpdating: false,
       };
     },
     add(state, action) {
@@ -27,8 +27,14 @@ const cartSlice = createSlice({
     changeQuantity(state, action) {
       console.log("Changing quantity of product in cart!");
     },
-    isUpdating(state, action) {
-      state.isUpdating = action.payload;
+    isLoading(state, action) {
+      state.isLoading = action.payload;
+    },
+    setError(state, action) {
+      state.error = action.payload;
+    },
+    setTotalQuantity(state, action) {
+      state.totalQuantity = action.payload;
     },
   },
 });

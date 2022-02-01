@@ -41,7 +41,7 @@ const ProductList = () => {
         message="Please try again later."
       />
     );
-  } else if (products && products.length > 0) {
+  } else {
     content = (
       <>
         <SectionHeading>Products</SectionHeading>

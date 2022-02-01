@@ -5,8 +5,8 @@ import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import Control, { CONTROL_TYPE } from "../UI/Control/Control";
 import Button, { BTN_TYPE } from "../UI/Button/Button";
 import { useParams } from "react-router-dom";
-import callFakeStoreAPI from "../../apis/fakeStoreApi";
 import Spinner from "../UI/Spinner/Spinner";
+import { cartParams } from "../../config/parameters";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import toDollars from "../../utilities/toDollars";
 
@@ -71,7 +71,10 @@ const ProductSingle = () => {
             <Control
               label="Quantity"
               type={CONTROL_TYPE.SELECT}
-              options={[1, 2, 3, 4, 5]}
+              options={Array.from(
+                { length: cartParams.maxQuantity },
+                (_, i) => i + 1
+              )}
               attributes={{ id: "quantity" }}
             />
             <div className={styles["action-wrapper"]}>

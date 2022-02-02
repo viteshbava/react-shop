@@ -54,7 +54,7 @@
 
 @media (max-width: 480px) {
   .wrapper {
-    width: 90%;
+    width: 90vw;
   }
   .heading {
     font-size: 1.25rem;

@@ -4,6 +4,7 @@
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
+  text-align: center;
   transition: all 0.1s linear;
   display: inline-block;
 }

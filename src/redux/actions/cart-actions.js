@@ -1,4 +1,5 @@
 import { cartActions } from "../slices/cart-slice";
+import { uiActions } from "../slices/ui-slice";
 import fakeStoreAPI from "../../apis/fakeStoreApi";
 import store from "../store";
 
@@ -33,18 +34,24 @@ const fetchCart = (cartId) => async (dispatch) => {
   dispatch(cartActions.isLoading(false));
 };
 
-const createCart = () => async (dispatch) => {
-  console.log("TO DO: check if we need to create a new cart");
-};
+// const createCart = () => async (dispatch) => {
+
+// };
 
 const addToCart = (product, quantity) => async (dispatch) => {
   console.log("TO DO: show loading state");
+  console.log("TO DO: check if we need to create a new cart");
   const { id: cartId } = store.getState().cart;
   try {
     const result = await fakeStoreAPI.updateCart(cartId, [
       { productId: product.id, quantity },
     ]);
     dispatch(cartActions.add({ product, quantity }));
+    dispatch(
+      uiActions.showAddToCartSummary({
+        itemsAdded: quantity,
+      })
+    );
   } catch (err) {
     console.error(err);
     // ERROR CODE HERER
@@ -52,4 +59,11 @@ const addToCart = (product, quantity) => async (dispatch) => {
   }
 };
 
-export { fetchCart, addToCart, createCart };
+// {modalOpen && (
+//   <Modal
+//     closeModal={toggleModalHandler}
+//     children={<AddToCartSummary />}
+//   />
+// )}
+
+export { fetchCart, addToCart };

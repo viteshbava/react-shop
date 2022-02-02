@@ -6,12 +6,7 @@ import toDollars from "../../utilities/toDollars";
 import styles from "./CartOrderSummary.module.css";
 
 const CartOrderSummary = () => {
-  const products = useSelector((state) => state.cart.products);
-
-  const itemSubtotal = products.reduce(
-    (total, p) => total + p.quantity * p.price,
-    0
-  );
+  const itemSubtotal = useSelector((state) => state.cart.totalItemPrice);
 
   const orderTotal =
     itemSubtotal; /* this is where additional fees etc would be added */

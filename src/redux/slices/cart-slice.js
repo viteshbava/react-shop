@@ -5,6 +5,7 @@ const STATE_INIT = {
   error: null,
   products: [],
   totalQuantity: 0,
+  totalItemPrice: 0,
   id: null,
 };
 
@@ -14,23 +15,28 @@ const cartSlice = createSlice({
 
   reducers: {
     replaceCart(state, action) {
+      const { products } = action.payload;
       return {
         ...state,
         ...action.payload,
+        totalItemPrice: products.reduce(
+          (total, p) => total + p.quantity * p.price,
+          0
+        ),
       };
     },
 
     add(state, action) {
-      const foundProduct = state.products.find(
-        (p) => p.id === action.payload.product.id
-      );
+      const { product, quantity } = action.payload;
+      const foundProduct = state.products.find((p) => p.id === product.id);
       foundProduct
-        ? (foundProduct.quantity += action.payload.quantity)
+        ? (foundProduct.quantity += quantity)
         : state.products.push({
-            ...action.payload.product,
-            quantity: action.payload.quantity,
+            ...product,
+            quantity: quantity,
           });
-      state.totalQuantity += action.payload.quantity;
+      state.totalQuantity += quantity;
+      state.totalItemPrice += product.price * quantity;
     },
 
     remove(state, action) {

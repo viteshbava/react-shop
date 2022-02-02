@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
-import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import Control, { CONTROL_TYPE } from "../UI/Control/Control";
 import Button, { BTN_TYPE } from "../UI/Button/Button";
@@ -9,14 +8,13 @@ import Spinner from "../UI/Spinner/Spinner";
 import { cartParams } from "../../config/parameters";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import toDollars from "../../utilities/toDollars";
-
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProduct,
   clearProduct,
 } from "../../redux/actions/product-actions";
-import { addToCart, createCart } from "../../redux/actions/cart-actions";
-
+import { addToCart } from "../../redux/actions/cart-actions";
+import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
 import styles from "./ProductSingle.module.css";
 
 const ProductSingle = () => {
@@ -24,6 +22,7 @@ const ProductSingle = () => {
   const { isLoading, error, product } = useSelector(
     (state) => state.selectedProduct
   );
+  const addToCartSummary = useSelector((state) => state.ui.addToCartSummary);
   const dispatch = useDispatch();
   const qtyRef = useRef();
 
@@ -33,7 +32,6 @@ const ProductSingle = () => {
   }, []);
 
   const addToCartHandler = () => {
-    dispatch(createCart());
     dispatch(addToCart(product, parseInt(qtyRef.current.value)));
   };
 
@@ -101,7 +99,7 @@ const ProductSingle = () => {
   return (
     <section>
       {content}
-      {/* <AddToCartSummary /> */}
+      {addToCartSummary && <AddToCartSummary {...addToCartSummary} />}
     </section>
   );
 };

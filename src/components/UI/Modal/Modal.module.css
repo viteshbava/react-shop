@@ -1,0 +1,32 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+}
+
+.modal {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin: 4rem auto;
+  z-index: 3000;
+  animation: slide-down 300ms ease-out forwards;
+}
+
+.body-disable-scroll {
+  overflow: hidden;
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -2rem);
+  }
+  to {
+    opacity: 1;
+  }
+}

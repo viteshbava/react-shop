@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch } from "react-redux";
-import { uiActions } from "../../../redux/slices/ui-slice";
 import styles from "./Modal.module.css";
 
-const Modal = ({ children }) => {
-  const dispatch = useDispatch();
-
+const Modal = ({ onOverlayClick, children }) => {
   useEffect(() => {
     document.body.classList.add(styles["body-disable-scroll"]);
     return () => {
@@ -14,14 +11,13 @@ const Modal = ({ children }) => {
     };
   }, []);
 
-  const outsideClick = (e) => {
-    if (e.target === e.currentTarget)
-      dispatch(uiActions.showAddToCartSummary(null));
+  const overlayClickHandler = (e) => {
+    if (e.target === e.currentTarget) onOverlayClick();
   };
 
   return ReactDOM.createPortal(
     <>
-      <div onClick={outsideClick} className={styles.overlay}></div>
+      <div onClick={overlayClickHandler} className={styles.overlay}></div>
       <div className={styles.modal}>{children}</div>
     </>,
     document.querySelector("#modal-root")

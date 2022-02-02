@@ -34,12 +34,8 @@ const fetchCart = (cartId) => async (dispatch) => {
   dispatch(cartActions.isLoading(false));
 };
 
-// const createCart = () => async (dispatch) => {
-
-// };
-
 const addToCart = (product, quantity) => async (dispatch) => {
-  console.log("TO DO: show loading state");
+  dispatch(uiActions.showLoadingState(true));
   console.log("TO DO: check if we need to create a new cart");
   const { id: cartId } = store.getState().cart;
   try {
@@ -57,13 +53,7 @@ const addToCart = (product, quantity) => async (dispatch) => {
     // ERROR CODE HERER
     console.log("TO DO: add to cart error alert");
   }
+  dispatch(uiActions.showLoadingState(false));
 };
-
-// {modalOpen && (
-//   <Modal
-//     closeModal={toggleModalHandler}
-//     children={<AddToCartSummary />}
-//   />
-// )}
 
 export { fetchCart, addToCart };

@@ -25,7 +25,7 @@ const AddToCartSummary = ({ itemsAdded }) => {
   };
 
   return (
-    <Modal>
+    <Modal onOverlayClick={closeSummaryHandler}>
       <Card className={styles.wrapper}>
         <div className={styles.header}>
           <h2 className={styles.heading}>

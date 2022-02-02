@@ -10,10 +10,14 @@ import Cart from "./components/Cart/Cart";
 import Wishlist from "./components/Wishlist/Wishlist";
 import ScrollToTop from "./utilities/ScrollToTop";
 import InfoError, { INFO_ERROR_TYPE } from "./components/Error/InfoError";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from "./redux/actions/cart-actions";
+import Spinner from "./components/UI/Spinner/Spinner";
+import Modal from "./components/UI/Modal/Modal";
+Modal;
 
 function App() {
+  const isLoading = useSelector((state) => state.ui.loading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,6 +26,11 @@ function App() {
 
   return (
     <>
+      {isLoading && (
+        <Modal>
+          <Spinner />
+        </Modal>
+      )}
       <Router>
         <ScrollToTop />
         <Header />

@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const STATE_INIT = { addToCartSummary: null, notification: null };
+const STATE_INIT = {
+  addToCartSummary: null,
+  notification: null,
+  loading: false,
+};
 
 const uiSlice = createSlice({
   name: "ui",
@@ -12,6 +16,9 @@ const uiSlice = createSlice({
     showNotification(state, action) {
       const { status, title, message } = action.payload;
       state.notification = { status, title, message };
+    },
+    showLoadingState(state, action) {
+      state.loading = action.payload;
     },
   },
 });

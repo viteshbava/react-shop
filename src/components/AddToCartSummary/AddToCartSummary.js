@@ -7,15 +7,22 @@ import Modal from "../UI/Modal/Modal";
 import toDollars from "../../utilities/toDollars";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../redux/slices/ui-slice";
+import { useNavigate } from "react-router-dom";
 
 const AddToCartSummary = ({ itemsAdded }) => {
   const { totalQuantity, totalItemPrice: cartSubtotal } = useSelector(
     (state) => state.cart
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const closeSummaryHandler = () =>
     dispatch(uiActions.showAddToCartSummary(null));
+
+  const viewCartHandler = () => {
+    dispatch(uiActions.showAddToCartSummary(null));
+    navigate("/cart");
+  };
 
   return (
     <Modal>
@@ -39,7 +46,7 @@ const AddToCartSummary = ({ itemsAdded }) => {
         </div>
 
         <div className={styles.actions}>
-          <Button link="/cart">
+          <Button onClick={viewCartHandler}>
             <Icon icon={ICON_TYPE.CART} />
             View Cart
           </Button>

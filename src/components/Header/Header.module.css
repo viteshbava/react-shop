@@ -15,10 +15,6 @@ header button {
   font-size: inherit;
 }
 
-header a:visited {
-  color: inherit;
-}
-
 .wrapper {
   display: flex;
   align-items: center;

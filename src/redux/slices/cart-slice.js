@@ -40,7 +40,13 @@ const cartSlice = createSlice({
     },
 
     remove(state, action) {
-      console.log("Removing product from cart!");
+      const productId = action.payload;
+      const foundProduct = state.products.find((p) => p.id === productId);
+      if (foundProduct) {
+        state.products = state.products.filter((p) => p.id !== productId);
+        state.totalQuantity -= foundProduct.quantity;
+        state.totalItemPrice -= foundProduct.price * foundProduct.quantity;
+      }
     },
     changeQuantity(state, action) {
       console.log("Changing quantity of product in cart!");

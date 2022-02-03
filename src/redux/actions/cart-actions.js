@@ -56,4 +56,23 @@ const addToCart = (product, quantity) => async (dispatch) => {
   dispatch(uiActions.showLoadingState(false));
 };
 
-export { fetchCart, addToCart };
+const removeFromCart = (productId) => async (dispatch) => {
+  console.log("removeFromCart TO DO: show confirm modal");
+  console.log("removeFromCart TO DO: show loading state");
+
+  const { id: cartId } = store.getState().cart;
+
+  try {
+    const result = await fakeStoreAPI.updateCart(cartId, [
+      { productId, quantity: 0 },
+    ]);
+    console.log("REMOVE FROM CART RESULT: ", result);
+    dispatch(cartActions.remove(productId));
+  } catch (err) {
+    console.error(err);
+    // ERROR CODE HERER
+    console.log("TO DO: add to cart error alert");
+  }
+};
+
+export { fetchCart, addToCart, removeFromCart };

@@ -3,19 +3,32 @@ import Control, { CONTROL_TYPE } from "../UI/Control/Control";
 import toDollars from "../../utilities/toDollars";
 import { cartParams } from "../../config/parameters";
 import styles from "./CartItem.module.css";
+import { Link } from "react-router-dom";
+import { removeFromCart } from "../../redux/actions/cart-actions";
+import { useDispatch } from "react-redux";
 
 const CartItem = ({ product }) => {
+  const dispatch = useDispatch();
   const { id, title, price, image, quantity } = product;
   const subTotal = price * quantity;
+
+  const removeProductHandler = () => dispatch(removeFromCart(id));
+
   return (
     <li className={styles["item-wrapper"]}>
       <div className={styles["image-wrapper"]}>
-        <img className={styles.image} src={image} alt="Product Image" />
+        <Link to={`/product/${id}`}>
+          <img className={styles.image} src={image} alt="Product Image" />
+        </Link>
       </div>
       <div className={styles["item-details"]}>
         <div className={styles["item-details__header"]}>
-          <h3 className={styles["product-name"]}>{title}</h3>
-          <button className={styles.close}>&times;</button>
+          <Link to={`/product/${id}`}>
+            <h3 className={styles["product-name"]}>{title}</h3>
+          </Link>
+          <button onClick={removeProductHandler} className={styles.close}>
+            &times;
+          </button>
         </div>
         <p className={styles["product-id"]}>
           Product ID: <span>{id}</span>

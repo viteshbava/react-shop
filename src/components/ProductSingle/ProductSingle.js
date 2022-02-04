@@ -31,7 +31,8 @@ const ProductSingle = () => {
     return () => dispatch(clearProduct());
   }, []);
 
-  const addToCartHandler = () => {
+  const addToCartHandler = (e) => {
+    e.preventDefault();
     dispatch(addToCart(product, parseInt(qtyRef.current.value)));
   };
 
@@ -73,22 +74,28 @@ const ProductSingle = () => {
             <p className={styles["product-id"]}>{`Product ID: ${id}`}</p>
             <p className={styles.price}>{toDollars(price)}</p>
             <p className={styles.descr}>{description}</p>
-            <Control
-              label="Quantity"
-              type={CONTROL_TYPE.SELECT}
-              options={Array.from(
-                { length: cartParams.maxQuantity },
-                (_, i) => i + 1
-              )}
-              attributes={{ id: "quantity" }}
-              focusRef={qtyRef}
-            />
-            <div className={styles["action-wrapper"]}>
-              <Button style={BTN_TYPE.SECONDARY}>Add to Wishlist</Button>
-              <Button onClick={addToCartHandler}>
+            <form
+              className={styles["add-to-cart-form"]}
+              onSubmit={addToCartHandler}
+            >
+              <Control
+                className={styles.quantity}
+                label="Quantity"
+                type={CONTROL_TYPE.NUMBER}
+                options={Array.from(
+                  { length: cartParams.maxQuantity },
+                  (_, i) => i + 1
+                )}
+                attributes={{ id: "quantity", min: "1" }}
+                focusRef={qtyRef}
+              />
+              <Button className={styles["add-to-cart-button"]} type={"submit"}>
                 <Icon icon={ICON_TYPE.CART} />
                 Add to Cart
               </Button>
+            </form>
+            <div className={styles["action-wrapper"]}>
+              <Button style={BTN_TYPE.SECONDARY}>Add to Wishlist</Button>
             </div>
           </div>
         </div>

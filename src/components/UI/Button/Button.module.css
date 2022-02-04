@@ -30,6 +30,7 @@
 
 .button--primary {
   color: var(--primary-black);
+  border: 1px solid var(--primary-main);
   background-color: var(--primary-main);
 }
 

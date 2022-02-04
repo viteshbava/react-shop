@@ -3,11 +3,13 @@
 import React from "react";
 import styles from "./Control.module.css";
 import Chevron from "./Chevron.svg";
+import Button, { BTN_TYPE } from "../Button/Button";
 
 const CONTROL_TYPE = {
   INPUT: "input",
   TEXTAREA: "textarea",
   SELECT: "select",
+  NUMBER: "number",
 };
 
 const Control = ({
@@ -53,6 +55,24 @@ const Control = ({
         </select>
       );
       break;
+    case CONTROL_TYPE.NUMBER:
+      control = (
+        <div className={styles["number-wrapper"]}>
+          <button type="button" className={styles["number__minus"]}>
+            -
+          </button>
+          <input
+            type={"number"}
+            ref={focusRef}
+            className={styles["input"]}
+            {...attributes}
+          />
+          <button type="button" className={styles["number__plus"]}>
+            +
+          </button>
+        </div>
+      );
+      break;
     default:
       console.error("Invalid control type!");
       break;
@@ -63,7 +83,7 @@ const Control = ({
         {label}
       </label>
       {control}
-      <p className={styles.feedback}>{feedback}</p>
+      {feedback && <p className={styles.feedback}>{feedback}</p>}
     </div>
   );
 };

@@ -14,6 +14,8 @@ const CartItem = ({ product }) => {
 
   const removeProductHandler = () => dispatch(removeFromCart(id));
 
+  const qtyChangeHandler = () => console.log("quantity has changed!");
+
   return (
     <li className={styles["item-wrapper"]}>
       <div className={styles["image-wrapper"]}>
@@ -43,7 +45,7 @@ const CartItem = ({ product }) => {
               { length: cartParams.maxQuantity },
               (_, i) => i + 1
             )}
-            attributes={{ id: "quantity" }}
+            attributes={{ id: "quantity", onChange: qtyChangeHandler }}
             selected={quantity}
           />
           <p className={styles.subtotal}>

@@ -16,8 +16,7 @@
 }
 
 .image {
-  max-width: 100%;
-  max-height: 100%;
+  width: 20rem;
 }
 
 .wishlist-toggle {
@@ -54,16 +53,35 @@
 .action-wrapper {
   margin-top: 1rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 1rem;
+  grid-template-columns: 1fr;
+  row-gap: 1rem;
 }
 
-@media (max-width: 768px) {
+.add-to-cart-form {
+  display: flex;
+  align-items: flex-end;
+}
+
+.add-to-cart-form > * {
+  margin: 0;
+}
+
+.add-to-cart-button {
+  width: 100%;
+  margin-left: 1rem;
+}
+
+@media (max-width: 900px) {
   .grid-wrapper {
     grid-template-columns: 1fr;
   }
-  .action-wrapper {
-    grid-template-columns: 1fr;
-    row-gap: 1rem;
+  .image {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 440px) {
+  .add-to-cart-button svg {
+    display: none;
   }
 }

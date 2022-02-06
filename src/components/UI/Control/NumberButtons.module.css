@@ -1,0 +1,41 @@
+.number-wrapper {
+  position: relative;
+  width: 11rem;
+}
+
+.number__minus,
+.number__plus {
+  position: absolute;
+  bottom: 0;
+  width: 3.5rem;
+  padding: 0.5rem;
+  line-height: inherit;
+  font: inherit;
+  font-size: inherit;
+  border: var(--primary-grey) 1px solid;
+  background-color: var(--primary-main-light);
+  cursor: pointer;
+}
+
+.number__minus {
+  left: 0;
+  border-radius: 8px 0px 0px 8px;
+}
+
+.number__plus {
+  right: 0;
+  border-radius: 0px 8px 8px 0px;
+}
+
+.number-wrapper input[type="number"] {
+  text-align: center;
+}
+
+.number-wrapper input[type="number"]::-webkit-outer-spin-button,
+.number-wrapper input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.number-wrapper input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}

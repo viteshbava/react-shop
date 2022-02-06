@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
-import Control, { CONTROL_TYPE } from "../UI/Control/Control";
+import NumberButtons from "../UI/Control/NumberButtons";
 import Button, { BTN_TYPE } from "../UI/Button/Button";
 import { useParams } from "react-router-dom";
 import Spinner from "../UI/Spinner/Spinner";
@@ -78,16 +78,11 @@ const ProductSingle = () => {
               className={styles["add-to-cart-form"]}
               onSubmit={addToCartHandler}
             >
-              <Control
+              <NumberButtons
                 className={styles.quantity}
-                label="Quantity"
-                type={CONTROL_TYPE.NUMBER}
-                options={Array.from(
-                  { length: cartParams.maxQuantity },
-                  (_, i) => i + 1
-                )}
-                attributes={{ id: "quantity", min: "1" }}
                 focusRef={qtyRef}
+                label="Quantity"
+                attributes={{ id: "quantity", min: "1", defaultValue: 1 }}
               />
               <Button className={styles["add-to-cart-button"]} type={"submit"}>
                 <Icon icon={ICON_TYPE.CART} />

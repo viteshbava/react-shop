@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import useInput from "../../hooks/use-input";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
-import Control, { CONTROL_TYPE } from "../UI/Control/Control";
+import TextField from "../UI/Control/TextField";
 import Button, { BTN_TYPE } from "../UI/Button/Button";
 import styles from "./SignIn.module.css";
 import Alert from "../UI/Alert/Alert";
@@ -63,10 +63,9 @@ const SignIn = () => {
           </Alert>
         )}
         <form onSubmit={formSubmitHandler}>
-          <Control
+          <TextField
             invalid={usernameShowError && true}
             feedback={usernameShowError && "Username must be entered"}
-            type={CONTROL_TYPE.INPUT}
             label="Username"
             attributes={{
               type: "text",
@@ -77,10 +76,9 @@ const SignIn = () => {
               onBlur: usernameBlurHandler,
             }}
           />
-          <Control
+          <TextField
             invalid={passwordShowError && true}
             feedback={passwordShowError && "Password must be entered"}
-            type={CONTROL_TYPE.INPUT}
             label="Password"
             attributes={{
               type: "password",

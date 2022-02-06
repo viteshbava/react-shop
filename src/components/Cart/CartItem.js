@@ -1,5 +1,5 @@
 import React from "react";
-import Control, { CONTROL_TYPE } from "../UI/Control/Control";
+import Select from "../UI/Control/Select";
 import toDollars from "../../utilities/toDollars";
 import { cartParams } from "../../config/parameters";
 import styles from "./CartItem.module.css";
@@ -37,16 +37,15 @@ const CartItem = ({ product }) => {
         </p>
         <p className={styles.price}>{toDollars(price)}</p>
         <div className={styles["item-details__footer"]}>
-          <Control
+          <Select
             label="Quantity"
             className={styles.quantity}
-            type={CONTROL_TYPE.SELECT}
             options={Array.from(
               { length: cartParams.maxQuantity },
               (_, i) => i + 1
             )}
-            attributes={{ id: "quantity", onChange: qtyChangeHandler }}
             selected={quantity}
+            attributes={{ id: "quantity", onChange: qtyChangeHandler }}
           />
           <p className={styles.subtotal}>
             Subtotal:{" "}

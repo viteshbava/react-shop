@@ -1,20 +1,22 @@
-/* Uses Control component of type Select */
-
 import Chevron from "./Chevron.svg";
+import Control, { CONTROL_TYPE } from "./Control";
 
-const backgroundImage = { backgroundImage: `url(${Chevron})` };
-control = (
-  <select
-    ref={focusRef}
-    style={backgroundImage}
-    className={styles["select"]}
-    {...attributes}
-    defaultValue={selected}
-  >
-    {options.map((opt) => (
-      <option key={opt} value={opt}>
-        {opt}
-      </option>
-    ))}
-  </select>
-);
+import styles from "./Select.module.css";
+
+const Select = ({ options, ...props }) => {
+  props.attributes.style = { backgroundImage: `url(${Chevron})` };
+  props.attributes.className = props.attributes.className
+    ? `${props.attributes.className} ${styles["select"]}`
+    : styles["select"];
+  return (
+    <Control type={CONTROL_TYPE.SELECT} {...props}>
+      {options.map((opt) => (
+        <option key={opt} value={opt}>
+          {opt}
+        </option>
+      ))}
+    </Control>
+  );
+};
+
+export default Select;

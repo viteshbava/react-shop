@@ -1,21 +1,35 @@
-import Chevron from "./Chevron.svg";
-import Control, { CONTROL_TYPE } from "./Control";
-
+import Chevron from "./ControlComponents/Chevron.svg";
+import ControlWrapper from "./ControlComponents/ControlWrapper";
 import styles from "./Select.module.css";
 
-const Select = ({ options, ...props }) => {
-  props.attributes.style = { backgroundImage: `url(${Chevron})` };
-  props.attributes.className = props.attributes.className
-    ? `${props.attributes.className} ${styles["select"]}`
-    : styles["select"];
+const Select = ({
+  invalid,
+  label,
+  feedback,
+  className,
+  options,
+  focusRef,
+  ...props
+}) => {
+  props.ref = focusRef;
+  const selectStyle = { backgroundImage: `url(${Chevron})` };
+
   return (
-    <Control type={CONTROL_TYPE.SELECT} {...props}>
-      {options.map((opt) => (
-        <option key={opt} value={opt}>
-          {opt}
-        </option>
-      ))}
-    </Control>
+    <ControlWrapper
+      id={props.id}
+      invalid={invalid}
+      label={label}
+      feedback={feedback}
+      className={className}
+    >
+      <select className={styles.select} style={selectStyle} {...props}>
+        {options.map((opt) => (
+          <option key={opt} value={opt}>
+            {opt}
+          </option>
+        ))}
+      </select>
+    </ControlWrapper>
   );
 };
 

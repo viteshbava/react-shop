@@ -67,26 +67,21 @@ const SignIn = () => {
             invalid={usernameShowError && true}
             feedback={usernameShowError && "Username must be entered"}
             label="Username"
-            attributes={{
-              type: "text",
-              id: "username",
-              placeholder: "Enter username ...",
-              value: username,
-              onChange: usernameChangeHandler,
-              onBlur: usernameBlurHandler,
-            }}
+            id="username"
+            placeholder="Enter username ..."
+            value={username}
+            onChange={usernameChangeHandler}
+            onBlur={usernameBlurHandler}
           />
           <TextField
             invalid={passwordShowError && true}
             feedback={passwordShowError && "Password must be entered"}
             label="Password"
-            attributes={{
-              type: "password",
-              id: "password",
-              placeholder: "Enter password ...",
-              onChange: passwordChangeHandler,
-              onBlur: passwordBlurHandler,
-            }}
+            type="password"
+            id="password"
+            placeholder="Enter password ..."
+            onChange={passwordChangeHandler}
+            onBlur={passwordBlurHandler}
           />
           <Button
             className={styles["sign-in-button"]}

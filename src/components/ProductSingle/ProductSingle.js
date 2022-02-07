@@ -82,7 +82,9 @@ const ProductSingle = () => {
                 className={styles.quantity}
                 focusRef={qtyRef}
                 label="Quantity"
-                attributes={{ id: "quantity", min: "1", defaultValue: 1 }}
+                id="quantity"
+                min="1"
+                defaultValue={1}
               />
               <Button className={styles["add-to-cart-button"]} type={"submit"}>
                 <Icon icon={ICON_TYPE.CART} />

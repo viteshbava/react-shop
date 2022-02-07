@@ -1,10 +1,27 @@
-/* Includes type = text, password, email */
-
-import Control, { CONTROL_TYPE } from "./Control";
+import ControlWrapper from "./ControlComponents/ControlWrapper";
 import styles from "./TextField.module.css";
 
-const TextField = (props) => {
-  return <Control type={CONTROL_TYPE.INPUT} {...props} />;
+const TextField = ({
+  invalid,
+  label,
+  feedback,
+  className,
+  focusRef,
+  ...props
+}) => {
+  props.ref = focusRef;
+
+  return (
+    <ControlWrapper
+      id={props.id}
+      invalid={invalid}
+      label={label}
+      feedback={feedback}
+      className={className}
+    >
+      <input type="text" {...props} />
+    </ControlWrapper>
+  );
 };
 
 export default TextField;

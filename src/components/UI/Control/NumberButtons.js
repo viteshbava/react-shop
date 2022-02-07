@@ -10,8 +10,6 @@ const NumberButtons = ({
   ...props
 }) => {
   props.ref = focusRef;
-  invalid = true;
-  feedback = "Redrum!";
   let classes = styles["number-wrapper"];
   if (invalid) classes += ` ${styles["number-wrapper--invalid"]}`;
   return (

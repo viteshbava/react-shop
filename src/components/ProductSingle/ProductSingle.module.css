@@ -54,6 +54,10 @@
   margin: 0;
 }
 
+.quantity input {
+  width: 11rem;
+}
+
 .action-wrapper {
   margin-top: 1rem;
   display: grid;

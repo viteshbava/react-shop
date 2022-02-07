@@ -1,6 +1,6 @@
 .number-wrapper {
   position: relative;
-  width: 11rem;
+  /* width: 11rem; */
 }
 
 .number__minus,
@@ -38,4 +38,9 @@
 }
 .number-wrapper input[type="number"] {
   -moz-appearance: textfield; /* Firefox */
+}
+
+.number-wrapper--invalid .number__minus,
+.number-wrapper--invalid .number__plus {
+  border-color: var(--primary-red);
 }

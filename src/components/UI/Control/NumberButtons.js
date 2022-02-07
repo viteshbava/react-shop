@@ -10,23 +10,27 @@ const NumberButtons = ({
   ...props
 }) => {
   props.ref = focusRef;
+  invalid = true;
+  feedback = "Redrum!";
   let classes = styles["number-wrapper"];
-  if (className) classes += ` ${className}`;
+  if (invalid) classes += ` ${styles["number-wrapper--invalid"]}`;
   return (
     <ControlWrapper
       id={props.id}
       invalid={invalid}
       label={label}
       feedback={feedback}
-      className={classes}
+      className={className}
     >
-      <button type="button" className={styles["number__minus"]}>
-        -
-      </button>
-      <input type="number" {...props} />
-      <button type="button" className={styles["number__plus"]}>
-        +
-      </button>
+      <div className={classes}>
+        <button type="button" className={styles["number__minus"]}>
+          -
+        </button>
+        <input type="number" {...props} />
+        <button type="button" className={styles["number__plus"]}>
+          +
+        </button>
+      </div>
     </ControlWrapper>
   );
 };

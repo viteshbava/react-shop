@@ -14,6 +14,9 @@ const Select = ({
   props.ref = focusRef;
   const selectStyle = { backgroundImage: `url(${Chevron})` };
 
+  if (!options || options.length === 0)
+    console.error("No options supplied to Select.js UI component!");
+
   return (
     <ControlWrapper
       id={props.id}

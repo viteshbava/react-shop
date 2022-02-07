@@ -28,6 +28,7 @@
 
 .number-wrapper input[type="number"] {
   text-align: center;
+  width: 100%;
 }
 
 .number-wrapper input[type="number"]::-webkit-outer-spin-button,

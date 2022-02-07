@@ -8,25 +8,31 @@ const NumberButtons = ({
   feedback,
   className,
   focusRef,
-  defaultValue,
+  value: currVall,
+  onChange,
   ...props
 }) => {
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState(currVall);
   props.ref = focusRef;
 
   let classes = styles["number-wrapper"];
   if (invalid) classes += ` ${styles["number-wrapper--invalid"]}`;
 
   const valChangeHanlder = (e) => {
-    setValue(e.target.value);
+    const val = +e.target.value;
+    if (props.min && val < props.min) {
+      setValue(+props.min);
+    } else if (props.max && val > props.max) {
+      setValue(+props.max);
+    } else setValue(val);
   };
 
   const decrHandler = () => {
-    if (value > props.min) setValue(value - 1);
+    if (!props.min || (props.min && value > props.min)) setValue(value - 1);
   };
 
   const incrHandler = () => {
-    setValue(value + 1);
+    if (!props.max || (props.max && value < props.max)) setValue(value + 1);
   };
 
   return (

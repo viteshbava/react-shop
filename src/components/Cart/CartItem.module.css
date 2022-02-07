@@ -12,7 +12,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 10rem;
+  min-width: 8rem;
   max-width: 10rem;
   height: 15rem;
 }
@@ -72,8 +72,8 @@
 }
 
 .quantity {
-  width: 6rem;
   margin-bottom: 0;
+  width: 11rem;
 }
 
 .subtotal {
@@ -84,12 +84,11 @@
   font-weight: bold;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 650px) {
   .item-details__footer {
     display: block;
   }
   .quantity {
-    width: 100%;
     margin-bottom: 1rem;
   }
 }
@@ -97,5 +96,8 @@
 @media (max-width: 576px) {
   .product-name {
     font-size: 1rem;
+  }
+  .item-details {
+    margin-left: 2rem;
   }
 }

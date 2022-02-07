@@ -5,7 +5,6 @@ import NumberButtons from "../UI/Control/NumberButtons";
 import Button, { BTN_TYPE } from "../UI/Button/Button";
 import { useParams } from "react-router-dom";
 import Spinner from "../UI/Spinner/Spinner";
-import { cartParams } from "../../config/parameters";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import toDollars from "../../utilities/toDollars";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +32,8 @@ const ProductSingle = () => {
 
   const addToCartHandler = (e) => {
     e.preventDefault();
-    dispatch(addToCart(product, parseInt(qtyRef.current.value)));
+    const qty = +qtyRef.current.value;
+    dispatch(addToCart(product, qty));
   };
 
   let content;
@@ -84,7 +84,7 @@ const ProductSingle = () => {
                 label="Quantity"
                 id="quantity"
                 min="1"
-                defaultValue={1}
+                value={1}
               />
               <Button className={styles["add-to-cart-button"]} type={"submit"}>
                 <Icon icon={ICON_TYPE.CART} />

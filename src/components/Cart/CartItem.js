@@ -1,7 +1,6 @@
 import React from "react";
-import Select from "../UI/Control/Select";
+import NumberButtons from "../UI/Control/NumberButtons";
 import toDollars from "../../utilities/toDollars";
-import { cartParams } from "../../config/parameters";
 import styles from "./CartItem.module.css";
 import { Link } from "react-router-dom";
 import { removeFromCart } from "../../redux/actions/cart-actions";
@@ -37,15 +36,13 @@ const CartItem = ({ product }) => {
         </p>
         <p className={styles.price}>{toDollars(price)}</p>
         <div className={styles["item-details__footer"]}>
-          <Select
-            label="Quantity"
+          <NumberButtons
             className={styles.quantity}
-            options={Array.from(
-              { length: cartParams.maxQuantity },
-              (_, i) => i + 1
-            )}
-            selected={quantity}
-            attributes={{ id: "quantity", onChange: qtyChangeHandler }}
+            label="Quantity"
+            id="quantity"
+            min="1"
+            value={quantity}
+            // onChange={qtyChangeHandler}
           />
           <p className={styles.subtotal}>
             Subtotal:{" "}

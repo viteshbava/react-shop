@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import { useDispatch } from "react-redux";
 import styles from "./Modal.module.css";
 
 const Modal = ({ onOverlayClick, children }) => {

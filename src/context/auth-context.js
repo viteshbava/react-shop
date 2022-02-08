@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ALERT_TYPE } from "../components/UI/Alert/Alert";
 
 const AuthContext = React.createContext({
   isLoggedIn: false,
@@ -26,7 +27,11 @@ const AuthContextProvider = ({ children }) => {
     } else {
       return {
         success: false,
-        message: "That username or password is incorrect.",
+        alert: {
+          type: ALERT_TYPE.ERROR,
+          title: "Unable to sign in",
+          message: "That username or password is incorrect.",
+        },
       };
     }
   };

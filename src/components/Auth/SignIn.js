@@ -10,7 +10,7 @@ import AuthContext from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const [showSignInFailure, setShowSignInFailure] = useState(false);
+  const [showSignInFailure, setShowSignInFailure] = useState(null);
   const navigate = useNavigate();
 
   const {
@@ -49,7 +49,7 @@ const SignIn = () => {
     if (result.success) {
       navigate("/");
     } else {
-      setShowSignInFailure(result);
+      setShowSignInFailure(result.alert);
     }
   };
 
@@ -58,9 +58,10 @@ const SignIn = () => {
       <SectionHeading>Sign in</SectionHeading>
       <div className={styles["form-container"]}>
         {showSignInFailure && (
-          <Alert onClose={() => setShowSignInFailure(false)}>
-            {showSignInFailure.message}
-          </Alert>
+          <Alert
+            onClose={() => setShowSignInFailure(null)}
+            {...showSignInFailure}
+          />
         )}
         <form onSubmit={formSubmitHandler}>
           <TextField

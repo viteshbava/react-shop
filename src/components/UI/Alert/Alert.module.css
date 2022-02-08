@@ -1,17 +1,53 @@
 .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 7fr 1fr;
+  column-gap: 1rem;
   width: 100%;
-  margin: 0 auto 1rem;
-  padding: 1rem;
+  margin-bottom: 1rem;
   border-radius: 0.5rem;
-  background-color: rgba(255, 0, 0, 0.2);
-  color: var(--primary-red);
+  padding-left: 1rem;
+  padding-right: 0.5rem;
 }
 
-.message {
-  margin: 0 1rem;
+.container--error {
+  background-color: rgb(250, 179, 179);
+  color: rgb(197, 9, 9);
+}
+.container--info {
+  background-color: rgb(154, 200, 253);
+  color: rgb(0, 89, 190);
+}
+.container--success {
+  background-color: rgb(194, 233, 194);
+  color: rgb(31, 139, 31);
+}
+.container--warning {
+  background-color: rgb(248, 218, 161);
+  color: rgb(170, 111, 0);
+}
+
+.icon {
+  justify-self: center;
+  align-self: center;
+  color: inherit;
+  font-size: 2rem;
+}
+
+.icon svg {
+  color: inherit;
+}
+
+.content {
+  padding: 1rem 0;
+}
+
+.title__label {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.content__message {
+  font-size: 0.75rem;
 }
 
 .close {
@@ -19,5 +55,5 @@
   border: none;
   cursor: pointer;
   font-size: 2rem;
-  color: var(--primary-red);
+  color: inherit;
 }

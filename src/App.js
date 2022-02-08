@@ -14,10 +14,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from "./redux/actions/cart-actions";
 import Spinner from "./components/UI/Spinner/Spinner";
 import Modal from "./components/UI/Modal/Modal";
-Modal;
+import FloatingAlerts from "./components/UI/Alert/FloatingAlerts";
 
 function App() {
-  const isLoading = useSelector((state) => state.ui.loading);
+  const { loading: isLoading, alerts } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,6 +31,8 @@ function App() {
           <Spinner />
         </Modal>
       )}
+      {alerts.length > 0 && <FloatingAlerts alerts={alerts} />}
+
       <Router>
         <ScrollToTop />
         <Header />

@@ -13,7 +13,7 @@ const CartItem = ({ product }) => {
 
   const removeProductHandler = () => dispatch(removeFromCart(id));
 
-  const qtyChangeHandler = () => console.log("quantity has changed!");
+  const qtyUpdateHandler = () => console.log("Send quantity change to API...");
 
   return (
     <li className={styles["item-wrapper"]}>
@@ -42,7 +42,7 @@ const CartItem = ({ product }) => {
             id="quantity"
             min="1"
             value={quantity}
-            // onChange={qtyChangeHandler}
+            onUpdate={qtyUpdateHandler}
           />
           <p className={styles.subtotal}>
             Subtotal:{" "}

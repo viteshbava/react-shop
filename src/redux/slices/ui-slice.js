@@ -17,8 +17,9 @@ const uiSlice = createSlice({
       state.addToCartSummary = action.payload;
     },
     addAlert(state, action) {
+      const newAlert = action.payload;
       state.alerts.alerts.unshift({
-        ...action.payload,
+        ...newAlert,
         id: state.alerts._id++,
       });
     },

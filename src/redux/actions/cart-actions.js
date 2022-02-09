@@ -51,7 +51,7 @@ const addToCart = (product, quantity) => async (dispatch) => {
     );
   } catch (err) {
     console.error(err);
-    // ERROR CODE HERER
+    // ERROR CODE HERE
     console.log("TO DO: add to cart error alert");
   }
   dispatch(uiActions.showLoadingState(false));

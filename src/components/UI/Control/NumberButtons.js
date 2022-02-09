@@ -8,31 +8,44 @@ const NumberButtons = ({
   feedback,
   className,
   focusRef,
-  value: currVall,
-  onChange,
+  value: currVal,
+  onUpdate,
   ...props
 }) => {
-  const [value, setValue] = useState(currVall);
+  const [value, setValue] = useState(currVal);
   props.ref = focusRef;
 
   let classes = styles["number-wrapper"];
   if (invalid) classes += ` ${styles["number-wrapper--invalid"]}`;
 
-  const valChangeHanlder = (e) => {
-    const val = +e.target.value;
-    if (props.min && val < props.min) {
-      setValue(+props.min);
-    } else if (props.max && val > props.max) {
-      setValue(+props.max);
-    } else setValue(val);
+  const inputChangeHandler = (e) => {
+    setValue(e.target.value);
   };
 
-  const decrHandler = () => {
-    if (!props.min || (props.min && value > props.min)) setValue(value - 1);
+  const inputBlurHandler = (e) => {
+    if (!e.target.value) {
+      setValue(currVal);
+    } else {
+      const val = +e.target.value;
+      if (props.min && val < props.min) return;
+      if (props.max && val > props.max) return;
+      changeHandler(val);
+    }
   };
 
-  const incrHandler = () => {
-    if (!props.max || (props.max && value < props.max)) setValue(value + 1);
+  const decrBtnHandler = () => {
+    if (props.min && value == props.min) return;
+    changeHandler(value - 1);
+  };
+
+  const incrBtnHandler = () => {
+    if (props.max && value == props.max) return;
+    changeHandler(value + 1);
+  };
+
+  const changeHandler = (newVal) => {
+    if (onUpdate) onUpdate();
+    setValue(newVal);
   };
 
   return (
@@ -45,7 +58,7 @@ const NumberButtons = ({
     >
       <div className={classes}>
         <button
-          onClick={decrHandler}
+          onClick={decrBtnHandler}
           type="button"
           className={styles["number__minus"]}
         >
@@ -54,11 +67,12 @@ const NumberButtons = ({
         <input
           type="number"
           value={value}
-          onChange={valChangeHanlder}
+          onChange={inputChangeHandler}
+          onBlur={inputBlurHandler}
           {...props}
         />
         <button
-          onClick={incrHandler}
+          onClick={incrBtnHandler}
           type="button"
           className={styles["number__plus"]}
         >

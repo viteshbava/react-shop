@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useRef } from "react";
 import NumberButtons from "../UI/Control/NumberButtons";
 import toDollars from "../../utilities/toDollars";
 import styles from "./CartItem.module.css";
 import { Link } from "react-router-dom";
-import { removeFromCart } from "../../redux/actions/cart-actions";
+import {
+  removeFromCart,
+  changeQuantity,
+} from "../../redux/actions/cart-actions";
 import { useDispatch } from "react-redux";
 
 const CartItem = ({ product }) => {
   const dispatch = useDispatch();
   const { id, title, price, image, quantity } = product;
   const subTotal = price * quantity;
+  const qtyRef = useRef();
 
   const removeProductHandler = () => dispatch(removeFromCart(id));
 
-  const qtyUpdateHandler = () => console.log("Send quantity change to API...");
+  const qtyUpdateHandler = (newVal) => dispatch(changeQuantity(id, newVal));
 
   return (
     <li className={styles["item-wrapper"]}>
@@ -43,6 +47,7 @@ const CartItem = ({ product }) => {
             min="1"
             value={quantity}
             onUpdate={qtyUpdateHandler}
+            // focusRef={qtyRef}
           />
           <p className={styles.subtotal}>
             Subtotal:{" "}

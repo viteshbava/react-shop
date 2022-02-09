@@ -49,7 +49,14 @@ const cartSlice = createSlice({
       }
     },
     changeQuantity(state, action) {
-      console.log("Changing quantity of product in cart!");
+      const { productId, quantity } = action.payload;
+      const foundProduct = state.products.find((p) => p.id === productId);
+      if (foundProduct) {
+        const delta = quantity - foundProduct.quantity;
+        foundProduct.quantity = quantity;
+        state.totalQuantity += delta;
+        state.totalItemPrice += foundProduct.price * delta;
+      }
     },
 
     isLoading(state, action) {

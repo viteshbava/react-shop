@@ -44,7 +44,7 @@ const NumberButtons = ({
   };
 
   const changeHandler = (newVal) => {
-    if (onUpdate) onUpdate();
+    if (onUpdate) onUpdate(newVal);
     setValue(newVal);
   };
 

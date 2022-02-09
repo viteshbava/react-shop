@@ -57,10 +57,31 @@ const addToCart = (product, quantity) => async (dispatch) => {
   dispatch(uiActions.showLoadingState(false));
 };
 
+const changeQuantity = (productId, quantity) => async (dispatch) => {
+  dispatch(uiActions.showLoadingState(true));
+  const { id: cartId } = store.getState().cart;
+  try {
+    const result = await fakeStoreAPI.updateCart(cartId, [
+      { productId, quantity },
+    ]);
+    dispatch(cartActions.changeQuantity({ productId, quantity }));
+    dispatch(
+      uiActions.addAlert({
+        type: ALERT_TYPE.SUCCESS,
+        title: `Item quantity changed`,
+      })
+    );
+  } catch (err) {
+    console.error(err);
+    // ERROR CODE HERE
+    console.log("TO DO: change quantity in cart error alert");
+  }
+  dispatch(uiActions.showLoadingState(false));
+};
+
 const removeFromCart = (productId) => async (dispatch) => {
   console.log("removeFromCart TO DO: show confirm modal");
-  console.log("removeFromCart TO DO: show loading state");
-
+  dispatch(uiActions.showLoadingState(true));
   const { id: cartId } = store.getState().cart;
 
   try {
@@ -79,6 +100,7 @@ const removeFromCart = (productId) => async (dispatch) => {
     // ERROR CODE HERER
     console.log("TO DO: add to cart error alert");
   }
+  dispatch(uiActions.showLoadingState(false));
 };
 
-export { fetchCart, addToCart, removeFromCart };
+export { fetchCart, addToCart, removeFromCart, changeQuantity };

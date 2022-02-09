@@ -11,6 +11,7 @@ const Modal = ({ onOverlayClick, children }) => {
   }, []);
 
   const overlayClickHandler = (e) => {
+    if (!onOverlayClick) return;
     if (e.target === e.currentTarget) onOverlayClick();
   };
 

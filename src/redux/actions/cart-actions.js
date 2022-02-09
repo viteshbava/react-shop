@@ -1,5 +1,6 @@
 import { cartActions } from "../slices/cart-slice";
 import { uiActions } from "../slices/ui-slice";
+import { ALERT_TYPE } from "../../components/UI/Alert/Alert";
 import fakeStoreAPI from "../../apis/fakeStoreApi";
 import store from "../store";
 
@@ -66,8 +67,13 @@ const removeFromCart = (productId) => async (dispatch) => {
     const result = await fakeStoreAPI.updateCart(cartId, [
       { productId, quantity: 0 },
     ]);
-    console.log("REMOVE FROM CART RESULT: ", result);
     dispatch(cartActions.remove(productId));
+    dispatch(
+      uiActions.addAlert({
+        type: ALERT_TYPE.SUCCESS,
+        title: `Item removed from cart`,
+      })
+    );
   } catch (err) {
     console.error(err);
     // ERROR CODE HERER

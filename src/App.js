@@ -17,7 +17,8 @@ import Modal from "./components/UI/Modal/Modal";
 import FloatingAlerts from "./components/UI/Alert/FloatingAlerts";
 
 function App() {
-  const { loading: isLoading, alerts } = useSelector((state) => state.ui);
+  const isLoading = useSelector((state) => state.ui.loading);
+  const { alerts } = useSelector((state) => state.ui.alerts);
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -1,6 +1,8 @@
-import React from "react";
 import styles from "./Alert.module.css";
 import Icon, { ICON_TYPE } from "../Icon/Icon";
+import { useEffect } from "react";
+import { uiActions } from "../../../redux/slices/ui-slice";
+import { useDispatch } from "react-redux";
 
 const ALERT_TYPE = {
   ERROR: "error",
@@ -9,8 +11,11 @@ const ALERT_TYPE = {
   WARNING: "warning",
 };
 
-const Alert = ({ type, title, message, onClose }) => {
+const Alert = ({ id, type, title, message }) => {
   let containerClasses = `${styles.container} ${styles[`container--${type}`]}`;
+
+  const dispatch = useDispatch();
+
   let icon;
   switch (type) {
     case ALERT_TYPE.ERROR:
@@ -30,6 +35,13 @@ const Alert = ({ type, title, message, onClose }) => {
       break;
   }
 
+  const onCloseHandler = () => dispatch(uiActions.removeAlert(id));
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => onCloseHandler(), 4000);
+    return () => clearTimeout(timeoutId);
+  }, []);
+
   return (
     <div className={containerClasses}>
       <Icon className={styles.icon} icon={icon} />
@@ -40,7 +52,7 @@ const Alert = ({ type, title, message, onClose }) => {
         </p>
         <p className={styles["content__message"]}>{message}</p>
       </div>
-      <button className={styles.close} onClick={onClose}>
+      <button className={styles.close} onClick={onCloseHandler}>
         &times;
       </button>
     </div>

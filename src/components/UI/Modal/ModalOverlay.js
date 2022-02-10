@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import styles from "./Modal.module.css";
+import styles from "./ModalOverlay.module.css";
 
-const Modal = ({ onOverlayClick, children }) => {
+const ModalOverlay = ({ onOverlayClick, children }) => {
   useEffect(() => {
     document.body.classList.add(styles["body-disable-scroll"]);
     return () => {
@@ -17,11 +17,11 @@ const Modal = ({ onOverlayClick, children }) => {
 
   return ReactDOM.createPortal(
     <>
-      <div onClick={overlayClickHandler} className={styles.overlay}></div>
-      <div className={styles.modal}>{children}</div>
+      <div onClick={overlayClickHandler} className={styles.wrapper}></div>
+      <div className={styles.container}>{children}</div>
     </>,
     document.querySelector("#modal-root")
   );
 };
 
-export default Modal;
+export default ModalOverlay;

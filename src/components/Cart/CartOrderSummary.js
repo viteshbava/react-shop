@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "../UI/Card/Card";
-import Button, { BTN_TYPE } from "../UI/Button/Button";
+import Button from "../UI/Button/Button";
 import { useSelector } from "react-redux";
 import toDollars from "../../utilities/toDollars";
 import styles from "./CartOrderSummary.module.css";
@@ -30,7 +30,7 @@ const CartOrderSummary = () => {
       </Card>
       <div className={styles["summary-actions"]}>
         <Button>Checkout</Button>
-        <Button style={BTN_TYPE.SECONDARY}>Continue Shopping</Button>
+        <Button variant="outlined">Continue Shopping</Button>
       </div>
     </div>
   );

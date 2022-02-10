@@ -55,7 +55,10 @@
 }
 
 .wrapper--error .header__icon {
-  color: rgb(197, 9, 9);
+  color: var(--danger-dark);
+}
+.wrapper--error .header__icon {
+  color: var(--danger-dark);
 }
 .wrapper--info .header__icon {
   color: rgb(0, 89, 190);

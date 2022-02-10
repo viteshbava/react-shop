@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import AuthContext from "../../context/auth-context";
-import Button, { BTN_TYPE } from "../UI/Button/Button";
+import Button from "../UI/Button/Button";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import { useSelector } from "react-redux";
 
@@ -18,19 +18,19 @@ const NavDesktop = ({ className, onSignOutHandler }) => {
         {ctx.isLoggedIn ? (
           <>
             <li>
-              <Button style={BTN_TYPE.SECONDARY} onClick={onSignOutHandler}>
+              <Button variant="outlined" onClick={onSignOutHandler}>
                 <Icon icon={ICON_TYPE.SIGNOUT} />
                 Sign out
               </Button>
             </li>
             <li>
-              <Button link="/wishlist" style={BTN_TYPE.SECONDARY}>
+              <Button variant="outlined" link="/wishlist">
                 <Icon icon={ICON_TYPE.HEART_FULL} />
                 Wishlist (2)
               </Button>
             </li>
             <li>
-              <Button link="/cart" style={BTN_TYPE.PRIMARY}>
+              <Button link="/cart">
                 <Icon icon={ICON_TYPE.CART} />
                 Cart ({cartTotalQty === null ? "SP!" : cartTotalQty})
               </Button>
@@ -38,7 +38,7 @@ const NavDesktop = ({ className, onSignOutHandler }) => {
           </>
         ) : (
           <li>
-            <Button link="/signin" style={BTN_TYPE.PRIMARY}>
+            <Button link="/signin">
               <Icon icon={ICON_TYPE.SIGNIN} />
               Sign in
             </Button>

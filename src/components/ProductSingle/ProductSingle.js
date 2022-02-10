@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import NumberButtons from "../UI/Control/NumberButtons";
-import Button, { BTN_TYPE } from "../UI/Button/Button";
+import Button from "../UI/Button/Button";
 import { useParams } from "react-router-dom";
 import Spinner from "../UI/Spinner/Spinner";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
@@ -92,7 +92,7 @@ const ProductSingle = () => {
               </Button>
             </form>
             <div className={styles["action-wrapper"]}>
-              <Button style={BTN_TYPE.SECONDARY}>Add to Wishlist</Button>
+              <Button variant="outlined">Add to Wishlist</Button>
             </div>
           </div>
         </div>

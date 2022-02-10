@@ -1,4 +1,4 @@
-.button {
+.btn {
   font: inherit;
   padding: 0.5rem 1rem;
   border: none;
@@ -9,39 +9,72 @@
   display: inline-block;
 }
 
-.button svg {
+.btn svg {
   margin-right: 0.5rem;
   font-size: 1rem;
-  color: inherit;
 }
 
-.button:focus {
+.btn:focus {
   outline: none;
 }
 
-.button:active {
+.btn:active {
   transform: scale(0.96);
 }
 
-.button:hover,
-.button:active {
+.btn:hover,
+.btn:active {
   background-image: linear-gradient(rgba(0, 0, 0, 0.05) 0 0);
 }
 
-.button--primary {
-  color: var(--primary-black);
+/* PRIMARY */
+
+.btn--primary {
+  color: var(--primary-main-dark);
   border: 1px solid var(--primary-main);
+}
+.btn--primary.btn--fill {
   background-color: var(--primary-main);
 }
-
-.button--error {
-  color: rgb(197, 9, 9);
-  border: 1px solid rgb(250, 179, 179);
-  background-color: rgb(250, 179, 179);
+.btn--primary.btn--outlined {
+  background-color: var(--primary-white);
 }
 
-.button--secondary {
-  color: var(--primary-black);
-  border: 1px solid var(--primary-main);
+/* ERROR */
+
+.btn--error {
+  color: var(--danger-dark);
+  border: 1px solid var(--danger-light);
+}
+.btn--error.btn--fill {
+  background-color: var(--danger-light);
+}
+.btn--error.btn--outlined {
+  background-color: var(--primary-white);
+}
+
+/* SUCCESS */
+
+.btn--success {
+  color: var(--success-dark);
+  border: 1px solid var(--success-light);
+}
+.btn--success.btn--fill {
+  background-color: var(--success-light);
+}
+.btn--success.btn--outlined {
+  background-color: var(--primary-white);
+}
+
+/* WARNING */
+
+.btn--warning {
+  color: var(--warning-dark);
+  border: 1px solid var(--warning-light);
+}
+.btn--warning.btn--fill {
+  background-color: var(--warning-light);
+}
+.btn--warning.btn--outlined {
   background-color: var(--primary-white);
 }

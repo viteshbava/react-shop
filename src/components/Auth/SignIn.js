@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import useInput from "../../hooks/use-input";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import TextField from "../UI/Control/TextField";
-import Button, { BTN_TYPE } from "../UI/Button/Button";
+import Button from "../UI/Button/Button";
 import styles from "./SignIn.module.css";
 import Alert from "../UI/Alert/Alert";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
@@ -84,11 +84,7 @@ const SignIn = () => {
             onChange={passwordChangeHandler}
             onBlur={passwordBlurHandler}
           />
-          <Button
-            className={styles["sign-in-button"]}
-            style={BTN_TYPE.PRIMARY}
-            type="submit"
-          >
+          <Button className={styles["sign-in-button"]} type="submit">
             <Icon icon={ICON_TYPE.SIGNIN} />
             Sign in
           </Button>

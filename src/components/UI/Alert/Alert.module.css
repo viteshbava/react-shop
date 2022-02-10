@@ -11,20 +11,20 @@
 }
 
 .container--error {
-  background-color: rgb(250, 179, 179);
-  color: rgb(197, 9, 9);
+  background-color: var(--danger-light);
+  color: var(--danger-dark);
 }
 .container--info {
-  background-color: rgb(154, 200, 253);
-  color: rgb(0, 89, 190);
+  background-color: var(--primary-main);
+  color: var(--primary-main-dark);
 }
 .container--success {
-  background-color: rgb(194, 233, 194);
-  color: rgb(31, 139, 31);
+  background-color: var(--success-light);
+  color: var(--success-dark);
 }
 .container--warning {
-  background-color: rgb(248, 218, 161);
-  color: rgb(170, 111, 0);
+  background-color: var(--warning-light);
+  color: var(--warning-dark);
 }
 
 .icon {

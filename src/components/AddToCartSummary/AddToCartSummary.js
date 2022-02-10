@@ -1,9 +1,9 @@
 import React from "react";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
-import Button, { BTN_TYPE } from "../UI/Button/Button";
+import Button from "../UI/Button/Button";
 import Card from "../UI/Card/Card";
 import styles from "./AddToCartSummary.module.css";
-import Modal from "../UI/Modal/Modal";
+import ModalOverlay from "../UI/Modal/ModalOverlay";
 import toDollars from "../../utilities/toDollars";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../redux/slices/ui-slice";
@@ -28,7 +28,7 @@ const AddToCartSummary = ({ itemsAdded }) => {
   cardClasses += ` ${styles["wrapper--error"]}`;
 
   return (
-    <Modal onOverlayClick={closeSummaryHandler}>
+    <ModalOverlay onOverlayClick={closeSummaryHandler}>
       <Card className={cardClasses}>
         <button
           onClick={closeSummaryHandler}
@@ -52,16 +52,20 @@ const AddToCartSummary = ({ itemsAdded }) => {
           </p>
         </div>
         <div className={styles.actions}>
-          <Button onClick={closeSummaryHandler} style={BTN_TYPE.SECONDARY}>
+          <Button
+            onClick={closeSummaryHandler}
+            variant="outlined"
+            color="error"
+          >
             Continue Shopping
           </Button>
-          <Button style={BTN_TYPE.ERROR} onClick={viewCartHandler}>
+          <Button color="error" onClick={viewCartHandler}>
             <Icon icon={ICON_TYPE.CART} />
             View Cart
           </Button>
         </div>
       </Card>
-    </Modal>
+    </ModalOverlay>
   );
 };
 

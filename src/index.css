@@ -1,13 +1,22 @@
 :root {
   --primary-main: #b0d4fc;
-  --primary-main-dark: #0659b4;
+  --primary-main-dark: #034b99;
   --primary-main-light: #eff4f8;
-  --primary-red: #e00000;
-  --red-light: #ffa8a8;
-  --primary-green: #22be45;
   --primary-white: #f9fcff;
   --primary-black: #132e4d;
   --primary-grey: #d2d6da;
+
+  --primary-red: #e00000;
+  --primary-green: #22be45;
+
+  --danger-dark: rgb(197, 9, 9);
+  --danger-light: rgb(250, 179, 179);
+  --success-dark: rgb(24, 109, 24);
+  --success-light: rgb(194, 233, 194);
+  /* --info-dark: rgb(0, 89, 190);
+  --info-light: rgb(154, 200, 253); */
+  --warning-dark: rgb(170, 111, 0);
+  --warning-light: rgb(248, 218, 161);
 }
 
 * {
@@ -27,12 +36,17 @@ body {
   background-color: var(--primary-white);
 }
 
-a {
-  text-decoration: none;
+/* The .btn-link is used to ensure the inherit does not affect buttons that are links, which have colouring defined by their own styles. */
+a:not(.btn-link),
+a:link:not(.btn-link),
+a:visited:not(.btn-link) {
+  color: inherit;
 }
 
+a,
+a:link,
 a:visited {
-  color: inherit;
+  text-decoration: none;
 }
 
 ul {

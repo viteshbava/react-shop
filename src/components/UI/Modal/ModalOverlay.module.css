@@ -1,4 +1,4 @@
-.overlay {
+.wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -8,7 +8,7 @@
   z-index: 2000;
 }
 
-.modal {
+.container {
   position: fixed;
   left: 50%;
   transform: translate(-50%, 0);

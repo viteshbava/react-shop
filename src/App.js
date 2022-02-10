@@ -13,7 +13,7 @@ import InfoError, { INFO_ERROR_TYPE } from "./components/Error/InfoError";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from "./redux/actions/cart-actions";
 import Spinner from "./components/UI/Spinner/Spinner";
-import Modal from "./components/UI/Modal/Modal";
+import ModalOverlay from "./components/UI/Modal/ModalOverlay";
 import FloatingAlerts from "./components/UI/Alert/FloatingAlerts";
 
 function App() {
@@ -28,9 +28,9 @@ function App() {
   return (
     <>
       {isLoading && (
-        <Modal>
+        <ModalOverlay>
           <Spinner />
-        </Modal>
+        </ModalOverlay>
       )}
       {alerts.length > 0 && <FloatingAlerts alerts={alerts} />}
 

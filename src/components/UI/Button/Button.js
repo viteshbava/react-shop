@@ -2,26 +2,27 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Button.module.css";
 
-const BTN_TYPE = {
-  PRIMARY: "primary",
-  SECONDARY: "secondary",
-};
-
 const Button = ({
   className,
-  style = BTN_TYPE.PRIMARY,
+  variant,
+  color,
   onClick,
   children,
   type,
   link,
-  href,
 }) => {
-  let btnStyles = styles.button;
-  if (style) btnStyles = `${btnStyles} ${styles[`button--${style}`]}`;
-  if (className) btnStyles = `${btnStyles} ${className}`;
+  let btnStyles = styles.btn;
+  btnStyles += variant
+    ? ` ${styles[`btn--${variant}`]}`
+    : ` ${styles["btn--fill"]}`;
+  btnStyles += color
+    ? ` ${styles[`btn--${color}`]}`
+    : ` ${styles["btn--primary"]}`;
+  if (className) btnStyles += ` ${className}`;
   if (link) {
     return (
-      <Link to={link} className={btnStyles}>
+      // Note: the btn-link class is used to over-ride the a:visited styling form index.css
+      <Link to={link} className={`${btnStyles} btn-link`}>
         {children}
       </Link>
     );
@@ -35,4 +36,3 @@ const Button = ({
 };
 
 export default Button;
-export { BTN_TYPE };

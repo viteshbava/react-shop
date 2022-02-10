@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import NumberButtons from "../UI/Control/NumberButtons";
 import toDollars from "../../utilities/toDollars";
 import styles from "./CartItem.module.css";
@@ -13,7 +13,6 @@ const CartItem = ({ product }) => {
   const dispatch = useDispatch();
   const { id, title, price, image, quantity } = product;
   const subTotal = price * quantity;
-  const qtyRef = useRef();
 
   const removeProductHandler = () => dispatch(removeFromCart(id));
 
@@ -47,7 +46,6 @@ const CartItem = ({ product }) => {
             min="1"
             value={quantity}
             onUpdate={qtyUpdateHandler}
-            // focusRef={qtyRef}
           />
           <p className={styles.subtotal}>
             Subtotal:{" "}

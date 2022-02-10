@@ -12,7 +12,7 @@
 .button svg {
   margin-right: 0.5rem;
   font-size: 1rem;
-  color: var(--primary-main-dark);
+  color: inherit;
 }
 
 .button:focus {
@@ -32,6 +32,12 @@
   color: var(--primary-black);
   border: 1px solid var(--primary-main);
   background-color: var(--primary-main);
+}
+
+.button--error {
+  color: rgb(197, 9, 9);
+  border: 1px solid rgb(250, 179, 179);
+  background-color: rgb(250, 179, 179);
 }
 
 .button--secondary {

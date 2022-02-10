@@ -14,7 +14,8 @@ const uiSlice = createSlice({
   initialState: STATE_INIT,
   reducers: {
     showAddToCartSummary(state, action) {
-      state.addToCartSummary = action.payload;
+      const numItemsAdded = action.payload;
+      state.addToCartSummary = numItemsAdded;
     },
     addAlert(state, action) {
       const newAlert = action.payload;

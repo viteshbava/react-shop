@@ -24,16 +24,23 @@ const AddToCartSummary = ({ itemsAdded }) => {
     navigate("/cart");
   };
 
+  let cardClasses = styles.wrapper;
+  cardClasses += ` ${styles["wrapper--error"]}`;
+
   return (
     <Modal onOverlayClick={closeSummaryHandler}>
-      <Card className={styles.wrapper}>
+      <Card className={cardClasses}>
+        <button
+          onClick={closeSummaryHandler}
+          className={styles["close-button"]}
+        >
+          &times;
+        </button>
         <div className={styles.header}>
-          <h2 className={styles.heading}>
+          <Icon icon={ICON_TYPE.ERROR} className={styles["header__icon"]} />
+          <h2 className={styles["header__title"]}>
             {itemsAdded} item(s) added to your cart
           </h2>
-          <button onClick={closeSummaryHandler} className={styles.close}>
-            &times;
-          </button>
         </div>
         <div className={styles.body}>
           <p>
@@ -44,14 +51,13 @@ const AddToCartSummary = ({ itemsAdded }) => {
             {toDollars(cartSubtotal)}
           </p>
         </div>
-
         <div className={styles.actions}>
-          <Button onClick={viewCartHandler}>
-            <Icon icon={ICON_TYPE.CART} />
-            View Cart
-          </Button>
           <Button onClick={closeSummaryHandler} style={BTN_TYPE.SECONDARY}>
             Continue Shopping
+          </Button>
+          <Button style={BTN_TYPE.ERROR} onClick={viewCartHandler}>
+            <Icon icon={ICON_TYPE.CART} />
+            View Cart
           </Button>
         </div>
       </Card>

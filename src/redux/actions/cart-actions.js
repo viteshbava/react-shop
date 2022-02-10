@@ -44,17 +44,18 @@ const addToCart = (product, quantity) => async (dispatch) => {
       { productId: product.id, quantity },
     ]);
     dispatch(cartActions.add({ product, quantity }));
+    dispatch(uiActions.showLoadingState(false));
     dispatch(
       uiActions.showAddToCartSummary({
-        itemsAdded: quantity,
+        numItemsAdded: quantity,
       })
     );
   } catch (err) {
+    dispatch(uiActions.showLoadingState(false));
     console.error(err);
     // ERROR CODE HERE
     console.log("TO DO: add to cart error alert");
   }
-  dispatch(uiActions.showLoadingState(false));
 };
 
 const changeQuantity = (productId, quantity) => async (dispatch) => {

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../redux/slices/ui-slice";
 import { useNavigate } from "react-router-dom";
 
-const AddToCartSummary = ({ itemsAdded }) => {
+const AddToCartSummary = ({ numItemsAdded }) => {
   const { totalQuantity, totalItemPrice: cartSubtotal } = useSelector(
     (state) => state.cart
   );
@@ -25,7 +25,7 @@ const AddToCartSummary = ({ itemsAdded }) => {
   };
 
   let cardClasses = styles.wrapper;
-  cardClasses += ` ${styles["wrapper--error"]}`;
+  cardClasses += ` ${styles["wrapper--success"]}`;
 
   return (
     <ModalOverlay onOverlayClick={closeSummaryHandler}>
@@ -37,9 +37,9 @@ const AddToCartSummary = ({ itemsAdded }) => {
           &times;
         </button>
         <div className={styles.header}>
-          <Icon icon={ICON_TYPE.ERROR} className={styles["header__icon"]} />
+          <Icon icon={ICON_TYPE.SUCCESS} className={styles["header__icon"]} />
           <h2 className={styles["header__title"]}>
-            {itemsAdded} item(s) added to your cart
+            {numItemsAdded} item(s) added to your cart
           </h2>
         </div>
         <div className={styles.body}>
@@ -55,11 +55,11 @@ const AddToCartSummary = ({ itemsAdded }) => {
           <Button
             onClick={closeSummaryHandler}
             variant="outlined"
-            color="error"
+            color="success"
           >
             Continue Shopping
           </Button>
-          <Button color="error" onClick={viewCartHandler}>
+          <Button color="success" onClick={viewCartHandler}>
             <Icon icon={ICON_TYPE.CART} />
             View Cart
           </Button>

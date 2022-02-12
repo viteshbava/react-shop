@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import NumberButtons from "../UI/Control/NumberButtons";
@@ -17,6 +17,7 @@ import { addToCart } from "../../redux/actions/cart-actions";
 import styles from "./ProductSingle.module.css";
 
 import Modal from "../UI/Modal/Modal";
+import ModalContext from "../../context/modal-context";
 
 const ProductSingle = () => {
   const { id } = useParams();
@@ -29,40 +30,62 @@ const ProductSingle = () => {
 
   const [modalProps, setModalProps] = useState(null);
 
+  const modalCtx = useContext(ModalContext);
+
   useEffect(() => {
     dispatch(fetchProduct(id));
     return () => dispatch(clearProduct());
   }, []);
 
-  const contShoppingHandler = () => {
-    dispatch(uiActions.showModal(true));
-    setModalProps({
-      type: "alert",
-      title: "Continue Shopping...",
-      body: "Remember you can add more items to your cart!",
-      okText: "Take me to the shops!",
-      onConfirm: () => console.log("Shopping commenced..."),
+  const addToCartHandler = (e) => {
+    e.preventDefault();
+    modalCtx.showModal({
+      type: "confirm",
+      title: "Add to cart?",
+      body: "Are you sure you want to add these items to your cart?",
+      cancelText: "Cancel",
+      okText: "Add to Cart",
+      onConfirm: addToCartConfirm,
+      onCancel: () => console.log("Cancel adding to cart..."),
     });
   };
 
-  const addToCartHandler = (e) => {
-    e.preventDefault();
+  const addToCartConfirm = () => {
     const qty = +qtyRef.current.value;
-    dispatch(addToCart(product, qty))
-      .then(() => {
-        dispatch(uiActions.showModal(true));
-        setModalProps({
-          type: "confirm",
-          title: "Item added to cart successfully!",
-          body: "Do you want to view your cart?",
-          cancelText: "Continue Shopping",
-          okText: "View Cart",
-          onConfirm: () => console.log("Viewing Cart..."),
-          onCancel: contShoppingHandler,
-        });
-      })
-      .catch((err) => console.log("Handle error: ", err));
+    dispatch(
+      addToCart(
+        product,
+        qty,
+        () =>
+          modalCtx.showModal({
+            type: "confirm",
+            title: "Item added to cart successfully!",
+            body: "Do you want to view your cart?",
+            cancelText: "Continue Shopping",
+            okText: "View Cart",
+            onConfirm: addToCartSuccess,
+            onCancel: () => console.log("Lets Continue shopping..."),
+          }),
+        addToCartError
+      )
+    );
   };
+
+  const addToCartSuccess = () =>
+    modalCtx.showModal({
+      type: "alert",
+      title: "Cart Updated!",
+      body: "Your cart has been updated successfully",
+      okText: "Back to shopping!",
+    });
+
+  const addToCartError = (err) =>
+    modalCtx.showModal({
+      type: "alert",
+      title: "Add to Cart Error!",
+      body: `Sorry but that didn't work!  Try again later! ${err}`,
+      okText: "Okay :-(",
+    });
 
   let content;
 
@@ -130,13 +153,6 @@ const ProductSingle = () => {
 
   return (
     <>
-      {modal.display && modalProps && <Modal {...modalProps} />}
-      {/* {modal.display && modalProps && (
-        <Modal {...modalProps}>
-          <div>Yes Hello</div>
-        </Modal>
-      )} */}
-
       <section>{content}</section>
     </>
   );

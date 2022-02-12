@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
@@ -16,7 +16,8 @@ import Spinner from "./components/UI/Spinner/Spinner";
 import ModalOverlay from "./components/UI/Modal/ModalOverlay";
 import FloatingAlerts from "./components/UI/Alert/FloatingAlerts";
 
-// import Modal from "./components/UI/Modal/Modal";
+import Modal from "./components/UI/Modal/Modal";
+import ModalContext from "./context/modal-context";
 
 function App() {
   const isLoading = useSelector((state) => state.ui.loading);
@@ -24,13 +25,15 @@ function App() {
   const { alerts } = useSelector((state) => state.ui.alerts);
   const dispatch = useDispatch();
 
+  const modalCtx = useContext(ModalContext);
+
   useEffect(() => {
     dispatch(fetchCart("1"));
   }, []);
 
   return (
     <>
-      {/* {modal.display && <Modal {...modal.content} />} */}
+      {modalCtx.show && <Modal {...modalCtx.props} />}
       {isLoading && (
         <ModalOverlay>
           <Spinner />

@@ -35,31 +35,28 @@ const fetchCart = (cartId) => async (dispatch) => {
   dispatch(cartActions.isLoading(false));
 };
 
-const addToCart = (product, quantity) => async (dispatch) => {
-  dispatch(uiActions.showLoadingState(true));
-  console.log("TO DO: check if we need to create a new cart");
-  const { id: cartId } = store.getState().cart;
-  try {
-    const result = await fakeStoreAPI.updateCart(cartId, [
-      { productId: product.id, quantity },
-    ]);
-    // throw new Error("Test Error!");
-    dispatch(cartActions.add({ product, quantity }));
-    dispatch(uiActions.showLoadingState(false));
-    // dispatch(uiActions.showModal(true));
-    // dispatch(
-    //   uiActions.showAddToCartSummary({
-    //     numItemsAdded: quantity,
-    //   })
-    // );
-  } catch (err) {
-    dispatch(uiActions.showLoadingState(false));
-    console.error(err);
-    // ERROR CODE HERE
-    throw err;
-    console.log("TO DO: add to cart error alert");
-  }
-};
+const addToCart =
+  (product, quantity, onAddSuccess, onAddError) => async (dispatch) => {
+    dispatch(uiActions.showLoadingState(true));
+    console.log("TO DO: check if we need to create a new cart");
+    const { id: cartId } = store.getState().cart;
+    try {
+      const result = await fakeStoreAPI.updateCart(cartId, [
+        { productId: product.id, quantity },
+      ]);
+      // throw new Error("Test Error!");
+      dispatch(cartActions.add({ product, quantity }));
+      dispatch(uiActions.showLoadingState(false));
+      onAddSuccess();
+    } catch (err) {
+      dispatch(uiActions.showLoadingState(false));
+      onAddError(err);
+      // console.error(err);
+      // ERROR CODE HERE
+      // throw err;
+      console.log("TO DO: add to cart error alert");
+    }
+  };
 
 const changeQuantity = (productId, quantity) => async (dispatch) => {
   dispatch(uiActions.showLoadingState(true));

@@ -1,8 +1,10 @@
+import { useContext } from "react";
+import ModalContext from "../../../context/modal-context";
 import ModalOverlay from "./ModalOverlay";
 import Card from "../Card/Card";
 import styles from "./Modal.module.css";
-import { uiActions } from "../../../redux/slices/ui-slice";
-import { useDispatch } from "react-redux";
+// import { uiActions } from "../../../redux/slices/ui-slice";
+// import { useDispatch } from "react-redux";
 
 const Modal = (props) => {
   const {
@@ -17,8 +19,11 @@ const Modal = (props) => {
     onConfirm,
   } = props;
 
-  const dispatch = useDispatch();
-  const closeModal = () => dispatch(uiActions.showModal(false));
+  const modalCtx = useContext(ModalContext);
+  const closeModal = () => modalCtx.hideModal();
+
+  // const dispatch = useDispatch();
+  // const closeModal = () => dispatch(uiActions.showModal(false));
 
   const onCancelHandler = () => {
     closeModal();

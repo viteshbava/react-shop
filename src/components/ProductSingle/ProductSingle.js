@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import NumberButtons from "../UI/Control/NumberButtons";
@@ -12,28 +12,56 @@ import {
   fetchProduct,
   clearProduct,
 } from "../../redux/actions/product-actions";
+import { uiActions } from "../../redux/slices/ui-slice";
 import { addToCart } from "../../redux/actions/cart-actions";
-import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
 import styles from "./ProductSingle.module.css";
+
+import Modal from "../UI/Modal/Modal";
 
 const ProductSingle = () => {
   const { id } = useParams();
   const { isLoading, error, product } = useSelector(
     (state) => state.selectedProduct
   );
-  const addToCartSummary = useSelector((state) => state.ui.addToCartSummary);
+  const modal = useSelector((state) => state.ui.modal);
   const dispatch = useDispatch();
   const qtyRef = useRef();
+
+  const [modalProps, setModalProps] = useState(null);
 
   useEffect(() => {
     dispatch(fetchProduct(id));
     return () => dispatch(clearProduct());
   }, []);
 
+  const contShoppingHandler = () => {
+    dispatch(uiActions.showModal(true));
+    setModalProps({
+      type: "alert",
+      title: "Continue Shopping...",
+      body: "Remember you can add more items to your cart!",
+      okText: "Take me to the shops!",
+      onConfirm: () => console.log("Shopping commenced..."),
+    });
+  };
+
   const addToCartHandler = (e) => {
     e.preventDefault();
     const qty = +qtyRef.current.value;
-    dispatch(addToCart(product, qty));
+    dispatch(addToCart(product, qty))
+      .then(() => {
+        dispatch(uiActions.showModal(true));
+        setModalProps({
+          type: "confirm",
+          title: "Item added to cart successfully!",
+          body: "Do you want to view your cart?",
+          cancelText: "Continue Shopping",
+          okText: "View Cart",
+          onConfirm: () => console.log("Viewing Cart..."),
+          onCancel: contShoppingHandler,
+        });
+      })
+      .catch((err) => console.log("Handle error: ", err));
   };
 
   let content;
@@ -101,10 +129,16 @@ const ProductSingle = () => {
   }
 
   return (
-    <section>
-      {content}
-      {addToCartSummary && <AddToCartSummary {...addToCartSummary} />}
-    </section>
+    <>
+      {modal.display && modalProps && <Modal {...modalProps} />}
+      {/* {modal.display && modalProps && (
+        <Modal {...modalProps}>
+          <div>Yes Hello</div>
+        </Modal>
+      )} */}
+
+      <section>{content}</section>
+    </>
   );
 };
 

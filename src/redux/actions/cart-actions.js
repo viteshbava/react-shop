@@ -43,17 +43,20 @@ const addToCart = (product, quantity) => async (dispatch) => {
     const result = await fakeStoreAPI.updateCart(cartId, [
       { productId: product.id, quantity },
     ]);
+    // throw new Error("Test Error!");
     dispatch(cartActions.add({ product, quantity }));
     dispatch(uiActions.showLoadingState(false));
-    dispatch(
-      uiActions.showAddToCartSummary({
-        numItemsAdded: quantity,
-      })
-    );
+    // dispatch(uiActions.showModal(true));
+    // dispatch(
+    //   uiActions.showAddToCartSummary({
+    //     numItemsAdded: quantity,
+    //   })
+    // );
   } catch (err) {
     dispatch(uiActions.showLoadingState(false));
     console.error(err);
     // ERROR CODE HERE
+    throw err;
     console.log("TO DO: add to cart error alert");
   }
 };

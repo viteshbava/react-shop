@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const STATE_INIT = {
-  addToCartSummary: null,
+  modal: {
+    display: false,
+    content: null,
+  },
   alerts: {
     _id: 0,
     alerts: [],
@@ -13,9 +16,9 @@ const uiSlice = createSlice({
   name: "ui",
   initialState: STATE_INIT,
   reducers: {
-    showAddToCartSummary(state, action) {
-      const numItemsAdded = action.payload;
-      state.addToCartSummary = numItemsAdded;
+    showModal(state, action) {
+      const displayModal = action.payload;
+      state.modal.display = displayModal;
     },
     addAlert(state, action) {
       const newAlert = action.payload;

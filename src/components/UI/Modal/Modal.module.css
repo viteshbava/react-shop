@@ -1,0 +1,13 @@
+.wrapper {
+  padding: 5rem;
+}
+
+.modal-body {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.cart-subtotal-label {
+  font-weight: bold;
+}

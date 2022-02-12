@@ -16,8 +16,11 @@ import Spinner from "./components/UI/Spinner/Spinner";
 import ModalOverlay from "./components/UI/Modal/ModalOverlay";
 import FloatingAlerts from "./components/UI/Alert/FloatingAlerts";
 
+// import Modal from "./components/UI/Modal/Modal";
+
 function App() {
   const isLoading = useSelector((state) => state.ui.loading);
+  const modal = useSelector((state) => state.ui.modal);
   const { alerts } = useSelector((state) => state.ui.alerts);
   const dispatch = useDispatch();
 
@@ -27,13 +30,13 @@ function App() {
 
   return (
     <>
+      {/* {modal.display && <Modal {...modal.content} />} */}
       {isLoading && (
         <ModalOverlay>
           <Spinner />
         </ModalOverlay>
       )}
       {alerts.length > 0 && <FloatingAlerts alerts={alerts} />}
-
       <Router>
         <ScrollToTop />
         <Header />

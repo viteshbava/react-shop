@@ -29,8 +29,14 @@ const fetchCart = (cartId) => async (dispatch) => {
     // Update Redux state with cart
     dispatch(cartActions.replaceCart(response_cart));
   } catch (err) {
-    dispatch(cartActions.setError(err));
-    // ERROR CODE GOES HERE
+    dispatch(cartActions.setError({ message: err.message }));
+    dispatch(
+      uiActions.addAlert({
+        type: ALERT_TYPE.ERROR,
+        title: "Unable to fetch cart data!",
+      })
+    );
+    console.error(err);
   }
   dispatch(cartActions.isLoading(false));
 };
@@ -44,17 +50,19 @@ const addToCart =
       const result = await fakeStoreAPI.updateCart(cartId, [
         { productId: product.id, quantity },
       ]);
-      // throw new Error("Test Error!");
       dispatch(cartActions.add({ product, quantity }));
       dispatch(uiActions.showLoadingState(false));
-      onAddSuccess();
+      if (onAddSuccess) onAddSuccess();
     } catch (err) {
       dispatch(uiActions.showLoadingState(false));
-      onAddError(err);
-      // console.error(err);
-      // ERROR CODE HERE
-      // throw err;
-      console.log("TO DO: add to cart error alert");
+      if (onAddError) onAddError(err);
+      dispatch(
+        uiActions.addAlert({
+          type: ALERT_TYPE.ERROR,
+          title: "Failed to add to cart!",
+        })
+      );
+      console.error(err);
     }
   };
 

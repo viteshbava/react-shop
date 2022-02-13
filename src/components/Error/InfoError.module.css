@@ -4,13 +4,12 @@
 
 .icon {
   font-size: 7rem;
-
   display: inline-block;
   margin-bottom: 2rem;
 }
 
 .icon--error {
-  color: var(--red-light);
+  color: var(--danger-dark);
 }
 
 .icon--info {

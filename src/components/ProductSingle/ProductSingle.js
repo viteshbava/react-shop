@@ -35,9 +35,7 @@ const ProductSingle = () => {
   const addToCartHandler = (e) => {
     e.preventDefault();
     const qty = +qtyRef.current.value;
-    dispatch(
-      addToCart(product, qty, () => addToCartSuccess(qty), addToCartError)
-    );
+    dispatch(addToCart(product, qty, () => addToCartSuccess(qty)));
   };
 
   const addToCartSuccess = (qty) => {
@@ -46,14 +44,6 @@ const ProductSingle = () => {
       customContent: <AddToCartSummary numItemsAdded={qty} />,
     });
   };
-
-  const addToCartError = (err) =>
-    modal.showModal({
-      type: "alert",
-      title: "Add to Cart Error!",
-      body: `Sorry but that didn't work!  Try again later! ${err}`,
-      okText: "Okay :-(",
-    });
 
   let content;
 
@@ -71,7 +61,7 @@ const ProductSingle = () => {
     content = (
       <InfoError
         type={INFO_ERROR_TYPE.ERROR}
-        heading="Unkown Product!"
+        heading="Unknown Product!"
         message={`A product with id: ${id} cannot be found.`}
       />
     );

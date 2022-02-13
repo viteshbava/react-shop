@@ -5,22 +5,27 @@ import { useSelector } from "react-redux";
 import toDollars from "../../utilities/toDollars";
 import styles from "./CartOrderSummary.module.css";
 
-import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
 import ModalContext from "../../context/modal-context";
+import { useNavigate } from "react-router-dom";
 
 const CartOrderSummary = () => {
   const itemSubtotal = useSelector((state) => state.cart.totalItemPrice);
   const modal = useContext(ModalContext);
+  const navigate = useNavigate();
 
   const orderTotal =
     itemSubtotal; /* this is where additional fees etc would be added */
 
   const onCheckoutClickHandler = () => {
     modal.showModal({
-      type: "custom",
-      customContent: <AddToCartSummary numItemsAdded={666} />,
+      type: "alert",
+      variant: "error",
+      title: "Checkout Not Ready!",
+      body: "The checkout feature has not yet been built.  Sorry!",
     });
   };
+
+  const onContShoppingHandler = () => navigate("/");
 
   return (
     <div>
@@ -41,7 +46,9 @@ const CartOrderSummary = () => {
       </Card>
       <div className={styles["summary-actions"]}>
         <Button onClick={onCheckoutClickHandler}>Checkout</Button>
-        <Button variant="outlined">Continue Shopping</Button>
+        <Button onClick={onContShoppingHandler} variant="outlined">
+          Continue Shopping
+        </Button>
       </div>
     </div>
   );

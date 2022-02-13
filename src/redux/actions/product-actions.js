@@ -10,8 +10,8 @@ const fetchProducts = () => async (dispatch) => {
     // Update Redux state with products
     dispatch(productsActions.setProducts(response_products));
   } catch (err) {
-    dispatch(productsActions.setError(err));
-    // ERROR CODE GOES HERE
+    dispatch(productsActions.setError({ message: err.message }));
+    console.error(err.message);
   }
   dispatch(productsActions.isLoading(false));
 };
@@ -22,8 +22,8 @@ const fetchProduct = (productId) => async (dispatch) => {
     const response_product = await fakeStoreApi.getProduct(productId);
     dispatch(selectedProductActions.setProduct(response_product));
   } catch (err) {
-    dispatch(selectedProductActions.setError(err));
-    // ERROR CODE GOES HERE
+    dispatch(selectedProductActions.setError({ message: err.message }));
+    console.error(err.message);
   }
   dispatch(selectedProductActions.isLoading(false));
 };

@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import Card from "../UI/Card/Card";
 import Button from "../UI/Button/Button";
 import { useSelector } from "react-redux";
 import toDollars from "../../utilities/toDollars";
 import styles from "./CartOrderSummary.module.css";
 
+import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
+import ModalContext from "../../context/modal-context";
+
 const CartOrderSummary = () => {
   const itemSubtotal = useSelector((state) => state.cart.totalItemPrice);
+  const modal = useContext(ModalContext);
 
   const orderTotal =
     itemSubtotal; /* this is where additional fees etc would be added */
+
+  const onCheckoutClickHandler = () => {
+    modal.showModal({
+      type: "custom",
+      customContent: <AddToCartSummary numItemsAdded={666} />,
+    });
+  };
 
   return (
     <div>
@@ -29,7 +40,7 @@ const CartOrderSummary = () => {
         </p>
       </Card>
       <div className={styles["summary-actions"]}>
-        <Button>Checkout</Button>
+        <Button onClick={onCheckoutClickHandler}>Checkout</Button>
         <Button variant="outlined">Continue Shopping</Button>
       </div>
     </div>

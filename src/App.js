@@ -21,11 +21,10 @@ import ModalContext from "./context/modal-context";
 
 function App() {
   const isLoading = useSelector((state) => state.ui.loading);
-  const modal = useSelector((state) => state.ui.modal);
   const { alerts } = useSelector((state) => state.ui.alerts);
   const dispatch = useDispatch();
 
-  const modalCtx = useContext(ModalContext);
+  const modal = useContext(ModalContext);
 
   useEffect(() => {
     dispatch(fetchCart("1"));
@@ -33,14 +32,14 @@ function App() {
 
   return (
     <>
-      {modalCtx.show && <Modal {...modalCtx.props} />}
-      {isLoading && (
-        <ModalOverlay>
-          <Spinner />
-        </ModalOverlay>
-      )}
-      {alerts.length > 0 && <FloatingAlerts alerts={alerts} />}
       <Router>
+        {modal.show && <Modal {...modal.props} />}
+        {isLoading && (
+          <ModalOverlay>
+            <Spinner />
+          </ModalOverlay>
+        )}
+        {alerts.length > 0 && <FloatingAlerts alerts={alerts} />}
         <ScrollToTop />
         <Header />
         <main>

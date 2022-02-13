@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useEffect, useRef, useContext } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import NumberButtons from "../UI/Control/NumberButtons";
@@ -12,11 +12,9 @@ import {
   fetchProduct,
   clearProduct,
 } from "../../redux/actions/product-actions";
-import { uiActions } from "../../redux/slices/ui-slice";
 import { addToCart } from "../../redux/actions/cart-actions";
 import styles from "./ProductSingle.module.css";
 
-import Modal from "../UI/Modal/Modal";
 import ModalContext from "../../context/modal-context";
 
 const ProductSingle = () => {
@@ -24,13 +22,9 @@ const ProductSingle = () => {
   const { isLoading, error, product } = useSelector(
     (state) => state.selectedProduct
   );
-  const modal = useSelector((state) => state.ui.modal);
   const dispatch = useDispatch();
   const qtyRef = useRef();
-
-  const [modalProps, setModalProps] = useState(null);
-
-  const modalCtx = useContext(ModalContext);
+  const modal = useContext(ModalContext);
 
   useEffect(() => {
     dispatch(fetchProduct(id));
@@ -39,7 +33,7 @@ const ProductSingle = () => {
 
   const addToCartHandler = (e) => {
     e.preventDefault();
-    modalCtx.showModal({
+    modal.showModal({
       type: "confirm",
       title: "Add to cart?",
       body: "Are you sure you want to add these items to your cart?",
@@ -57,7 +51,7 @@ const ProductSingle = () => {
         product,
         qty,
         () =>
-          modalCtx.showModal({
+          modal.showModal({
             type: "confirm",
             title: "Item added to cart successfully!",
             body: "Do you want to view your cart?",
@@ -72,7 +66,7 @@ const ProductSingle = () => {
   };
 
   const addToCartSuccess = () =>
-    modalCtx.showModal({
+    modal.showModal({
       type: "alert",
       title: "Cart Updated!",
       body: "Your cart has been updated successfully",
@@ -80,7 +74,7 @@ const ProductSingle = () => {
     });
 
   const addToCartError = (err) =>
-    modalCtx.showModal({
+    modal.showModal({
       type: "alert",
       title: "Add to Cart Error!",
       body: `Sorry but that didn't work!  Try again later! ${err}`,

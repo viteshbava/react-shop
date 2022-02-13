@@ -15,8 +15,8 @@
   color: var(--danger-dark);
 }
 .container--info {
-  background-color: var(--primary-main);
-  color: var(--primary-main-dark);
+  background-color: var(--info-dark);
+  color: var(--info-light);
 }
 .container--success {
   background-color: var(--success-light);

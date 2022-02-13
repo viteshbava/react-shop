@@ -80,3 +80,16 @@
 .btn--warning.btn--outlined {
   background-color: var(--primary-white);
 }
+
+/* INFO */
+
+.btn--info {
+  color: var(--info-dark);
+  border-color: var(--info-light);
+}
+.btn--info.btn--fill {
+  background-color: var(--info-light);
+}
+.btn--info.btn--outlined {
+  background-color: var(--primary-white);
+}

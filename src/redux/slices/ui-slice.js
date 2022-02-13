@@ -1,10 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const STATE_INIT = {
-  modal: {
-    display: false,
-    content: null,
-  },
   alerts: {
     _id: 0,
     alerts: [],
@@ -16,10 +12,6 @@ const uiSlice = createSlice({
   name: "ui",
   initialState: STATE_INIT,
   reducers: {
-    showModal(state, action) {
-      const displayModal = action.payload;
-      state.modal.display = displayModal;
-    },
     addAlert(state, action) {
       const newAlert = action.payload;
       state.alerts.alerts.unshift({

@@ -35,6 +35,7 @@ const ProductSingle = () => {
     e.preventDefault();
     modal.showModal({
       type: "confirm",
+      variant: "warning",
       title: "Add to cart?",
       body: "Are you sure you want to add these items to your cart?",
       cancelText: "Cancel",

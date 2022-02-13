@@ -1,13 +1,90 @@
 .wrapper {
-  padding: 5rem;
+  position: relative;
+  width: 30rem;
+  padding: 2rem;
 }
 
-.modal-body {
-  display: flex;
-  justify-content: space-between;
+.close-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-size: 2rem;
+  color: grey;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.close-button:hover {
+  color: var(--primary-black);
+}
+
+.header {
+  padding: 0 2rem;
   margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.header__icon {
+  font-size: 5rem;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.body {
+  text-align: center;
+  margin-bottom: 2.5rem;
 }
 
 .cart-subtotal-label {
   font-weight: bold;
+}
+
+.cart-subtotal-value {
+  font-weight: bold;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.actions button {
+  margin-left: 1rem;
+}
+
+.wrapper--primary .header__icon {
+  color: var(--primary-main);
+}
+.wrapper--error .header__icon {
+  color: var(--danger-dark);
+}
+.wrapper--info .header__icon {
+  color: var(--info-dark);
+}
+.wrapper--success .header__icon {
+  color: var(--success-dark);
+}
+.wrapper--warning .header__icon {
+  color: var(--warning-dark);
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    width: 90vw;
+  }
+  .heading {
+    font-size: 1.25rem;
+  }
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 1rem;
+  }
 }

@@ -66,7 +66,7 @@ const Icon = ({ className, icon }) => {
       iconReturn = <FontAwesomeIcon icon={faCheckCircle} />;
       break;
     default:
-      console.error("Invalid icon type!");
+      console.error(`Invalid icon type: ${icon}`);
   }
   const spanClasses = styles.wrapper + (className ? ` ${className}` : "");
   return <span className={spanClasses}>{iconReturn}</span>;

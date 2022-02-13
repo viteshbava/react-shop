@@ -13,8 +13,8 @@
   --danger-light: rgb(250, 179, 179);
   --success-dark: rgb(24, 109, 24);
   --success-light: rgb(194, 233, 194);
-  /* --info-dark: rgb(0, 89, 190);
-  --info-light: rgb(154, 200, 253); */
+  --info-dark: rgb(3, 75, 153);
+  --info-light: rgb(176, 212, 252);
   --warning-dark: rgb(170, 111, 0);
   --warning-light: rgb(248, 218, 161);
 }

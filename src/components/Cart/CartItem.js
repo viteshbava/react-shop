@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import NumberButtons from "../UI/Control/NumberButtons";
 import toDollars from "../../utilities/toDollars";
 import styles from "./CartItem.module.css";
@@ -8,13 +8,30 @@ import {
   changeQuantity,
 } from "../../redux/actions/cart-actions";
 import { useDispatch } from "react-redux";
+import ModalContext from "../../context/modal-context";
 
 const CartItem = ({ product }) => {
   const dispatch = useDispatch();
   const { id, title, price, image, quantity } = product;
   const subTotal = price * quantity;
 
-  const removeProductHandler = () => dispatch(removeFromCart(id));
+  const modal = useContext(ModalContext);
+
+  const removeProductHandler = () => {
+    modal.showModal({
+      type: "confirm",
+      variant: "warning",
+      title: "Remove product from cart?",
+      body: "Are you sure you want to remove this from your cart?",
+      okText: "Remove Items",
+      onConfirm: removeProductAction,
+    });
+  };
+
+  const removeProductAction = () => {
+    dispatch(removeFromCart(id));
+    // ADD ERROR CONDITION HERE
+  };
 
   const qtyUpdateHandler = (newVal) => dispatch(changeQuantity(id, newVal));
 

@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import Icon, { ICON_TYPE } from "../Icon/Icon";
 import ModalContext from "../../../context/modal-context";
+import Icon, { ICON_TYPE } from "../Icon/Icon";
 import ModalOverlay from "./ModalOverlay";
 import Card from "../Card/Card";
 import styles from "./Modal.module.css";

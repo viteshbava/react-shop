@@ -15,7 +15,9 @@ import {
 import { addToCart } from "../../redux/actions/cart-actions";
 import styles from "./ProductSingle.module.css";
 
+import { useNavigate } from "react-router-dom";
 import ModalContext from "../../context/modal-context";
+import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
 
 const ProductSingle = () => {
   const { id } = useParams();
@@ -25,6 +27,7 @@ const ProductSingle = () => {
   const dispatch = useDispatch();
   const qtyRef = useRef();
   const modal = useContext(ModalContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchProduct(id));
@@ -33,46 +36,18 @@ const ProductSingle = () => {
 
   const addToCartHandler = (e) => {
     e.preventDefault();
-    modal.showModal({
-      type: "confirm",
-      variant: "warning",
-      title: "Add to cart?",
-      body: "Are you sure you want to add these items to your cart?",
-      cancelText: "Cancel",
-      okText: "Add to Cart",
-      onConfirm: addToCartConfirm,
-      onCancel: () => console.log("Cancel adding to cart..."),
-    });
-  };
-
-  const addToCartConfirm = () => {
     const qty = +qtyRef.current.value;
     dispatch(
-      addToCart(
-        product,
-        qty,
-        () =>
-          modal.showModal({
-            type: "confirm",
-            title: "Item added to cart successfully!",
-            body: "Do you want to view your cart?",
-            cancelText: "Continue Shopping",
-            okText: "View Cart",
-            onConfirm: addToCartSuccess,
-            onCancel: () => console.log("Lets Continue shopping..."),
-          }),
-        addToCartError
-      )
+      addToCart(product, qty, () => addToCartAction(qty), addToCartError)
     );
   };
 
-  const addToCartSuccess = () =>
+  const addToCartAction = (qty) => {
     modal.showModal({
-      type: "alert",
-      title: "Cart Updated!",
-      body: "Your cart has been updated successfully",
-      okText: "Back to shopping!",
+      type: "custom",
+      customContent: <AddToCartSummary numItemsAdded={qty} />,
     });
+  };
 
   const addToCartError = (err) =>
     modal.showModal({

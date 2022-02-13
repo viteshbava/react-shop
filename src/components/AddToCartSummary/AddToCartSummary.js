@@ -4,22 +4,23 @@ import Button from "../UI/Button/Button";
 import Card from "../UI/Card/Card";
 import styles from "./AddToCartSummary.module.css";
 import toDollars from "../../utilities/toDollars";
-import { useDispatch, useSelector } from "react-redux";
-import { uiActions } from "../../redux/slices/ui-slice";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import { useContext } from "react";
+import ModalContext from "../../context/modal-context";
 
 const AddToCartSummary = ({ numItemsAdded }) => {
   const { totalQuantity, totalItemPrice: cartSubtotal } = useSelector(
     (state) => state.cart
   );
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const closeSummaryHandler = () =>
-    dispatch(uiActions.showAddToCartSummary(null));
+  const modalCtx = useContext(ModalContext);
+  const closeModal = () => modalCtx.hideModal();
 
   const viewCartHandler = () => {
-    dispatch(uiActions.showAddToCartSummary(null));
+    closeModal();
     navigate("/cart");
   };
 
@@ -28,11 +29,10 @@ const AddToCartSummary = ({ numItemsAdded }) => {
 
   return (
     <Card className={cardClasses}>
-      <button onClick={closeSummaryHandler} className={styles["close-button"]}>
+      <button onClick={closeModal} className={styles["close-button"]}>
         &times;
       </button>
       <div className={styles.header}>
-        <Icon icon={ICON_TYPE.SUCCESS} className={styles["header__icon"]} />
         <h2 className={styles["header__title"]}>
           {numItemsAdded} item(s) added to your cart
         </h2>
@@ -47,14 +47,10 @@ const AddToCartSummary = ({ numItemsAdded }) => {
         </p>
       </div>
       <div className={styles.actions}>
-        <Button
-          onClick={closeSummaryHandler}
-          variant="outlined"
-          color="success"
-        >
+        <Button onClick={closeModal} variant="outlined">
           Continue Shopping
         </Button>
-        <Button color="success" onClick={viewCartHandler}>
+        <Button onClick={viewCartHandler}>
           <Icon icon={ICON_TYPE.CART} />
           View Cart
         </Button>

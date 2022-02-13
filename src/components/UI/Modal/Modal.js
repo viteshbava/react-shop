@@ -22,6 +22,8 @@ const Modal = (props) => {
   const modalCtx = useContext(ModalContext);
   const closeModal = () => modalCtx.hideModal();
 
+  const { icon, color } = _setIconAndColor(variant);
+
   const onCancelHandler = () => {
     closeModal();
     if (onCancel) onCancel();
@@ -32,8 +34,79 @@ const Modal = (props) => {
     if (onConfirm) onConfirm();
   };
 
-  let modalContent;
+  const _getAlertContent = () => {
+    const footer = (
+      <>
+        <Button color={color} onClick={onOkayHandler}>
+          {okText}
+        </Button>
+      </>
+    );
+    return _setModalContent(footer);
+  };
 
+  const _getConfirmContent = () => {
+    if (!onConfirm)
+      console.error("Confirm modal has not received a onConfirm action!");
+    const footer = (
+      <>
+        <Button onClick={onCancelHandler} variant="outlined" color={color}>
+          {cancelText}
+        </Button>
+        <Button color={color} onClick={onOkayHandler}>
+          {okText}
+        </Button>
+      </>
+    );
+    return _setModalContent(footer);
+  };
+
+  const _setModalContent = (footer) => {
+    let cardClasses = styles.wrapper;
+    cardClasses += ` ${styles[`wrapper--${color}`]}`;
+    return (
+      <Card className={cardClasses}>
+        <button onClick={closeModal} className={styles["close-button"]}>
+          &times;
+        </button>
+        <div className={styles.header}>
+          {icon && <Icon icon={icon} className={styles["header__icon"]} />}
+          <h2 className={styles["header__title"]}>{title}</h2>
+        </div>
+        <div className={styles.body}>{body}</div>
+        <div className={styles.actions}>{footer}</div>
+      </Card>
+    );
+  };
+
+  let modalContent;
+  switch (type) {
+    case "custom":
+      modalContent = customContent;
+      break;
+    case "alert":
+      modalContent = _getAlertContent();
+      break;
+    case "confirm":
+      modalContent = _getConfirmContent();
+      break;
+    default:
+      console.error(`Unknown modal type: ${type}`);
+      break;
+  }
+
+  return (
+    <ModalOverlay onOverlayClick={closeModal}>{modalContent}</ModalOverlay>
+  );
+};
+
+export default Modal;
+
+/*************************************************** 
+Utility functions below used in this Modal component
+****************************************************/
+
+const _setmodalContent = () => {
   if (type === "custom") {
     modalContent = customContent;
   } else {
@@ -68,31 +141,9 @@ const Modal = (props) => {
         break;
     }
 
-    let cardClasses = styles.wrapper;
-    cardClasses += ` ${styles[`wrapper--${color}`]}`;
-    modalContent = (
-      <Card className={cardClasses}>
-        <button onClick={closeModal} className={styles["close-button"]}>
-          &times;
-        </button>
-        <div className={styles.header}>
-          {icon && <Icon icon={icon} className={styles["header__icon"]} />}
-          <h2 className={styles["header__title"]}>{title}</h2>
-        </div>
-        <div className={styles.body}>{body}</div>
-        <div className={styles.actions}>{footer}</div>
-      </Card>
-    );
+    return _setModalContent(color, icon, title, body, footer, closeModal);
   }
-
-  return (
-    <ModalOverlay onOverlayClick={closeModal}>{modalContent}</ModalOverlay>
-  );
 };
-
-export default Modal;
-
-// Utility functions below used in this Modal component
 
 const _setIconAndColor = (variant) => {
   let color;

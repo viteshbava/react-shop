@@ -42,7 +42,8 @@ const fetchCart = (cartId) => async (dispatch) => {
 };
 
 const addToCart =
-  (product, quantity, onAddSuccess, onAddError) => async (dispatch) => {
+  ({ product, quantity, onAddSuccess, onAddError }) =>
+  async (dispatch) => {
     dispatch(uiActions.showLoadingState(true));
     console.log("TO DO: check if we need to create a new cart");
     const { id: cartId } = store.getState().cart;
@@ -66,31 +67,35 @@ const addToCart =
     }
   };
 
-const changeQuantity = (productId, quantity) => async (dispatch) => {
-  dispatch(uiActions.showLoadingState(true));
-  const { id: cartId } = store.getState().cart;
-  try {
-    const result = await fakeStoreAPI.updateCart(cartId, [
-      { productId, quantity },
-    ]);
-    dispatch(cartActions.changeQuantity({ productId, quantity }));
-    dispatch(
-      uiActions.addAlert({
-        type: ALERT_TYPE.SUCCESS,
-        title: `Item quantity changed`,
-      })
-    );
-  } catch (err) {
-    dispatch(
-      uiActions.addAlert({
-        type: ALERT_TYPE.ERROR,
-        title: "Unable to change quantity!",
-      })
-    );
-    console.error(err);
-  }
-  dispatch(uiActions.showLoadingState(false));
-};
+const changeQuantity =
+  ({ productId, quantity, onError }) =>
+  async (dispatch) => {
+    dispatch(uiActions.showLoadingState(true));
+    const { id: cartId } = store.getState().cart;
+    try {
+      const result = await fakeStoreAPI.updateCart(cartId, [
+        { productId, quantity },
+      ]);
+      dispatch(cartActions.changeQuantity({ productId, quantity }));
+      dispatch(
+        uiActions.addAlert({
+          type: ALERT_TYPE.SUCCESS,
+          title: `Item quantity changed`,
+        })
+      );
+    } catch (err) {
+      dispatch(
+        uiActions.addAlert({
+          type: ALERT_TYPE.ERROR,
+          title: "Unable to change quantity!",
+        })
+      );
+      console.log(onError);
+      if (onError) onError();
+      console.error(err);
+    }
+    dispatch(uiActions.showLoadingState(false));
+  };
 
 const removeFromCart = (productId) => async (dispatch) => {
   dispatch(uiActions.showLoadingState(true));

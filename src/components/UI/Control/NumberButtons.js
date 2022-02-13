@@ -43,10 +43,13 @@ const NumberButtons = ({
     changeHandler(value + 1);
   };
 
+  // if an onUpdate function is provided to this Control, the Control will call that function upon value change and provide to arguments: the new value (newVal), and a function that can be used to undo the change back to original value (undoChange). undoChange could, for example, be used in an error callback.
   const changeHandler = (newVal) => {
-    if (onUpdate) onUpdate(newVal);
     setValue(newVal);
+    if (onUpdate) onUpdate(newVal, undoChange);
   };
+
+  const undoChange = () => setValue(currVal);
 
   return (
     <ControlWrapper

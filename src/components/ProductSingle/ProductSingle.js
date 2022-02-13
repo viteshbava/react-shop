@@ -35,7 +35,13 @@ const ProductSingle = () => {
   const addToCartHandler = (e) => {
     e.preventDefault();
     const qty = +qtyRef.current.value;
-    dispatch(addToCart(product, qty, () => addToCartSuccess(qty)));
+    dispatch(
+      addToCart({
+        product,
+        quantity: qty,
+        onAddSuccess: () => addToCartSuccess(qty),
+      })
+    );
   };
 
   const addToCartSuccess = (qty) => {

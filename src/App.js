@@ -33,7 +33,7 @@ function App() {
   return (
     <>
       <Router>
-        {modal.show && <Modal {...modal.props} />}
+        {modal.show && modal.props && <Modal {...modal.props} />}
         {isLoading && (
           <ModalOverlay>
             <Spinner />

@@ -2,14 +2,14 @@ import React, { useState } from "react";
 
 const ModalContext = React.createContext({
   show: false,
-  props: {},
+  props: null,
   showModal: () => {},
   hideModal: () => {},
 });
 
 const ModalContextProvider = ({ children }) => {
   const [show, setShow] = useState(false);
-  const [props, setProps] = useState({});
+  const [props, setProps] = useState(null);
 
   const showModal = (props) => {
     setShow(true);
@@ -18,6 +18,7 @@ const ModalContextProvider = ({ children }) => {
 
   const hideModal = () => {
     setShow(false);
+    setProps(null);
   };
 
   return (

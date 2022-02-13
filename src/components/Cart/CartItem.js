@@ -28,7 +28,14 @@ const CartItem = ({ product }) => {
     });
   };
 
-  const qtyUpdateHandler = (newVal) => dispatch(changeQuantity(id, newVal));
+  const qtyUpdateHandler = (newVal, undoUpdate) =>
+    dispatch(
+      changeQuantity({
+        productId: id,
+        quantity: newVal,
+        onError: undoUpdate,
+      })
+    );
 
   return (
     <li className={styles["item-wrapper"]}>

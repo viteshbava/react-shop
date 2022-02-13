@@ -24,13 +24,8 @@ const CartItem = ({ product }) => {
       title: "Remove product from cart?",
       body: "Are you sure you want to remove this from your cart?",
       okText: "Remove Items",
-      onConfirm: removeProductAction,
+      onConfirm: () => dispatch(removeFromCart(id)),
     });
-  };
-
-  const removeProductAction = () => {
-    dispatch(removeFromCart(id));
-    // ADD ERROR CONDITION HERE
   };
 
   const qtyUpdateHandler = (newVal) => dispatch(changeQuantity(id, newVal));

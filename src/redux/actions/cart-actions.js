@@ -73,15 +73,18 @@ const changeQuantity = (productId, quantity) => async (dispatch) => {
       })
     );
   } catch (err) {
+    dispatch(
+      uiActions.addAlert({
+        type: ALERT_TYPE.ERROR,
+        title: "Unable to change quantity!",
+      })
+    );
     console.error(err);
-    // ERROR CODE HERE
-    console.log("TO DO: change quantity in cart error alert");
   }
   dispatch(uiActions.showLoadingState(false));
 };
 
 const removeFromCart = (productId) => async (dispatch) => {
-  console.log("removeFromCart TO DO: show confirm modal");
   dispatch(uiActions.showLoadingState(true));
   const { id: cartId } = store.getState().cart;
 
@@ -97,9 +100,13 @@ const removeFromCart = (productId) => async (dispatch) => {
       })
     );
   } catch (err) {
+    dispatch(
+      uiActions.addAlert({
+        type: ALERT_TYPE.ERROR,
+        title: "Unable to remove item from cart!",
+      })
+    );
     console.error(err);
-    // ERROR CODE HERER
-    console.log("TO DO: add to cart error alert");
   }
   dispatch(uiActions.showLoadingState(false));
 };

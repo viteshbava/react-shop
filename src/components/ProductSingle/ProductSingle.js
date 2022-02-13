@@ -15,7 +15,6 @@ import {
 import { addToCart } from "../../redux/actions/cart-actions";
 import styles from "./ProductSingle.module.css";
 
-import { useNavigate } from "react-router-dom";
 import ModalContext from "../../context/modal-context";
 import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
 
@@ -27,7 +26,6 @@ const ProductSingle = () => {
   const dispatch = useDispatch();
   const qtyRef = useRef();
   const modal = useContext(ModalContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchProduct(id));
@@ -38,11 +36,11 @@ const ProductSingle = () => {
     e.preventDefault();
     const qty = +qtyRef.current.value;
     dispatch(
-      addToCart(product, qty, () => addToCartAction(qty), addToCartError)
+      addToCart(product, qty, () => addToCartSuccess(qty), addToCartError)
     );
   };
 
-  const addToCartAction = (qty) => {
+  const addToCartSuccess = (qty) => {
     modal.showModal({
       type: "custom",
       customContent: <AddToCartSummary numItemsAdded={qty} />,

@@ -15,17 +15,16 @@ const fetchCart = (cartId) => async (dispatch) => {
       0
     );
     dispatch(cartActions.setTotalQuantity(totalQuantity));
-    // Fetch product data for each item in cart and store in temp array
-    const productDataArr = [];
-    for (const product of response_cart.products) {
-      const response_product = await fakeStoreAPI.getProduct(product.productId);
-      productDataArr.push({
+    // Fetch product data for each item in cart
+    const promises = response_cart.products.map(async (p) => {
+      const response_product = await fakeStoreAPI.getProduct(p.productId);
+      return {
         ...response_product,
-        quantity: product.quantity,
-      });
-    }
-    // Swap product array in cart with product data array
-    response_cart.products = productDataArr;
+        quantity: p.quantity,
+      };
+    });
+    // Swap product array in cart with new product data array
+    response_cart.products = await Promise.all(promises);
     // Update Redux state with cart
     dispatch(cartActions.replaceCart(response_cart));
   } catch (err) {

@@ -12,6 +12,7 @@ import ScrollToTop from "./utilities/ScrollToTop";
 import InfoError, { INFO_ERROR_TYPE } from "./components/Error/InfoError";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from "./redux/actions/cart-actions";
+import { fetchWishlist } from "./redux/actions/wishlist-actions";
 import Spinner from "./components/UI/Spinner/Spinner";
 import ModalOverlay from "./components/UI/Modal/ModalOverlay";
 import FloatingAlerts from "./components/UI/Alert/FloatingAlerts";
@@ -28,6 +29,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchCart("1"));
+    dispatch(fetchWishlist("1"));
   }, []);
 
   return (

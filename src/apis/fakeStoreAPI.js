@@ -1,4 +1,5 @@
 import sendHttpRequest from "../utilities/sendHttpRequest";
+import ReactError from "../utilities/reactError";
 
 const BASE_URL = "https://fakestoreapi.com";
 const URL = {
@@ -8,6 +9,11 @@ const URL = {
 
 const fakeStoreApi = {
   getProduct: (productId) => {
+    if (!productId)
+      throw new ReactError({
+        message: "Empty product ID was supplied to fakeStoreApi!",
+        statusCode: 400,
+      });
     const product = sendHttpRequest({
       url: `${URL.PRODUCTS}/${productId}`,
     });
@@ -25,6 +31,11 @@ const fakeStoreApi = {
   },
 
   getCart: (cartId) => {
+    if (!cartId)
+      throw new ReactError({
+        message: "Empty cart ID was supplied to fakeStoreApi!",
+        statusCode: 400,
+      });
     const cart = sendHttpRequest({
       url: `${URL.CARTS}/${cartId}`,
       headers: {
@@ -35,6 +46,11 @@ const fakeStoreApi = {
   },
 
   updateCart: (cartId, products) => {
+    if (!cartId)
+      throw new ReactError({
+        message: "Empty cart ID was supplied to fakeStoreApi!",
+        statusCode: 400,
+      });
     const result = sendHttpRequest({
       method: "PUT",
       url: `${URL.CARTS}/${cartId}`,

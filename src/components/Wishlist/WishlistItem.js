@@ -2,6 +2,7 @@ import React from "react";
 import toDollars from "../../utilities/toDollars";
 import { removeFromWishlist } from "../../redux/actions/wishlist-actions";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import styles from "./WishlistItem.module.css";
 
 const WishlistItem = ({ product }) => {
@@ -13,11 +14,15 @@ const WishlistItem = ({ product }) => {
   return (
     <li className={styles["item-wrapper"]}>
       <div className={styles["image-wrapper"]}>
-        <img className={styles.image} src={image} alt="Product Image" />
+        <Link to={`/product/${id}`}>
+          <img className={styles.image} src={image} alt="Product Image" />
+        </Link>
       </div>
       <div className={styles["item-details"]}>
         <div className={styles["item-details__header"]}>
-          <h3 className={styles["product-name"]}>{title}</h3>
+          <h3 className={styles["product-name"]}>
+            <Link to={`/product/${id}`}>{title}</Link>
+          </h3>
           <button onClick={removeProductHandler} className={styles.close}>
             &times;
           </button>

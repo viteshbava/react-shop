@@ -11,33 +11,37 @@ const Cart = () => {
     (state) => state.cart
   );
 
-  let content;
+  const getCartContent = () => {
+    if (isLoading) {
+      return (
+        <>
+          <SectionHeading>Cart</SectionHeading>
+          <Spinner />
+        </>
+      );
+    }
 
-  if (isLoading) {
-    content = (
-      <>
-        <SectionHeading>Cart</SectionHeading>
-        <Spinner />
-      </>
-    );
-  } else if (error) {
-    content = (
-      <InfoError
-        type={INFO_ERROR_TYPE.ERROR}
-        heading="Error Fetching Cart!"
-        message={error.message}
-      />
-    );
-  } else if (!products || (products && !products.length)) {
-    content = (
-      <InfoError
-        type={INFO_ERROR_TYPE.INFO}
-        heading="Your Cart is Empty!"
-        message="Go add some products!"
-      />
-    );
-  } else {
-    content = (
+    if (error) {
+      return (
+        <InfoError
+          type={INFO_ERROR_TYPE.ERROR}
+          heading="Error Fetching Cart!"
+          message={error.message}
+        />
+      );
+    }
+
+    if (!products || (products && !products.length)) {
+      return (
+        <InfoError
+          type={INFO_ERROR_TYPE.INFO}
+          heading="Your Cart is Empty!"
+          message="Go add some products!"
+        />
+      );
+    }
+
+    return (
       <>
         <SectionHeading>Cart ({totalQuantity})</SectionHeading>
         <div className={styles["grid-wrapper"]}>
@@ -50,9 +54,9 @@ const Cart = () => {
         </div>
       </>
     );
-  }
+  };
 
-  return <section>{content}</section>;
+  return <section>{getCartContent()}</section>;
 };
 
 export default Cart;

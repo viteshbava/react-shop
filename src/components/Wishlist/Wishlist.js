@@ -1,9 +1,14 @@
 import React from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import WishlistItem from "./WishlistItem";
+import { useSelector } from "react-redux";
 import styles from "./Wishlist.module.css";
 
 const Wishlist = () => {
+  const { isLoading, error, products, totalQuantity } = useSelector(
+    (state) => state.wishlist
+  );
+
   return (
     <section>
       <SectionHeading>Wishlist (3)</SectionHeading>

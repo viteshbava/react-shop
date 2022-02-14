@@ -1,9 +1,14 @@
 import React from "react";
 import toDollars from "../../utilities/toDollars";
+import { removeFromWishlist } from "../../redux/actions/wishlist-actions";
+import { useDispatch } from "react-redux";
 import styles from "./WishlistItem.module.css";
 
 const WishlistItem = ({ product }) => {
-  const { id, title, price, image, quantity } = product;
+  const dispatch = useDispatch();
+  const { id, title, price, image } = product;
+
+  const removeProductHandler = () => dispatch(removeFromWishlist(id));
 
   return (
     <li className={styles["item-wrapper"]}>
@@ -13,7 +18,9 @@ const WishlistItem = ({ product }) => {
       <div className={styles["item-details"]}>
         <div className={styles["item-details__header"]}>
           <h3 className={styles["product-name"]}>{title}</h3>
-          <button className={styles.close}>&times;</button>
+          <button onClick={removeProductHandler} className={styles.close}>
+            &times;
+          </button>
         </div>
         <p className={styles["product-id"]}>
           Product ID: <span>{id}</span>

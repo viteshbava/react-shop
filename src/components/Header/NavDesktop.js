@@ -9,6 +9,7 @@ import styles from "./NavDesktop.module.css";
 const NavDesktop = ({ className, onSignOutHandler }) => {
   const ctx = useContext(AuthContext);
   const cartTotalQty = useSelector((state) => state.cart.totalQuantity);
+  const wishlistTotalQty = useSelector((state) => state.wishlist.totalQuantity);
 
   const navClasses = styles.wrapper + (className ? ` ${className}` : "");
 
@@ -26,7 +27,8 @@ const NavDesktop = ({ className, onSignOutHandler }) => {
             <li>
               <Button variant="outlined" link="/wishlist">
                 <Icon icon={ICON_TYPE.HEART_FULL} />
-                Wishlist (2)
+                Wishlist ({wishlistTotalQty === null ? "SP!" : wishlistTotalQty}
+                )
               </Button>
             </li>
             <li>

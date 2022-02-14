@@ -2,6 +2,8 @@ import React from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import WishlistItem from "./WishlistItem";
 import { useSelector } from "react-redux";
+import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
+import Spinner from "../UI/Spinner/Spinner";
 import styles from "./Wishlist.module.css";
 
 const Wishlist = () => {
@@ -9,19 +11,49 @@ const Wishlist = () => {
     (state) => state.wishlist
   );
 
-  return (
-    <section>
-      <SectionHeading>Wishlist (3)</SectionHeading>
-      <ul className={styles["item-list"]}>
-        <WishlistItem url="https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg" />
-        <WishlistItem url="https://www.vishopper.com/images/products/maxxmax/PL/1090_cut-out-tall-and-thin-pine-tree.jpg" />
-        <WishlistItem url="https://www.appears-itn.eu/wp-content/uploads/2018/07/long.jpg" />
-        <WishlistItem url="https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg" />
-        <WishlistItem url="https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg" />
-        <WishlistItem url="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" />
-      </ul>
-    </section>
-  );
+  const getWishlistContent = () => {
+    if (isLoading) {
+      return (
+        <>
+          <SectionHeading>Wishlist</SectionHeading>
+          <Spinner />
+        </>
+      );
+    }
+
+    if (error) {
+      return (
+        <InfoError
+          type={INFO_ERROR_TYPE.ERROR}
+          heading="Error Fetching Wishlist!"
+          message={error.message}
+        />
+      );
+    }
+
+    if (!products || (products && !products.length)) {
+      return (
+        <InfoError
+          type={INFO_ERROR_TYPE.INFO}
+          heading="Your Wishlist is Empty!"
+          message="Feel free to add products to your wishlist to purchase later!"
+        />
+      );
+    }
+
+    return (
+      <>
+        <SectionHeading>Wishlist ({totalQuantity})</SectionHeading>
+        <ul className={styles["item-list"]}>
+          {products.map((p) => (
+            <WishlistItem key={p.id} product={p} />
+          ))}
+        </ul>
+      </>
+    );
+  };
+
+  return <section>{getWishlistContent()}</section>;
 };
 
 export default Wishlist;

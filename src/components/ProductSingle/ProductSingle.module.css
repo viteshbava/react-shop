@@ -5,7 +5,6 @@
 }
 
 .image-wrapper {
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -17,14 +16,6 @@
 
 .image {
   width: 20rem;
-}
-
-.wishlist-toggle {
-  position: absolute;
-  display: inline-block;
-  font-size: 1.5rem;
-  top: 0;
-  right: 0;
 }
 
 .category {

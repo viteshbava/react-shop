@@ -13,27 +13,39 @@ import {
   clearProduct,
 } from "../../redux/actions/product-actions";
 import { addToCart } from "../../redux/actions/cart-actions";
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from "../../redux/actions/wishlist-actions";
 import styles from "./ProductSingle.module.css";
 
 import ModalContext from "../../context/modal-context";
 import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
 
 const ProductSingle = () => {
-  const { id } = useParams();
+  const id = +useParams().id;
   const { isLoading, error, product } = useSelector(
     (state) => state.selectedProduct
   );
+  const wishlist = useSelector((state) => state.wishlist.products);
   const dispatch = useDispatch();
   const qtyRef = useRef();
   const modal = useContext(ModalContext);
 
   const [initialRender, setInitialRender] = useState(true);
+  const [inWishlist, setInWishlist] = useState(false);
 
   useEffect(() => {
     setInitialRender(false);
     dispatch(fetchProduct(id));
     return () => dispatch(clearProduct());
   }, [id]);
+
+  useEffect(() => {
+    const foundProduct = wishlist.find((p) => p.id === id);
+    setInWishlist(!!foundProduct);
+    // !!foundProduct ? setInWishlist(true) : setInWishlist(false);
+  }, [id, wishlist]);
 
   const addToCartHandler = (e) => {
     e.preventDefault();
@@ -52,6 +64,12 @@ const ProductSingle = () => {
       type: "custom",
       customContent: <AddToCartSummary numItemsAdded={qty} />,
     });
+  };
+
+  const toggleWishlistHandler = () => {
+    inWishlist
+      ? dispatch(removeFromWishlist(id))
+      : dispatch(addToWishlist(product));
   };
 
   const getProductContent = () => {
@@ -76,15 +94,24 @@ const ProductSingle = () => {
       );
 
     const { title, price, category, description, image } = product;
+
+    const wishlistButtonContent = inWishlist ? (
+      <>
+        <Icon icon={ICON_TYPE.HEART_FULL} />
+        Added to Wishlist (click to remove)
+      </>
+    ) : (
+      <>
+        <Icon icon={ICON_TYPE.HEART_EMPTY} />
+        Add to Wishlist
+      </>
+    );
+
     return (
       <>
         <SectionHeading>{title}</SectionHeading>
         <div className={styles["grid-wrapper"]}>
           <div className={styles["image-wrapper"]}>
-            <Icon
-              className={styles["wishlist-toggle"]}
-              icon={ICON_TYPE.HEART_EMPTY}
-            />
             <img className={styles.image} src={image} alt="Product Image" />
           </div>
           <div className={styles["details-wrapper"]}>
@@ -110,7 +137,9 @@ const ProductSingle = () => {
               </Button>
             </form>
             <div className={styles["action-wrapper"]}>
-              <Button variant="outlined">Add to Wishlist</Button>
+              <Button onClick={toggleWishlistHandler} variant="outlined">
+                {wishlistButtonContent}
+              </Button>
             </div>
           </div>
         </div>

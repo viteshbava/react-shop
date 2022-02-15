@@ -2,6 +2,7 @@ import { wishlistActions } from "../slices/wishlist-slice";
 import { uiActions } from "../slices/ui-slice";
 import { ALERT_TYPE } from "../../components/UI/Alert/Alert";
 import fakeStoreAPI from "../../apis/fakeStoreApi";
+import store from "../store";
 
 const fetchWishlist = (userId) => async (dispatch) => {
   dispatch(wishlistActions.isLoading(true));
@@ -72,7 +73,7 @@ const removeFromWishlist = (productId) => async (dispatch) => {
     dispatch(
       uiActions.addAlert({
         type: ALERT_TYPE.SUCCESS,
-        title: `Item removed from wishlist!`,
+        title: `Product removed from wishlist!`,
       })
     );
   } catch (err) {

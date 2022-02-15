@@ -1,5 +1,12 @@
 .grid-flex {
   display: flex;
+  flex-direction: column;
+}
+
+.grid-flex a {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .wrapper {
@@ -10,6 +17,7 @@
   padding: 1.5rem;
   text-align: center;
   cursor: pointer;
+  flex-grow: 1;
 }
 
 .image-wrapper {
@@ -27,11 +35,18 @@
 }
 
 .wishlist-toggle {
+  border: none;
+  background-color: transparent;
   position: absolute;
   display: inline-block;
   font-size: 1.5rem;
   top: 0;
   right: 0;
+  cursor: pointer;
+}
+
+.wishlist-toggle:hover {
+  transform: scale(1.2);
 }
 
 .heading {

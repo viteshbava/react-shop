@@ -44,7 +44,6 @@ const ProductSingle = () => {
   useEffect(() => {
     const foundProduct = wishlist.find((p) => p.id === id);
     setInWishlist(!!foundProduct);
-    // !!foundProduct ? setInWishlist(true) : setInWishlist(false);
   }, [id, wishlist]);
 
   const addToCartHandler = (e) => {

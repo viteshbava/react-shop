@@ -11,7 +11,7 @@ const ALERT_TYPE = {
   WARNING: "warning",
 };
 
-const Alert = ({ id, type, title, message }) => {
+const Alert = ({ id, type, title, message, onClose }) => {
   let containerClasses = `${styles.container} ${styles[`container--${type}`]}`;
 
   const dispatch = useDispatch();
@@ -35,7 +35,10 @@ const Alert = ({ id, type, title, message }) => {
       break;
   }
 
-  const onCloseHandler = () => dispatch(uiActions.removeAlert(id));
+  const onCloseHandler = () => {
+    if (onClose) onClose();
+    if (id) dispatch(uiActions.removeAlert(id));
+  };
 
   useEffect(() => {
     const timeoutId = setTimeout(() => onCloseHandler(), 4000);

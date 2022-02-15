@@ -16,7 +16,7 @@ const uiSlice = createSlice({
       const newAlert = action.payload;
       state.alerts.alerts.unshift({
         ...newAlert,
-        id: state.alerts._id++,
+        id: ++state.alerts._id,
       });
     },
     removeAlert(state, action) {

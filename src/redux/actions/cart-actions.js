@@ -6,6 +6,7 @@ import store from "../store";
 
 const fetchCart = (cartId) => async (dispatch) => {
   dispatch(cartActions.isLoading(true));
+  dispatch(cartActions.setError(null));
   try {
     // Fetch cart data
     const response_cart = await fakeStoreAPI.getCart(cartId);

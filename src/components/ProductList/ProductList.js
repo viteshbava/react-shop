@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import ProductListItem from "./ProductListItem";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
@@ -12,37 +12,43 @@ const ProductList = () => {
   const { isLoading, error, products } = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
+  const [initialRender, setInitialRender] = useState(true);
+
   useEffect(() => {
+    setInitialRender(false);
     dispatch(fetchProducts());
   }, []);
 
-  let content;
+  const getProductListContent = () => {
+    if (isLoading || initialRender)
+      return (
+        <>
+          <SectionHeading>Products</SectionHeading>
+          <Spinner />
+        </>
+      );
 
-  if (isLoading) {
-    content = (
-      <>
-        <SectionHeading>Products</SectionHeading>
-        <Spinner />
-      </>
-    );
-  } else if (error) {
-    content = (
-      <InfoError
-        type={INFO_ERROR_TYPE.ERROR}
-        heading="Error Fetching Products!"
-        message={error.message}
-      />
-    );
-  } else if (!products || (products && !products.length)) {
-    content = (
-      <InfoError
-        type={INFO_ERROR_TYPE.INFO}
-        heading="No Products to Show!"
-        message="Please try again later."
-      />
-    );
-  } else {
-    content = (
+    if (error)
+      return (
+        <InfoError
+          type={INFO_ERROR_TYPE.ERROR}
+          heading="Error Fetching Products!"
+          message={error.message}
+        />
+      );
+
+    if (!products || !products.length) {
+      console.log("NO PRODUCTS TO SHOW INFO!");
+      return (
+        <InfoError
+          type={INFO_ERROR_TYPE.INFO}
+          heading="No Products to Show!"
+          message="Please try again later."
+        />
+      );
+    }
+
+    return (
       <>
         <SectionHeading>Products</SectionHeading>
         <ul className={styles["grid-wrapper"]}>
@@ -52,9 +58,9 @@ const ProductList = () => {
         </ul>
       </>
     );
-  }
+  };
 
-  return <section>{content}</section>;
+  return <section>{getProductListContent()}</section>;
 };
 
 export default ProductList;

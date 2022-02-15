@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import CartItem from "./CartItem";
 import CartOrderSummary from "./CartOrderSummary";
@@ -11,17 +12,22 @@ const Cart = () => {
     (state) => state.cart
   );
 
+  const [initialRender, setInitialRender] = useState(true);
+
+  useEffect(() => {
+    setInitialRender(false);
+  }, []);
+
   const getCartContent = () => {
-    if (isLoading) {
+    if (isLoading || initialRender)
       return (
         <>
           <SectionHeading>Cart</SectionHeading>
           <Spinner />
         </>
       );
-    }
 
-    if (error) {
+    if (error)
       return (
         <InfoError
           type={INFO_ERROR_TYPE.ERROR}
@@ -29,9 +35,8 @@ const Cart = () => {
           message={error.message}
         />
       );
-    }
 
-    if (!products || (products && !products.length)) {
+    if (!products || (products && !products.length))
       return (
         <InfoError
           type={INFO_ERROR_TYPE.INFO}
@@ -39,7 +44,6 @@ const Cart = () => {
           message="Go add some products!"
         />
       );
-    }
 
     return (
       <>

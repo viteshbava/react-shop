@@ -1,4 +1,4 @@
-import { useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import NumberButtons from "../UI/Control/NumberButtons";
@@ -27,10 +27,13 @@ const ProductSingle = () => {
   const qtyRef = useRef();
   const modal = useContext(ModalContext);
 
+  const [initialRender, setInitialRender] = useState(true);
+
   useEffect(() => {
+    setInitialRender(false);
     dispatch(fetchProduct(id));
     return () => dispatch(clearProduct());
-  }, []);
+  }, [id]);
 
   const addToCartHandler = (e) => {
     e.preventDefault();
@@ -51,29 +54,29 @@ const ProductSingle = () => {
     });
   };
 
-  let content;
+  const getProductContent = () => {
+    if (isLoading || initialRender) return <Spinner />;
 
-  if (isLoading) {
-    content = <Spinner />;
-  } else if (error) {
-    content = (
-      <InfoError
-        type={INFO_ERROR_TYPE.ERROR}
-        heading="Error Fetching Product!"
-        message={error.message}
-      />
-    );
-  } else if (!product) {
-    content = (
-      <InfoError
-        type={INFO_ERROR_TYPE.ERROR}
-        heading="Unknown Product!"
-        message={`A product with id: ${id} cannot be found.`}
-      />
-    );
-  } else {
+    if (error)
+      return (
+        <InfoError
+          type={INFO_ERROR_TYPE.ERROR}
+          heading="Error Fetching Product!"
+          message={error.message}
+        />
+      );
+
+    if (!product)
+      return (
+        <InfoError
+          type={INFO_ERROR_TYPE.ERROR}
+          heading="No Data for that Product!"
+          message={`Unable to retrieve data for product with ID: ${id}`}
+        />
+      );
+
     const { title, price, category, description, image } = product;
-    content = (
+    return (
       <>
         <SectionHeading>{title}</SectionHeading>
         <div className={styles["grid-wrapper"]}>
@@ -113,11 +116,11 @@ const ProductSingle = () => {
         </div>
       </>
     );
-  }
+  };
 
   return (
     <>
-      <section>{content}</section>
+      <section>{getProductContent()}</section>
     </>
   );
 };

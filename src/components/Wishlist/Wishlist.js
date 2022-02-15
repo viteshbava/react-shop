@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import WishlistItem from "./WishlistItem";
 import { useSelector } from "react-redux";
@@ -11,17 +11,22 @@ const Wishlist = () => {
     (state) => state.wishlist
   );
 
+  const [initialRender, setInitialRender] = useState(true);
+
+  useEffect(() => {
+    setInitialRender(false);
+  }, []);
+
   const getWishlistContent = () => {
-    if (isLoading) {
+    if (isLoading || initialRender)
       return (
         <>
           <SectionHeading>Wishlist</SectionHeading>
           <Spinner />
         </>
       );
-    }
 
-    if (error) {
+    if (error)
       return (
         <InfoError
           type={INFO_ERROR_TYPE.ERROR}
@@ -29,9 +34,9 @@ const Wishlist = () => {
           message={error.message}
         />
       );
-    }
 
     if (!products || (products && !products.length)) {
+      console.log("EMPTY WISHLIST!");
       return (
         <InfoError
           type={INFO_ERROR_TYPE.INFO}

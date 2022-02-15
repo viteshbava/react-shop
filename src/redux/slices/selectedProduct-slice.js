@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const STATE_INIT = { product: null, isLoading: false, error: null };
+const STATE_INIT = {
+  isLoading: false,
+  product: null,
+  error: null,
+};
 
 const selectedProductSlice = createSlice({
   name: "selectedProduct",

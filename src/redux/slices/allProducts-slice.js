@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const STATE_INIT = { products: [], isLoading: false, error: null };
+const STATE_INIT = { products: null, isLoading: false, error: null };
 
 const productsSlice = createSlice({
   name: "products",
@@ -14,6 +14,9 @@ const productsSlice = createSlice({
     },
     setError(state, action) {
       state.error = action.payload;
+    },
+    clearAllProducts(state, action) {
+      return { ...STATE_INIT };
     },
   },
 });

@@ -114,7 +114,7 @@ const removeFromCart = (productId) => async (dispatch) => {
 export { fetchUserCart, addToCart, removeFromCart, changeQuantity };
 
 /**********************************************************
-  Utility functions for cart-actions  
+  Helper functions for cart-actions  
 **********************************************************/
 const _fetchCartForUser = async (userId) => {
   // Fetch array of carts for supplied userId

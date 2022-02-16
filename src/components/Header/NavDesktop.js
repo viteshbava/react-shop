@@ -32,7 +32,7 @@ const NavDesktop = ({ className, onSignOutHandler }) => {
               </Button>
             </li>
             <li>
-              <Button link="/cart">
+              <Button variant={cartTotalQty === 0 && "outlined"} link="/cart">
                 <Icon icon={ICON_TYPE.CART} />
                 Cart ({cartTotalQty === null ? "SP!" : cartTotalQty})
               </Button>

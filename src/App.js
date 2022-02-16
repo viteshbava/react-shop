@@ -27,7 +27,7 @@ function App() {
 
   const modal = useContext(ModalContext);
 
-  const DUMMY_USERID = 2;
+  const DUMMY_USERID = 6;
 
   useEffect(() => {
     dispatch(fetchUserCart(DUMMY_USERID));

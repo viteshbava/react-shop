@@ -71,6 +71,23 @@ const fakeStoreApi = {
     return result;
   },
 
+  createUserCart: (cart) => {
+    if (!cart)
+      throw new ReactError({
+        message: "Empty cart was supplied to fakeStoreApi!",
+        statusCode: 400,
+      });
+    const result = sendHttpRequest({
+      method: "POST",
+      url: URL.CARTS,
+      body: cart,
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    return result;
+  },
+
   getUserCarts: (userId) => {
     if (!userId)
       throw new ReactError({

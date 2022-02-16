@@ -3,9 +3,11 @@ import AuthContext from "../../context/auth-context";
 import { Link } from "react-router-dom";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import styles from "./NavMobileCollapse.module.css";
+import { useSelector } from "react-redux";
 
 const NavMobileCollapse = ({ className, onSignOutHandler }) => {
   const ctx = useContext(AuthContext);
+  const wishlistQuantity = useSelector((state) => state.wishlist.totalQuantity);
   const navClasses = `${className} ${styles.wrapper}`;
 
   return (
@@ -15,7 +17,8 @@ const NavMobileCollapse = ({ className, onSignOutHandler }) => {
           <>
             <li>
               <Link to="/wishlist">
-                <Icon icon={ICON_TYPE.HEART_FULL} /> Wishlist (3)
+                <Icon icon={ICON_TYPE.HEART_FULL} /> Wishlist (
+                {wishlistQuantity})
               </Link>
             </li>
             <li>

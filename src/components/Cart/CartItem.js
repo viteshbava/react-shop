@@ -46,9 +46,9 @@ const CartItem = ({ product }) => {
       </div>
       <div className={styles["item-details"]}>
         <div className={styles["item-details__header"]}>
-          <Link to={`/product/${id}`}>
-            <h3 className={styles["product-name"]}>{title}</h3>
-          </Link>
+          <h3 className={styles["product-name"]}>
+            <Link to={`/product/${id}`}>{title}</Link>
+          </h3>
           <button onClick={removeProductHandler} className={styles.close}>
             &times;
           </button>

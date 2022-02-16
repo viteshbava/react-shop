@@ -70,6 +70,21 @@ const fakeStoreApi = {
     });
     return result;
   },
+
+  getUserCarts: (userId) => {
+    if (!userId)
+      throw new ReactError({
+        message: "Empty user ID was supplied to fakeStoreApi!",
+        statusCode: 400,
+      });
+    const userCarts = sendHttpRequest({
+      url: `${URL.CARTS}/user/${userId}`,
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    return userCarts;
+  },
 };
 
 export default fakeStoreApi;

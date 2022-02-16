@@ -70,6 +70,9 @@ const cartSlice = createSlice({
     setTotalQuantity(state, action) {
       state.totalQuantity = action.payload;
     },
+    clearCart(state, action) {
+      return { ...STATE_INIT };
+    },
   },
 });
 

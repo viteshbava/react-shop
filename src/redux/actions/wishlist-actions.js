@@ -7,7 +7,7 @@ import store from "../store";
 const fetchWishlist = (userId) => async (dispatch) => {
   dispatch(wishlistActions.isLoading(true));
   try {
-    // Fetch wishlist data
+    // Fetch wishlist for supplied userId
     // const response_wishlist = await [API CALL GOES HERE]
     /* No wishlist API in fakestoreAPI therefore using dummy wishlists */
     // const response_wishlist = []; /* empty dummy wishlist */

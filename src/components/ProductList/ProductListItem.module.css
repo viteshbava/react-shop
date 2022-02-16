@@ -35,6 +35,7 @@
 }
 
 .wishlist-toggle {
+  color: var(--primary-main-dark);
   border: none;
   background-color: transparent;
   position: absolute;

@@ -11,7 +11,7 @@ import Wishlist from "./components/Wishlist/Wishlist";
 import ScrollToTop from "./utilities/ScrollToTop";
 import InfoError, { INFO_ERROR_TYPE } from "./components/Error/InfoError";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCart } from "./redux/actions/cart-actions";
+import { fetchUserCart, fetchCart } from "./redux/actions/cart-actions";
 import { fetchWishlist } from "./redux/actions/wishlist-actions";
 import Spinner from "./components/UI/Spinner/Spinner";
 import ModalOverlay from "./components/UI/Modal/ModalOverlay";
@@ -27,10 +27,12 @@ function App() {
 
   const modal = useContext(ModalContext);
 
+  const DUMMY_USERID = 2;
+
   useEffect(() => {
-    dispatch(fetchCart("1"));
-    dispatch(fetchWishlist("1"));
-  }, []);
+    dispatch(fetchUserCart(DUMMY_USERID));
+    dispatch(fetchWishlist(DUMMY_USERID));
+  }, [DUMMY_USERID]);
 
   return (
     <>

@@ -4,30 +4,18 @@ import { ALERT_TYPE } from "../../components/UI/Alert/Alert";
 import fakeStoreAPI from "../../apis/fakeStoreApi";
 import store from "../store";
 
-const fetchCart = (cartId) => async (dispatch) => {
+const fetchUserCart = (userId) => async (dispatch) => {
   dispatch(cartActions.isLoading(true));
-  dispatch(cartActions.setError(null));
   try {
-    // Fetch cart data
-    const response_cart = await fakeStoreAPI.getCart(cartId);
-    // Update total quantity
-    const totalQuantity = response_cart.products.reduce(
-      (total, p) => total + p.quantity,
-      0
-    );
-    dispatch(cartActions.setTotalQuantity(totalQuantity));
-    // Fetch product data for each item in cart
-    const promises = response_cart.products.map(async (p) => {
-      const response_product = await fakeStoreAPI.getProduct(p.productId);
-      return {
-        ...response_product,
-        quantity: p.quantity,
-      };
-    });
-    // Swap product array in cart with new product data array
-    response_cart.products = await Promise.all(promises);
-    // Update Redux state with cart
-    dispatch(cartActions.replaceCart(response_cart));
+    const cartId = await fetchCartForUser(userId);
+    if (cartId) {
+      const cart_data = await fetchCartData(cartId, dispatch);
+      const cart_products = await fetchCartProducts(cart_data.products);
+      // Swap product array in cart with new product data array
+      cart_data.products = cart_products;
+      // Update cart in Redux
+      dispatch(cartActions.replaceCart(cart_data));
+    } else dispatch(cartActions.clearCart());
   } catch (err) {
     dispatch(cartActions.setError({ message: err.message }));
     dispatch(
@@ -39,6 +27,40 @@ const fetchCart = (cartId) => async (dispatch) => {
     console.error(err);
   }
   dispatch(cartActions.isLoading(false));
+};
+
+const fetchCartForUser = async (userId) => {
+  // Fetch array of carts for supplied userId
+  const user_carts = await fakeStoreAPI.getUserCarts(userId);
+  // Assume that first element in array is the current cart for practice purposes.
+  // In reality the API should somehow define the 'current' cart separately from 'cart history'
+  return user_carts.length ? user_carts[0].id : null;
+};
+
+const fetchCartData = async (cartId, dispatch) => {
+  // Fetch cart data
+  const cart_data = await fakeStoreAPI.getCart(cartId);
+  // Update total quantity
+  const totalQuantity = cart_data.products.reduce(
+    (total, p) => total + p.quantity,
+    0
+  );
+  // Display total quantity as we load products
+  dispatch(cartActions.setTotalQuantity(totalQuantity));
+  return cart_data;
+};
+
+const fetchCartProducts = async (cartProducts) => {
+  // Fetch product data for each item in cart
+  const promises = cartProducts.map(async (p) => {
+    const response_product = await fakeStoreAPI.getProduct(p.productId);
+    return {
+      ...response_product,
+      quantity: p.quantity,
+    };
+  });
+  // return array of products
+  return await Promise.all(promises);
 };
 
 const addToCart =
@@ -124,4 +146,4 @@ const removeFromCart = (productId) => async (dispatch) => {
   dispatch(uiActions.showLoadingState(false));
 };
 
-export { fetchCart, addToCart, removeFromCart, changeQuantity };
+export { fetchUserCart, addToCart, removeFromCart, changeQuantity };

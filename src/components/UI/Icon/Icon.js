@@ -11,6 +11,7 @@ import {
   faInfoCircle,
   faExclamationTriangle,
   faCheckCircle,
+  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartEmpty } from "@fortawesome/free-regular-svg-icons";
 import styles from "./Icon.module.css";
@@ -18,6 +19,7 @@ import styles from "./Icon.module.css";
 const ICON_TYPE = {
   SIGNIN: "signin",
   SIGNOUT: "signout",
+  REGISTER: "register",
   HEART_FULL: "heart_full",
   HEART_EMPTY: "heart_empty",
   CART: "cart",
@@ -37,6 +39,9 @@ const Icon = ({ className, icon }) => {
       break;
     case ICON_TYPE.SIGNOUT:
       iconReturn = <FontAwesomeIcon icon={faSignOutAlt} />;
+      break;
+    case ICON_TYPE.REGISTER:
+      iconReturn = <FontAwesomeIcon icon={faUserPlus} />;
       break;
     case ICON_TYPE.HEART_FULL:
       iconReturn = <FontAwesomeIcon icon={faHeartFull} />;

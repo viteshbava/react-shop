@@ -45,6 +45,12 @@ const NavDesktop = ({ className, onSignOutHandler }) => {
   const link_signed_out = (
     <>
       <li className={styles["ml-extra"]}>
+        <Button variant={"outlined"} link="/register">
+          <Icon icon={ICON_TYPE.REGISTER} />
+          Register
+        </Button>
+      </li>
+      <li>
         <Button link="/signin">
           <Icon icon={ICON_TYPE.SIGNIN} />
           Sign in

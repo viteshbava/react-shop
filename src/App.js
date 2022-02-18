@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import SignIn from "./components/Auth/SignIn";
+import Register from "./pages/Register";
 import ProductList from "./components/ProductList/ProductList";
 import ProductSingle from "./components/ProductSingle/ProductSingle";
 import Cart from "./components/Cart/Cart";
@@ -53,6 +54,7 @@ function App() {
             <Routes>
               <Route exact path="/" element={<ProductList />} />
               <Route exact path="/signin" element={<SignIn />} />
+              <Route exact path="/register" element={<Register />} />
               <Route path="/product/:id" element={<ProductSingle />} />
               <Route exact path="/cart" element={<Cart />} />
               <Route exact path="/wishlist" element={<Wishlist />} />

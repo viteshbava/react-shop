@@ -1,5 +1,6 @@
 .wrapper {
   color: var(--primary-black);
+  padding-bottom: 1rem;
 }
 
 .wrapper li > * {

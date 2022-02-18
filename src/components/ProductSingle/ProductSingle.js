@@ -72,7 +72,9 @@ const ProductSingle = () => {
   };
 
   const getProductContent = () => {
-    if (isLoading || initialRender) return <Spinner />;
+    if (initialRender) return <></>;
+
+    if (isLoading) return <Spinner />;
 
     if (error)
       return (

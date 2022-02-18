@@ -19,7 +19,8 @@ const Cart = () => {
   }, []);
 
   const getCartContent = () => {
-    if (isLoading || initialRender)
+    if (initialRender) return <></>;
+    if (isLoading)
       return (
         <>
           <SectionHeading>Cart</SectionHeading>

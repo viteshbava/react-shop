@@ -1,4 +1,20 @@
 .wrapper {
   color: var(--primary-main-dark);
+  font-size: 3rem;
+}
+
+.times {
+  margin-left: -5px;
+}
+
+.wrapper button {
+  all: unset;
+}
+
+.wrapper svg {
   font-size: 2rem;
+}
+
+.hamburger {
+  display: flex;
 }

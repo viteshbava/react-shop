@@ -8,6 +8,8 @@ import ProductList from "./components/ProductList/ProductList";
 import ProductSingle from "./components/ProductSingle/ProductSingle";
 import Cart from "./components/Cart/Cart";
 import Wishlist from "./components/Wishlist/Wishlist";
+import Help from "./pages/Help";
+import About from "./pages/About";
 import ScrollToTop from "./utilities/ScrollToTop";
 import InfoError, { INFO_ERROR_TYPE } from "./components/Error/InfoError";
 import { useDispatch, useSelector } from "react-redux";
@@ -54,6 +56,8 @@ function App() {
               <Route path="/product/:id" element={<ProductSingle />} />
               <Route exact path="/cart" element={<Cart />} />
               <Route exact path="/wishlist" element={<Wishlist />} />
+              <Route exact path="/help" element={<Help />} />
+              <Route exact path="/about" element={<About />} />
               <Route
                 path="*"
                 element={

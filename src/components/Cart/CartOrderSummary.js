@@ -25,8 +25,6 @@ const CartOrderSummary = () => {
     });
   };
 
-  const onContShoppingHandler = () => navigate("/");
-
   return (
     <div>
       <Card className={styles["summary-wrapper"]}>
@@ -45,8 +43,17 @@ const CartOrderSummary = () => {
         </p>
       </Card>
       <div className={styles["summary-actions"]}>
-        <Button onClick={onCheckoutClickHandler}>Checkout</Button>
-        <Button onClick={onContShoppingHandler} variant="outlined">
+        <Button
+          className={styles["summary-actions__action"]}
+          onClick={onCheckoutClickHandler}
+        >
+          Checkout
+        </Button>
+        <Button
+          className={styles["summary-actions__action"]}
+          link={"/"}
+          variant="outlined"
+        >
           Continue Shopping
         </Button>
       </div>

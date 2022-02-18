@@ -50,6 +50,7 @@ header button {
 @media (max-width: 780px) {
   .wrapper {
     justify-content: center;
+    padding: 0;
   }
   .nav-desktop {
     display: none;

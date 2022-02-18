@@ -18,7 +18,8 @@ const Wishlist = () => {
   }, []);
 
   const getWishlistContent = () => {
-    if (isLoading || initialRender)
+    if (initialRender) return <></>;
+    if (isLoading)
       return (
         <>
           <SectionHeading>Wishlist</SectionHeading>

@@ -21,9 +21,9 @@ const Button = ({
   if (className) btnStyles += ` ${className}`;
   if (link) {
     return (
-      // Note: the btn-link class is used to over-ride the a:visited styling form index.css
-      <Link to={link} className={`${btnStyles} btn-link`}>
-        {children}
+      // Note: children of link are inside a span so the a:visited declaration in index.module.css does not override the styles
+      <Link to={link}>
+        <span className={btnStyles}>{children}</span>
       </Link>
     );
   } else {

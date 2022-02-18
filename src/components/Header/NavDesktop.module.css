@@ -1,7 +1,43 @@
 .wrapper ul {
   display: flex;
+  align-items: center;
+}
+
+.flex-first {
+  order: -1;
 }
 
 .wrapper ul li {
   margin-left: 1rem;
+  color: var(--primary-main-dark);
+}
+
+.navlink {
+  all: unset;
+  margin: 0 1rem;
+  padding: 0.25rem 0;
+  cursor: pointer;
+}
+
+.navlink svg {
+  margin-right: 0.25rem;
+}
+
+.navlink:hover {
+  color: var(--primary-main);
+}
+
+.navlink:active {
+  color: inherit;
+}
+
+.wrapper ul .ml-extra {
+  margin-left: 2rem;
+}
+
+.navlink:active,
+.wrapper ul li .navlink--active {
+  color: inherit;
+  font-weight: bold;
+  border-bottom: 1px solid var(--primary-main-dark);
 }

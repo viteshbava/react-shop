@@ -39,11 +39,9 @@ const CartItem = ({ product }) => {
 
   return (
     <li className={styles["item-wrapper"]}>
-      <div className={styles["image-wrapper"]}>
-        <Link to={`/product/${id}`}>
-          <img className={styles.image} src={image} alt="Product Image" />
-        </Link>
-      </div>
+      <Link className={styles["image-wrapper"]} to={`/product/${id}`}>
+        <img className={styles.image} src={image} alt="Product Image" />
+      </Link>
       <div className={styles["item-details"]}>
         <div className={styles["item-details__header"]}>
           <h3 className={styles["product-name"]}>

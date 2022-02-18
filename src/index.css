@@ -36,17 +36,12 @@ body {
   background-color: var(--primary-white);
 }
 
-/* The .btn-link is used to ensure the inherit does not affect buttons that are links, which have colouring defined by their own styles. */
-a:not(.btn-link),
-a:link:not(.btn-link),
-a:visited:not(.btn-link) {
-  color: inherit;
+a {
+  text-decoration: none;
 }
 
-a,
-a:link,
 a:visited {
-  text-decoration: none;
+  color: inherit;
 }
 
 ul {

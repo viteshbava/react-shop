@@ -20,7 +20,8 @@ const ProductList = () => {
   }, []);
 
   const getProductListContent = () => {
-    if (isLoading || initialRender)
+    if (initialRender) return <></>;
+    if (isLoading)
       return (
         <>
           <SectionHeading>Products</SectionHeading>

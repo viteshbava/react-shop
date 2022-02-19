@@ -19,20 +19,17 @@ const Button = ({
     ? ` ${styles[`btn--${color}`]}`
     : ` ${styles["btn--primary"]}`;
   if (className) btnStyles += ` ${className}`;
-  if (link) {
+  if (link)
     return (
-      // Note: children of link are inside a span so the a:visited declaration in index.module.css does not override the styles
-      <Link to={link}>
-        <span className={btnStyles}>{children}</span>
+      <Link className={btnStyles} to={link}>
+        {children}
       </Link>
     );
-  } else {
-    return (
-      <button type={type} className={btnStyles} onClick={onClick}>
-        {children}
-      </button>
-    );
-  }
+  return (
+    <button type={type} className={btnStyles} onClick={onClick}>
+      {children}
+    </button>
+  );
 };
 
 export default Button;

@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
-import CartButton from "./CartButton";
 import { useSelector } from "react-redux";
 
 const NavTopRightDesktop = ({ className }) => {

@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartEmpty } from "@fortawesome/free-regular-svg-icons";
 import styles from "./Icon.module.css";
+import Badge from "../Badge/Badge";
 
 const ICON_TYPE = {
   SIGNIN: "signin",
@@ -31,7 +32,7 @@ const ICON_TYPE = {
   WARNING: "warning",
 };
 
-const Icon = ({ className, icon }) => {
+const Icon = ({ className, icon, badge }) => {
   let iconReturn;
   switch (icon) {
     case ICON_TYPE.SIGNIN:
@@ -74,7 +75,12 @@ const Icon = ({ className, icon }) => {
       console.error(`Invalid icon type: ${icon}`);
   }
   const spanClasses = styles.wrapper + (className ? ` ${className}` : "");
-  return <span className={spanClasses}>{iconReturn}</span>;
+  return (
+    <span className={spanClasses}>
+      {iconReturn}
+      {badge && <Badge className={styles.badge}>{badge}</Badge>}
+    </span>
+  );
 };
 
 export default Icon;

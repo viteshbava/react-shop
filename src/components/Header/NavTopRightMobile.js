@@ -34,14 +34,12 @@ const NavTopRightMobile = ({ className }) => {
     <>
       <li>
         <NavLink className={navLinkActive} to={"/wishlist"}>
-          <Icon icon={ICON_TYPE.HEART_FULL} />
-          <Badge className={styles["qty-badge"]}>{wishlistTotalQty}</Badge>
+          <Icon icon={ICON_TYPE.HEART_FULL} badge={wishlistTotalQty} />
         </NavLink>
       </li>
       <li>
         <NavLink className={navLinkActive} to={"/cart"}>
-          <Icon icon={ICON_TYPE.CART} />
-          <Badge className={styles["qty-badge"]}>{cartTotalQty}</Badge>
+          <Icon icon={ICON_TYPE.CART} badge={cartTotalQty} />
         </NavLink>
       </li>
     </>

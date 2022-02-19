@@ -21,7 +21,7 @@ const Button = ({
   if (className) btnStyles += ` ${className}`;
   if (link)
     return (
-      <Link className={btnStyles} to={link}>
+      <Link onClick={onClick} className={btnStyles} to={link}>
         {children}
       </Link>
     );

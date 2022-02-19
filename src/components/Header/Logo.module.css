@@ -8,6 +8,10 @@
   color: var(--primary-main-dark);
 }
 
+.logo-link__text:hover {
+  opacity: 0.7;
+}
+
 @media (max-width: 900px) {
   .logo-link__text {
     font-size: 2rem;

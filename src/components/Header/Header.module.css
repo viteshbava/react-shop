@@ -17,31 +17,6 @@ header {
   display: none;
 }
 
-/* .logo {
-  flex: 3;
-  text-align: left;
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: var(--primary-main-dark);
-} */
-
-/* .nav-mobile-left,
-.nav-mobile-right {
-  display: none;
-  flex: 1;
-  color: var(--primary-main-dark);
-  font-size: 2rem;
-} */
-
-/* .nav-mobile-right {
-  text-align: right;
-}
-
-.nav-mobile-collapse {
-  display: none;
-  flex-basis: 100%;
-} */
-
 @media (max-width: 900px) {
   .wrapper {
     padding: 0.5rem 0;
@@ -54,13 +29,6 @@ header {
     display: block;
   }
 
-  /* .nav-desktop {
-    display: none;
-  } */
-  /* .nav-mobile-left,
-  .nav-mobile-right {
-    display: block;
-  } */
   .nav-mobile-collapse {
     display: block;
   }

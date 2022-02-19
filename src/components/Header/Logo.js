@@ -1,9 +1,9 @@
 import styles from "./Logo.module.css";
 import { Link } from "react-router-dom";
 
-const Logo = () => {
+const Logo = ({ onClick }) => {
   return (
-    <Link className={styles["logo-link"]} to="/">
+    <Link onClick={onClick} className={styles["logo-link"]} to="/">
       <span className={styles["logo-link__text"]}>React Shop</span>
     </Link>
   );

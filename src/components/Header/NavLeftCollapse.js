@@ -44,7 +44,7 @@ const NavLeftCollapse = ({ close }) => {
       <div className={localStyles.wrapper}>
         <div className={localStyles.container}>
           <div className={localStyles.header}>
-            <Logo />
+            <Logo onClick={close} />
             <button onClick={close} className={localStyles.close}>
               &times;
             </button>

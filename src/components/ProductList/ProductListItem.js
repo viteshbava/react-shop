@@ -43,6 +43,7 @@ const ProductListItem = ({ product }) => {
         <Card className={styles.wrapper}>
           <div className={styles["image-wrapper"]}>
             <button
+              title="Add to wishlist"
               className={styles["wishlist-toggle"]}
               onClick={toggleWishlistHandler}
             >

@@ -18,12 +18,12 @@ const NavTopRightMobile = ({ className }) => {
   const nav_signed_out = (
     <>
       <li>
-        <NavLink className={navLinkActive} to={"/register"}>
+        <NavLink title="Register" className={navLinkActive} to={"/register"}>
           <Icon icon={ICON_TYPE.REGISTER} />
         </NavLink>
       </li>
       <li>
-        <NavLink className={navLinkActive} to={"/signin"}>
+        <NavLink title="Sign in" className={navLinkActive} to={"/signin"}>
           <Icon icon={ICON_TYPE.SIGNIN} />
         </NavLink>
       </li>
@@ -33,12 +33,12 @@ const NavTopRightMobile = ({ className }) => {
   const nav_signed_in = (
     <>
       <li>
-        <NavLink className={navLinkActive} to={"/wishlist"}>
+        <NavLink title="Wishlist" className={navLinkActive} to={"/wishlist"}>
           <Icon icon={ICON_TYPE.HEART_FULL} badge={wishlistTotalQty} />
         </NavLink>
       </li>
       <li>
-        <NavLink className={navLinkActive} to={"/cart"}>
+        <NavLink title="Cart" className={navLinkActive} to={"/cart"}>
           <Icon icon={ICON_TYPE.CART} badge={cartTotalQty} />
         </NavLink>
       </li>

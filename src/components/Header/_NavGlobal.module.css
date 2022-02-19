@@ -1,0 +1,23 @@
+.navlink {
+  all: unset;
+  cursor: pointer;
+}
+
+.navlink svg {
+  margin-right: 0.25rem;
+}
+
+.navlink:hover {
+  opacity: 0.7;
+}
+
+.navlink:active {
+  opacity: 1;
+}
+
+.navlink:active,
+.navlink--active {
+  color: inherit;
+  font-weight: bold;
+  border-bottom: 1px solid var(--primary-main-dark);
+}

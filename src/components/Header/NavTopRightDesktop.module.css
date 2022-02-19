@@ -1,0 +1,17 @@
+.wrapper ul {
+  display: flex;
+  align-items: center;
+  color: var(--primary-main-dark);
+}
+
+.wrapper ul li {
+  margin-left: 2rem;
+}
+
+.wrapper ul li.ml-extra {
+  margin-left: 2rem;
+}
+
+.flex-first {
+  order: -1;
+}

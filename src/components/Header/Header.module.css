@@ -6,63 +6,61 @@ header {
   z-index: 1000;
 }
 
-header button {
-  background-color: transparent;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  color: inherit;
-  font-size: inherit;
-}
-
 .wrapper {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
   padding: 1rem 0;
 }
 
-.logo {
+.nav-top-right-mobile {
+  display: none;
+}
+
+/* .logo {
   flex: 3;
   text-align: left;
   font-size: 2.5rem;
   font-weight: bold;
   color: var(--primary-main-dark);
-}
+} */
 
-.nav-mobile-left,
+/* .nav-mobile-left,
 .nav-mobile-right {
   display: none;
   flex: 1;
   color: var(--primary-main-dark);
   font-size: 2rem;
-}
+} */
 
-.nav-mobile-right {
+/* .nav-mobile-right {
   text-align: right;
 }
 
 .nav-mobile-collapse {
   display: none;
   flex-basis: 100%;
-}
+} */
 
-@media (max-width: 780px) {
+@media (max-width: 900px) {
   .wrapper {
-    justify-content: center;
-    padding: 0;
+    padding: 0.5rem 0;
   }
-  .nav-desktop {
+
+  .nav-top-right-desktop {
     display: none;
   }
-  .nav-mobile-left,
-  .nav-mobile-right {
+  .nav-top-right-mobile {
     display: block;
   }
-  .logo {
-    text-align: center;
-    font-size: 2rem;
-  }
+
+  /* .nav-desktop {
+    display: none;
+  } */
+  /* .nav-mobile-left,
+  .nav-mobile-right {
+    display: block;
+  } */
   .nav-mobile-collapse {
     display: block;
   }

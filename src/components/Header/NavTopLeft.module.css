@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.hamburger-display-control {
+  display: none;
+  margin-right: 1.5rem;
+}
+
+.hamburger {
+  color: var(--primary-main-dark);
+  width: 2rem;
+  height: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .hamburger-display-control {
+    display: block;
+  }
+}

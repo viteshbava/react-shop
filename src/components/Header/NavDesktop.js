@@ -59,9 +59,6 @@ const NavDesktop = ({ className, onSignOutHandler }) => {
     </>
   );
 
-  const navLinkClasses = (isActive) =>
-    styles.navlink + (isActive ? ` ${styles["navlink--active"]}` : "");
-
   return (
     <nav className={navClasses}>
       <ul>

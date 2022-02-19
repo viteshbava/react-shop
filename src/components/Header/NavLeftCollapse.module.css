@@ -1,0 +1,51 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+}
+
+.wrapper {
+  z-index: 3000;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: var(--primary-main-light);
+  padding-top: 0.5rem;
+  height: 100vh;
+  width: 60%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.close {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: var(--primary-main-dark);
+  font-size: 3rem;
+}
+
+.wrapper nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.wrapper nav div {
+  flex-grow: 1;
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    width: 100%;
+  }
+}

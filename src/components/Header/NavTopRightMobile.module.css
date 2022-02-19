@@ -1,0 +1,31 @@
+.wrapper ul {
+  display: flex;
+  color: var(--primary-main-dark);
+  font-size: 1.5rem;
+}
+
+.wrapper ul li {
+  margin-left: 1.5rem;
+}
+
+.wrapper ul li:hover {
+  opacity: 0.7;
+}
+
+.wrapper ul li:active {
+  opacity: 1;
+}
+
+.active {
+  opacity: 0.7;
+}
+
+.wrapper a {
+  position: relative;
+}
+
+.qty-badge {
+  position: absolute;
+  right: -1rem;
+  top: -0.85rem;
+}

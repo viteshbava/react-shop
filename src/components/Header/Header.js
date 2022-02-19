@@ -1,50 +1,46 @@
 import React from "react";
 import { useState, useContext } from "react";
 import styles from "./Header.module.css";
-import NavMobileLeft from "./NavMobileLeft";
+import NavTopLeft from "./NavTopLeft";
+import NavTopRightDesktop from "./NavTopRightDesktop";
+import NavTopRightMobile from "./NavTopRightMobile";
 import NavMobileRight from "./NavMobileRight";
-import NavMobileCollapse from "./NavMobileCollapse";
+import NavLeftCollapse from "./NavLeftCollapse";
 import NavDesktop from "./NavDesktop";
 import AuthContext from "../../context/auth-context";
 import { useNavigate, Link } from "react-router-dom";
 
 const Header = () => {
-  const [showMobileCollapseNav, setShowMobileCollapseNav] = useState(false);
+  const [showNavLeftCollapse, setShowNavLeftCollapse] = useState(false);
   const ctx = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const hamburgerClickHandler = () => {
-    setShowMobileCollapseNav((prev) => !prev);
-  };
+  const toggleLeftNav = () => setShowNavLeftCollapse((prev) => !prev);
 
   const onSignOutHandler = () => {
     ctx.onLogout();
-    setShowMobileCollapseNav(false);
+    setShowNavLeftCollapse(false);
     navigate("/");
   };
 
   return (
     <header>
       <div className={`container ${styles.wrapper}`}>
-        <NavMobileLeft
-          className={styles["nav-mobile-left"]}
-          hamburgerClickHandler={hamburgerClickHandler}
-          showMobileCollapseNav={showMobileCollapseNav}
-        />
-        <div className={styles.logo}>
-          <Link to="/">React Shop</Link>
-        </div>
-        <NavDesktop
+        <NavTopLeft hamburgerClickHandler={toggleLeftNav} />
+        <NavTopRightDesktop className={styles["nav-top-right-desktop"]} />
+        <NavTopRightMobile className={styles["nav-top-right-mobile"]} />
+        {showNavLeftCollapse && <NavLeftCollapse close={toggleLeftNav} />}
+        {/* <NavDesktop
           className={styles["nav-desktop"]}
           onSignOutHandler={onSignOutHandler}
-        />
-        <NavMobileRight className={styles["nav-mobile-right"]} />
-        {showMobileCollapseNav && (
+        /> */}
+        {/* <NavMobileRight className={styles["nav-mobile-right"]} /> */}
+        {/* {showMobileCollapseNav && (
           <NavMobileCollapse
             className={styles["nav-mobile-collapse"]}
             onSignOutHandler={onSignOutHandler}
           />
-        )}
+        )} */}
       </div>
     </header>
   );

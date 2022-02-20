@@ -28,14 +28,16 @@ const NavTopRightDesktop = ({ className }) => {
   const nav_signed_out = (
     <>
       <li className={localStyles["ml-extra"]}>
-        <Button variant={"outlined"} link="/register">
-          <Icon icon={ICON_TYPE.REGISTER} />
+        <Button
+          variant={"outlined"}
+          icon={<Icon icon={ICON_TYPE.REGISTER} />}
+          link="/register"
+        >
           Register
         </Button>
       </li>
       <li>
-        <Button link="/signin">
-          <Icon icon={ICON_TYPE.SIGNIN} />
+        <Button icon={<Icon icon={ICON_TYPE.SIGNIN} />} link="/signin">
           Sign in
         </Button>
       </li>
@@ -57,8 +59,11 @@ const NavTopRightDesktop = ({ className }) => {
         </NavLink>
       </li>
       <li>
-        <Button variant={cartTotalQty === 0 && "outlined"} link="/cart">
-          <Icon icon={ICON_TYPE.CART} />
+        <Button
+          variant={cartTotalQty === 0 && "outlined"}
+          icon={<Icon icon={ICON_TYPE.CART} />}
+          link="/cart"
+        >
           Cart ({cartTotalQty === null ? "SP!" : cartTotalQty})
         </Button>
       </li>

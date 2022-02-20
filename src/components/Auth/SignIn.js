@@ -84,8 +84,11 @@ const SignIn = () => {
             onChange={passwordChangeHandler}
             onBlur={passwordBlurHandler}
           />
-          <Button className={styles["sign-in-button"]} type="submit">
-            <Icon icon={ICON_TYPE.SIGNIN} />
+          <Button
+            className={styles["sign-in-button"]}
+            icon={<Icon icon={ICON_TYPE.SIGNIN} />}
+            type="submit"
+          >
             Sign in
           </Button>
         </form>

@@ -96,8 +96,11 @@ const NavLeftCollapse = ({ close }) => {
           <ul className={localStyles.actions}>
             {ctx.isLoggedIn && (
               <li>
-                <Button onClick={onSignOutHandler} variant={"outlined"}>
-                  <Icon icon={ICON_TYPE.SIGNOUT} />
+                <Button
+                  onClick={onSignOutHandler}
+                  icon={<Icon icon={ICON_TYPE.SIGNOUT} />}
+                  variant={"outlined"}
+                >
                   Sign out
                 </Button>
               </li>
@@ -105,14 +108,21 @@ const NavLeftCollapse = ({ close }) => {
             {!ctx.isLoggedIn && (
               <>
                 <li>
-                  <Button onClick={close} variant={"outlined"} link="/register">
-                    <Icon icon={ICON_TYPE.REGISTER} />
+                  <Button
+                    onClick={close}
+                    icon={<Icon icon={ICON_TYPE.REGISTER} />}
+                    variant={"outlined"}
+                    link="/register"
+                  >
                     Register
                   </Button>
                 </li>
                 <li>
-                  <Button onClick={close} link="/signin">
-                    <Icon icon={ICON_TYPE.SIGNIN} />
+                  <Button
+                    onClick={close}
+                    icon={<Icon icon={ICON_TYPE.SIGNIN} />}
+                    link="/signin"
+                  >
                     Sign in
                   </Button>
                 </li>

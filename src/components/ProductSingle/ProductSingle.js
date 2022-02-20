@@ -28,6 +28,8 @@ const ProductSingle = () => {
     (state) => state.selectedProduct
   );
   const wishlist = useSelector((state) => state.wishlist.products);
+  const { isLoading: cartLoading } = useSelector((state) => state.cart);
+  const { isLoading: wishlistLoading } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
   const qtyRef = useRef();
   const modal = useContext(ModalContext);
@@ -96,17 +98,14 @@ const ProductSingle = () => {
 
     const { title, price, category, description, image } = product;
 
-    const wishlistButtonContent = inWishlist ? (
-      <>
-        <Icon icon={ICON_TYPE.HEART_FULL} />
-        Added to Wishlist (click to remove)
-      </>
+    const wishlistBtnIcon = inWishlist ? (
+      <Icon icon={ICON_TYPE.HEART_FULL} />
     ) : (
-      <>
-        <Icon icon={ICON_TYPE.HEART_EMPTY} />
-        Add to Wishlist
-      </>
+      <Icon icon={ICON_TYPE.HEART_EMPTY} />
     );
+    const wishlistBtnText = inWishlist
+      ? "Added to Wishlist (click to remove)"
+      : "Add to Wishlist";
 
     return (
       <>
@@ -132,14 +131,23 @@ const ProductSingle = () => {
                 min="1"
                 value={1}
               />
-              <Button className={styles["add-to-cart-button"]} type={"submit"}>
-                <Icon icon={ICON_TYPE.CART} />
+              <Button
+                loading={cartLoading}
+                className={styles["add-to-cart-button"]}
+                type={"submit"}
+                icon={<Icon icon={ICON_TYPE.CART} />}
+              >
                 Add to Cart
               </Button>
             </form>
             <div className={styles["action-wrapper"]}>
-              <Button onClick={toggleWishlistHandler} variant="outlined">
-                {wishlistButtonContent}
+              <Button
+                loading={wishlistLoading}
+                onClick={toggleWishlistHandler}
+                variant="outlined"
+                icon={wishlistBtnIcon}
+              >
+                {wishlistBtnText}
               </Button>
             </div>
           </div>

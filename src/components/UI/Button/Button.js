@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Button.module.css";
+import Spinner from "../Spinner/Spinner";
 
 const Button = ({
   className,
@@ -10,24 +11,39 @@ const Button = ({
   children,
   type,
   link,
+  icon,
+  disabled,
+  loading,
 }) => {
   let btnStyles = styles.btn;
   btnStyles += variant
     ? ` ${styles[`btn--${variant}`]}`
     : ` ${styles["btn--fill"]}`;
-  btnStyles += color
-    ? ` ${styles[`btn--${color}`]}`
-    : ` ${styles["btn--primary"]}`;
+  btnStyles +=
+    disabled || loading
+      ? ` ${styles["btn--disabled"]}`
+      : color
+      ? ` ${styles[`btn--${color}`]}`
+      : ` ${styles["btn--primary"]}`;
   if (className) btnStyles += ` ${className}`;
+
+  const content = (
+    <>
+      {loading && <Spinner className={styles.spinner} spinnerWidth={0.15} />}
+      {!loading && icon && <span className={styles.icon}>{icon}</span>}
+      {children}
+    </>
+  );
+
   if (link)
     return (
       <Link onClick={onClick} className={btnStyles} to={link}>
-        {children}
+        {content}
       </Link>
     );
   return (
     <button type={type} className={btnStyles} onClick={onClick}>
-      {children}
+      {content}
     </button>
   );
 };

@@ -4,8 +4,8 @@ const STATE_INIT = {
   isLoading: false,
   error: null,
   products: [],
-  totalQuantity: 0,
-  totalItemPrice: 0,
+  totalQuantity: null,
+  totalItemPrice: null,
   id: null,
 };
 
@@ -72,7 +72,7 @@ const cartSlice = createSlice({
       state.totalQuantity = action.payload;
     },
     clearCart(state, action) {
-      return { ...STATE_INIT };
+      return { ...STATE_INIT, totalQuantity: 0, totalItemPrice: 0 };
     },
   },
 });

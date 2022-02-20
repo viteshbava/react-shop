@@ -61,7 +61,7 @@ const NavLeftCollapse = ({ close }) => {
                       className={navLinkActive}
                     >
                       <Icon icon={ICON_TYPE.CART} />
-                      Cart ({cartTotalQty === null ? "SP!" : cartTotalQty})
+                      Cart{cartTotalQty !== null && ` (${cartTotalQty})`}
                     </NavLink>
                   </li>
                   <li>
@@ -70,9 +70,15 @@ const NavLeftCollapse = ({ close }) => {
                       to={"/wishlist"}
                       className={navLinkActive}
                     >
-                      <Icon icon={ICON_TYPE.HEART_FULL} />
-                      Wishlist (
-                      {wishlistTotalQty === null ? "SP!" : wishlistTotalQty})
+                      <Icon
+                        icon={
+                          wishlistTotalQty
+                            ? ICON_TYPE.HEART_FULL
+                            : ICON_TYPE.HEART_EMPTY
+                        }
+                      />
+                      Wishlist
+                      {wishlistTotalQty !== null && ` (${wishlistTotalQty})`}
                     </NavLink>
                   </li>
                 </>

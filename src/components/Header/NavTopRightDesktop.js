@@ -47,10 +47,6 @@ const NavTopRightDesktop = ({ className }) => {
   const nav_signed_in = (
     <>
       <li className={localStyles["flex-first"]}>
-        {/* <NavLink to={"/wishlist"} className={globalStyles.navlink}>
-          <Icon icon={ICON_TYPE.SIGNOUT} />
-          Sign out
-        </NavLink> */}
         <button className={globalStyles.navlink} onClick={onSignOutHandler}>
           <Icon icon={ICON_TYPE.SIGNOUT} />
           Sign out
@@ -58,17 +54,21 @@ const NavTopRightDesktop = ({ className }) => {
       </li>
       <li>
         <NavLink to={"/wishlist"} className={navLinkActive}>
-          <Icon icon={ICON_TYPE.HEART_FULL} />
-          Wishlist ({wishlistTotalQty === null ? "SP!" : wishlistTotalQty})
+          <Icon
+            icon={
+              wishlistTotalQty ? ICON_TYPE.HEART_FULL : ICON_TYPE.HEART_EMPTY
+            }
+          />
+          Wishlist{wishlistTotalQty !== null && ` (${wishlistTotalQty})`}
         </NavLink>
       </li>
       <li>
         <Button
-          variant={cartTotalQty === 0 && "outlined"}
+          variant={!cartTotalQty && "outlined"}
           icon={<Icon icon={ICON_TYPE.CART} />}
           link="/cart"
         >
-          Cart ({cartTotalQty === null ? "SP!" : cartTotalQty})
+          Cart{cartTotalQty !== null && ` (${cartTotalQty})`}
         </Button>
       </li>
     </>

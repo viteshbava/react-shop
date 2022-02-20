@@ -3,7 +3,6 @@ import { useContext } from "react";
 import AuthContext from "../../context/auth-context";
 import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import { NavLink } from "react-router-dom";
-import Badge from "../UI/Badge/Badge";
 import { useSelector } from "react-redux";
 
 const NavTopRightMobile = ({ className }) => {
@@ -34,12 +33,18 @@ const NavTopRightMobile = ({ className }) => {
     <>
       <li>
         <NavLink title="Wishlist" className={navLinkActive} to={"/wishlist"}>
-          <Icon icon={ICON_TYPE.HEART_FULL} badge={wishlistTotalQty} />
+          <Icon
+            icon={ICON_TYPE.HEART_FULL}
+            badge={wishlistTotalQty !== null && `${wishlistTotalQty}`}
+          />
         </NavLink>
       </li>
       <li>
         <NavLink title="Cart" className={navLinkActive} to={"/cart"}>
-          <Icon icon={ICON_TYPE.CART} badge={cartTotalQty} />
+          <Icon
+            icon={ICON_TYPE.CART}
+            badge={cartTotalQty !== null && `${cartTotalQty}`}
+          />
         </NavLink>
       </li>
     </>

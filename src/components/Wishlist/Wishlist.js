@@ -37,7 +37,6 @@ const Wishlist = () => {
       );
 
     if (!products || (products && !products.length)) {
-      console.log("EMPTY WISHLIST!");
       return (
         <InfoError
           type={INFO_ERROR_TYPE.INFO}

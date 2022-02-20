@@ -4,7 +4,7 @@ const STATE_INIT = {
   isLoading: false,
   error: null,
   products: [],
-  totalQuantity: 0,
+  totalQuantity: null,
 };
 
 const wishlistSlice = createSlice({

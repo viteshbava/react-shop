@@ -29,7 +29,9 @@ const ProductSingle = () => {
   );
   const wishlist = useSelector((state) => state.wishlist.products);
   const { isLoading: cartLoading } = useSelector((state) => state.cart);
-  const { isLoading: wishlistLoading } = useSelector((state) => state.wishlist);
+  const { isLoading: wishlistLoading, loadingProduct } = useSelector(
+    (state) => state.wishlist
+  );
   const dispatch = useDispatch();
   const qtyRef = useRef();
   const modal = useContext(ModalContext);
@@ -142,7 +144,7 @@ const ProductSingle = () => {
             </form>
             <div className={styles["action-wrapper"]}>
               <Button
-                loading={wishlistLoading}
+                loading={wishlistLoading || loadingProduct === id}
                 onClick={toggleWishlistHandler}
                 variant="outlined"
                 icon={wishlistBtnIcon}

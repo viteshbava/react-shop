@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const STATE_INIT = {
   isLoading: false,
+  loadingProduct: null,
   error: null,
   products: [],
   totalQuantity: 0,
@@ -37,6 +38,11 @@ const wishlistSlice = createSlice({
 
     isLoading(state, action) {
       state.isLoading = action.payload;
+    },
+
+    loadingProduct(state, action) {
+      const productId = action.payload;
+      state.loadingProduct = productId;
     },
 
     setError(state, action) {

@@ -50,8 +50,7 @@ const AddToCartSummary = ({ numItemsAdded }) => {
         <Button onClick={closeModal} variant="outlined">
           Continue Shopping
         </Button>
-        <Button onClick={viewCartHandler}>
-          <Icon icon={ICON_TYPE.CART} />
+        <Button onClick={viewCartHandler} icon={<Icon icon={ICON_TYPE.CART} />}>
           View Cart
         </Button>
       </div>

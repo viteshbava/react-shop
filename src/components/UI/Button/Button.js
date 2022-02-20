@@ -29,7 +29,7 @@ const Button = ({
 
   const content = (
     <>
-      {loading && <Spinner className={styles.spinner} spinnerWidth={0.15} />}
+      {loading && <Spinner className={styles.spinner} />}
       {!loading && icon && <span className={styles.icon}>{icon}</span>}
       {children}
     </>

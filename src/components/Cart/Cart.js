@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import CartItem from "./CartItem";
 import CartOrderSummary from "./CartOrderSummary";
-import Spinner from "../UI/Spinner/Spinner";
+import PageLoader from "../UI/PageLoader/PageLoader";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import { useSelector } from "react-redux";
 import styles from "./Cart.module.css";
@@ -24,7 +24,7 @@ const Cart = () => {
       return (
         <>
           <SectionHeading>Cart</SectionHeading>
-          <Spinner />
+          <PageLoader />
         </>
       );
 

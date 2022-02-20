@@ -12,11 +12,8 @@ import { Link } from "react-router-dom";
 import Spinner from "../UI/Spinner/Spinner";
 
 const ProductListItem = ({ product }) => {
-  const {
-    products: wishlistProducts,
-    isLoading: wishlistIsLoading,
-    loadingProduct: wishlistIsLoadingProduct,
-  } = useSelector((state) => state.wishlist);
+  const { products: wishlistProducts, isLoading: wishlistIsLoading } =
+    useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
   const [inWishlist, setInWishlist] = useState(false);
 
@@ -25,15 +22,11 @@ const ProductListItem = ({ product }) => {
     setInWishlist(!!foundProduct);
   }, [product, wishlistProducts]);
 
-  const productLoadingInWishlist = wishlistIsLoadingProduct === product.id;
-
   const toggleWishlistHandler = (e) => {
     e.preventDefault();
-    if (!wishlistIsLoading && !productLoadingInWishlist) {
-      inWishlist
-        ? dispatch(removeFromWishlist(product.id))
-        : dispatch(addToWishlist(product));
-    }
+    inWishlist
+      ? dispatch(removeFromWishlist(product.id))
+      : dispatch(addToWishlist(product));
   };
 
   const wishListIcon = inWishlist
@@ -42,9 +35,7 @@ const ProductListItem = ({ product }) => {
 
   const wishlistBtnClasses =
     styles["wishlist-toggle"] +
-    (wishlistIsLoading || productLoadingInWishlist
-      ? ` ${styles["wishlist-toggle--read-only"]}`
-      : "");
+    (wishlistIsLoading ? ` ${styles["wishlist-toggle--read-only"]}` : "");
 
   return (
     <li className={styles["grid-flex"]}>
@@ -56,14 +47,7 @@ const ProductListItem = ({ product }) => {
               className={wishlistBtnClasses}
               onClick={toggleWishlistHandler}
             >
-              {productLoadingInWishlist ? (
-                <Spinner
-                  className={styles["wishlist-spinner"]}
-                  spinnerWidth={0.15}
-                />
-              ) : (
-                <Icon icon={wishListIcon} />
-              )}
+              <Icon icon={wishListIcon} />
             </button>
             <img
               className={styles.image}

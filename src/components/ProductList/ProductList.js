@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ProductListItem from "./ProductListItem";
 import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
-import Spinner from "../UI/Spinner/Spinner";
+import PageLoader from "../UI/PageLoader/PageLoader";
 import styles from "./ProductList.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +25,7 @@ const ProductList = () => {
       return (
         <>
           <SectionHeading>Products</SectionHeading>
-          <Spinner />
+          <PageLoader />
         </>
       );
 

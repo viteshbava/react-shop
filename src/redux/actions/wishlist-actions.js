@@ -40,7 +40,7 @@ const fetchWishlist = (userId) => async (dispatch) => {
 };
 
 const addToWishlist = (product) => async (dispatch) => {
-  dispatch(wishlistActions.loadingProduct(product.id));
+  dispatch(uiActions.showLoadingState(true));
   /* if user has not wishlist, create one here */
   // const { id: userId } = store.getState().user;
   console.log("TO DO: get the user Id to update wishlist");
@@ -48,9 +48,10 @@ const addToWishlist = (product) => async (dispatch) => {
   try {
     // const result = await [API CALL GOES HERE]
     // Simulate lengthy API call using wait helper function
-    await wait(5000);
+    await wait(2000);
     dispatch(wishlistActions.add(product));
-    dispatch(wishlistActions.loadingProduct(null));
+    dispatch(uiActions.showLoadingState(false));
+
     dispatch(
       uiActions.addAlert({
         type: ALERT_TYPE.SUCCESS,
@@ -58,7 +59,8 @@ const addToWishlist = (product) => async (dispatch) => {
       })
     );
   } catch (err) {
-    dispatch(wishlistActions.loadingProduct(null));
+    dispatch(uiActions.showLoadingState(false));
+
     dispatch(
       uiActions.addAlert({
         type: ALERT_TYPE.ERROR,
@@ -70,15 +72,16 @@ const addToWishlist = (product) => async (dispatch) => {
 };
 
 const removeFromWishlist = (productId) => async (dispatch) => {
-  dispatch(wishlistActions.loadingProduct(productId));
+  dispatch(uiActions.showLoadingState(true));
   // const { id: userId } = store.getState().user;
   console.log("TO DO: get the user Id to update wishlist");
   try {
     // const result = await [API CALL GOES HERE]
     // Simulate lengthy API call using wait helper function
-    await wait(5000);
+    await wait(2000);
     dispatch(wishlistActions.remove(productId));
-    dispatch(wishlistActions.loadingProduct(null));
+    dispatch(uiActions.showLoadingState(false));
+
     dispatch(
       uiActions.addAlert({
         type: ALERT_TYPE.SUCCESS,
@@ -86,7 +89,8 @@ const removeFromWishlist = (productId) => async (dispatch) => {
       })
     );
   } catch (err) {
-    dispatch(wishlistActions.loadingProduct(null));
+    dispatch(uiActions.showLoadingState(false));
+
     dispatch(
       uiActions.addAlert({
         type: ALERT_TYPE.ERROR,

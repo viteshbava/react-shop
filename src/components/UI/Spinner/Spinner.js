@@ -1,18 +1,16 @@
 import styles from "./Spinner.module.css";
 
-const Spinner = ({ className, spinnerWidth }) => {
-  const wrapper_classes = className ? className : styles["default-wrapper"];
-
-  const spinnerWidthStyle = {
-    borderWidth: `${spinnerWidth ? spinnerWidth : 1}rem`,
-    borderTopWidth: `${spinnerWidth ? spinnerWidth : 1}rem`,
+const Spinner = ({ className, width = "1.25rem", thinkness = "0.15rem" }) => {
+  const dimensions = {
+    width,
+    height: width,
+    borderWidth: thinkness,
+    borderTopWidth: thinkness,
   };
 
-  return (
-    <div className={wrapper_classes}>
-      <div style={spinnerWidthStyle} className={styles.spinner}></div>
-    </div>
-  );
+  const spinnerClasses = styles.main + (className ? ` ${className}` : "");
+
+  return <div style={dimensions} className={spinnerClasses}></div>;
 };
 
 export default Spinner;

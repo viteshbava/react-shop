@@ -4,7 +4,7 @@ import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import NumberButtons from "../UI/Control/NumberButtons";
 import Button from "../UI/Button/Button";
 import { useParams } from "react-router-dom";
-import Spinner from "../UI/Spinner/Spinner";
+import PageLoader from "../UI/PageLoader/PageLoader";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import toDollars from "../../utilities/toDollars";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,9 +29,7 @@ const ProductSingle = () => {
   );
   const wishlist = useSelector((state) => state.wishlist.products);
   const { isLoading: cartLoading } = useSelector((state) => state.cart);
-  const { isLoading: wishlistLoading, loadingProduct } = useSelector(
-    (state) => state.wishlist
-  );
+  const { isLoading: wishlistLoading } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
   const qtyRef = useRef();
   const modal = useContext(ModalContext);
@@ -78,7 +76,7 @@ const ProductSingle = () => {
   const getProductContent = () => {
     if (initialRender) return <></>;
 
-    if (isLoading) return <Spinner />;
+    if (isLoading) return <PageLoader />;
 
     if (error)
       return (
@@ -144,7 +142,7 @@ const ProductSingle = () => {
             </form>
             <div className={styles["action-wrapper"]}>
               <Button
-                loading={wishlistLoading || loadingProduct === id}
+                loading={wishlistLoading}
                 onClick={toggleWishlistHandler}
                 variant="outlined"
                 icon={wishlistBtnIcon}

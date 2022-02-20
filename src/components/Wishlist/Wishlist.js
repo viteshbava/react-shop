@@ -3,7 +3,7 @@ import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import WishlistItem from "./WishlistItem";
 import { useSelector } from "react-redux";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
-import Spinner from "../UI/Spinner/Spinner";
+import PageLoader from "../UI/PageLoader/PageLoader";
 import styles from "./Wishlist.module.css";
 
 const Wishlist = () => {
@@ -23,7 +23,7 @@ const Wishlist = () => {
       return (
         <>
           <SectionHeading>Wishlist</SectionHeading>
-          <Spinner />
+          <PageLoader />
         </>
       );
 

@@ -21,7 +21,10 @@ const WishlistItem = ({ product }) => {
           <h3 className={styles["product-name"]}>
             <Link to={`/product/${id}`}>{title}</Link>
           </h3>
-          <button onClick={removeProductHandler} className={styles.close}>
+          <button
+            onClick={removeProductHandler}
+            className={styles.header__close}
+          >
             &times;
           </button>
         </div>

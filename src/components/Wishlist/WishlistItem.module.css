@@ -31,7 +31,7 @@
   position: relative;
 }
 
-.item-details__header button {
+.header__close {
   right: 0;
   top: 0;
   position: absolute;
@@ -41,6 +41,11 @@
   line-height: 1;
   font-size: 2rem;
   cursor: pointer;
+}
+
+.close__spinner {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .item-details__header button:hover {

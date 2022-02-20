@@ -14,11 +14,10 @@ import About from "./pages/About";
 import ScrollToTop from "./utilities/ScrollToTop";
 import InfoError, { INFO_ERROR_TYPE } from "./components/Error/InfoError";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserCart, fetchCart } from "./redux/actions/cart-actions";
+import { fetchUserCart } from "./redux/actions/cart-actions";
 import { fetchWishlist } from "./redux/actions/wishlist-actions";
-import Spinner from "./components/UI/Spinner/Spinner";
-import ModalOverlay from "./components/UI/Modal/ModalOverlay";
 import FloatingAlerts from "./components/UI/Alert/FloatingAlerts";
+import FullScreenLoader from "./components/UI/FullScreenLoader/FullScreenLoader";
 
 import Modal from "./components/UI/Modal/Modal";
 import ModalContext from "./context/modal-context";
@@ -41,11 +40,7 @@ function App() {
     <>
       <Router>
         {modal.show && modal.props && <Modal {...modal.props} />}
-        {isLoading && (
-          <ModalOverlay>
-            <Spinner />
-          </ModalOverlay>
-        )}
+        {isLoading && <FullScreenLoader />}
         {alerts.length > 0 && <FloatingAlerts alerts={alerts} />}
         <ScrollToTop />
         <Header />

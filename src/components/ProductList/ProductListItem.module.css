@@ -46,8 +46,19 @@
   cursor: pointer;
 }
 
-.wishlist-toggle:hover {
+.wishlist-toggle--read-only {
+  cursor: default;
+  color: var(--primary-grey);
+}
+
+.wishlist-toggle:not(.wishlist-toggle--read-only):hover {
   transform: scale(1.2);
+}
+
+.wishlist-spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--primary-grey-dark);
 }
 
 .heading {

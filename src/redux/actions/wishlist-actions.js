@@ -9,6 +9,8 @@ const fetchWishlist = (userId) => async (dispatch) => {
   try {
     // Fetch wishlist for supplied userId
     // const response_wishlist = await [API CALL GOES HERE]
+    // Simulate lengthy API call using wait helper function
+    await wait(5000);
     /* No wishlist API in fakestoreAPI therefore using dummy wishlists */
     // const response_wishlist = []; /* empty dummy wishlist */
     const response_wishlist = [
@@ -45,10 +47,8 @@ const addToWishlist = (product) => async (dispatch) => {
   const userId = "1";
   try {
     // const result = await [API CALL GOES HERE]
-    // NOTE: api call(s) below are only used to simulate the time it might take to add/remove from wishlist.  To be replaced with actual api call for add/remove wishlist.
-    await fakeStoreAPI.getProducts();
-    await fakeStoreAPI.getProducts();
-    await fakeStoreAPI.getProducts();
+    // Simulate lengthy API call using wait helper function
+    await wait(5000);
     dispatch(wishlistActions.add(product));
     dispatch(wishlistActions.loadingProduct(null));
     dispatch(
@@ -75,10 +75,8 @@ const removeFromWishlist = (productId) => async (dispatch) => {
   console.log("TO DO: get the user Id to update wishlist");
   try {
     // const result = await [API CALL GOES HERE]
-    // NOTE: api call(s) below are only used to simulate the time it might take to add/remove from wishlist.  To be replaced with actual api call for add/remove wishlist.
-    await fakeStoreAPI.getProducts();
-    await fakeStoreAPI.getProducts();
-    await fakeStoreAPI.getProducts();
+    // Simulate lengthy API call using wait helper function
+    await wait(5000);
     dispatch(wishlistActions.remove(productId));
     dispatch(wishlistActions.loadingProduct(null));
     dispatch(
@@ -100,3 +98,7 @@ const removeFromWishlist = (productId) => async (dispatch) => {
 };
 
 export { fetchWishlist, addToWishlist, removeFromWishlist };
+
+/* HELPER FUNCTIONS FOR THIS FILE */
+
+const wait = (delay) => new Promise((resolve) => setTimeout(resolve, delay));

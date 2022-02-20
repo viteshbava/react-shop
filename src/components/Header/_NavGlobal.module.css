@@ -1,6 +1,7 @@
 .navlink {
-  all: unset;
   cursor: pointer;
+  padding-bottom: 0.25rem;
+  display: inline-block;
 }
 
 .navlink svg {

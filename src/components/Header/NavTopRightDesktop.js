@@ -47,6 +47,10 @@ const NavTopRightDesktop = ({ className }) => {
   const nav_signed_in = (
     <>
       <li className={localStyles["flex-first"]}>
+        {/* <NavLink to={"/wishlist"} className={globalStyles.navlink}>
+          <Icon icon={ICON_TYPE.SIGNOUT} />
+          Sign out
+        </NavLink> */}
         <button className={globalStyles.navlink} onClick={onSignOutHandler}>
           <Icon icon={ICON_TYPE.SIGNOUT} />
           Sign out

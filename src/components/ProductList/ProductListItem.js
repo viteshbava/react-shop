@@ -37,6 +37,9 @@ const ProductListItem = ({ product }) => {
     styles["wishlist-toggle"] +
     (wishlistIsLoading ? ` ${styles["wishlist-toggle--read-only"]}` : "");
 
+  const trimText = (text, maxLength = 30) =>
+    text.length > maxLength ? text.substring(0, maxLength + 1) + " ..." : text;
+
   return (
     <li className={styles["grid-flex"]}>
       <Link to={`/product/${product.id}`}>
@@ -55,7 +58,7 @@ const ProductListItem = ({ product }) => {
               alt="Product Image"
             />
           </div>
-          <h2 className={styles.heading}>{product.title}</h2>
+          <h2 className={styles.heading}>{trimText(product.title)}</h2>
           <h1 className={styles.price}>{toDollars(product.price)}</h1>
         </Card>
       </Link>

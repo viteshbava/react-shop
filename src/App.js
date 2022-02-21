@@ -26,6 +26,8 @@ import Register from "./pages/Register";
 import ProductList from "./pages/ProductList/ProductList";
 import ProductSingle from "./pages/ProductSingle/ProductSingle";
 import Help from "./pages/Help/Help";
+import HelpText_1 from "./pages/Help/HelpText_1";
+import HelpText_2 from "./pages/Help/HelpText_2";
 import About from "./pages/About";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import Cart from "./pages/Cart/Cart";
@@ -58,19 +60,28 @@ function App() {
       <main>
         <div className="container">
           <Routes>
-            <Route
-              exact
-              path="/"
-              element={<Navigate replace to={"/products"} />}
-            />
             <Route exact path="/signin" element={<SignIn />} />
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/products" element={<ProductList />} />
             <Route path="/products/:id" element={<ProductSingle />} />
             <Route exact path="/cart" element={<Cart />} />
             <Route exact path="/wishlist" element={<Wishlist />} />
-            <Route exact path="/help" element={<Help />} />
+            <Route exact path="/help" element={<Help />}>
+              <Route path="help1" element={<HelpText_1 />} />
+              <Route path="help2" element={<HelpText_2 />} />
+              <Route
+                path="*"
+                element={
+                  <InfoError
+                    type={INFO_ERROR_TYPE.ERROR}
+                    heading="Help Text Not Found!"
+                    message="Please check the URL."
+                  />
+                }
+              />
+            </Route>
             <Route exact path="/about" element={<About />} />
+            <Route index element={<ProductList />} />
             <Route
               path="*"
               element={

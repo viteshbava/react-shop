@@ -1,8 +1,13 @@
-.help-buttons {
+.intro {
+  text-align: center;
+}
+
+.help-nav {
   display: flex;
+  justify-content: center;
   margin: 2rem 0;
 }
 
-.help-buttons button {
+.help-nav a:first-of-type {
   margin-right: 1rem;
 }

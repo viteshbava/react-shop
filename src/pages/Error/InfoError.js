@@ -1,6 +1,5 @@
-import React from "react";
-import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
-import SectionHeading from "../UI/SectionHeading/SectionHeading";
+import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
+import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
 import styles from "./InfoError.module.css";
 
 const INFO_ERROR_TYPE = {

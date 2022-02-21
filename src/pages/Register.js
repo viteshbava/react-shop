@@ -1,4 +1,4 @@
-import InfoError, { INFO_ERROR_TYPE } from "../components/Error/InfoError";
+import InfoError, { INFO_ERROR_TYPE } from "./Error/InfoError";
 
 const Register = () => {
   return (

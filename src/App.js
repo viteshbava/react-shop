@@ -5,7 +5,6 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import FloatingAlerts from "./components/UI/Alert/FloatingAlerts";
 import FullScreenLoader from "./components/UI/FullScreenLoader/FullScreenLoader";
-import InfoError, { INFO_ERROR_TYPE } from "./components/Error/InfoError";
 import Modal from "./components/UI/Modal/Modal";
 
 import ModalContext from "./context/modal-context";
@@ -25,6 +24,7 @@ import Help from "./pages/Help";
 import About from "./pages/About";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import Cart from "./pages/Cart/Cart";
+import InfoError, { INFO_ERROR_TYPE } from "./pages/Error/InfoError";
 
 import ScrollToTop from "./utilities/ScrollToTop";
 
@@ -72,7 +72,6 @@ function App() {
                   />
                 }
               />
-              <Route path="*">404 Not Found!</Route>
             </Routes>
           </div>
         </main>

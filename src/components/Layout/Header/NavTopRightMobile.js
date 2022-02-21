@@ -1,7 +1,7 @@
 import styles from "./NavTopRightMobile.module.css";
 import { useContext } from "react";
-import AuthContext from "../../context/auth-context";
-import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
+import AuthContext from "../../../context/auth-context";
+import Icon, { ICON_TYPE } from "../../UI/Icon/Icon";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 

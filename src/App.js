@@ -1,25 +1,16 @@
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import "./App.css";
 
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import FloatingAlerts from "./components/UI/Alert/FloatingAlerts";
-import FullScreenLoader from "./components/FullScreenLoader/FullScreenLoader";
-import Modal from "./components/UI/Modal/Modal";
+import Header from "./components/Layout/Header/Header";
+import Footer from "./components/Layout/Footer/Footer";
+import Feedback from "./components/Feedback/Feedback";
 
-import ModalContext from "./context/modal-context";
-
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchUserCart } from "./redux/actions/cart-actions";
 import { fetchWishlist } from "./redux/actions/wishlist-actions";
 import { fetchProducts } from "./redux/actions/product-actions";
 
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import SignIn from "./pages/Signin/SignIn";
 import Register from "./pages/Register";
@@ -36,11 +27,7 @@ import InfoError, { INFO_ERROR_TYPE } from "./pages/Error/InfoError";
 import ScrollToTop from "./utilities/ScrollToTop";
 
 function App() {
-  const isLoading = useSelector((state) => state.ui.loading);
-  const { alerts } = useSelector((state) => state.ui.alerts);
   const dispatch = useDispatch();
-
-  const modal = useContext(ModalContext);
 
   const DUMMY_USERID = 1;
 
@@ -52,9 +39,7 @@ function App() {
 
   return (
     <Router>
-      {modal.show && modal.props && <Modal {...modal.props} />}
-      {isLoading && <FullScreenLoader />}
-      {alerts.length > 0 && <FloatingAlerts alerts={alerts} />}
+      <Feedback />
       <ScrollToTop />
       <Header />
       <main>

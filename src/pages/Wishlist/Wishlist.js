@@ -3,7 +3,7 @@ import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
 import WishlistItem from "./WishlistItem";
 import { useSelector } from "react-redux";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
-import PageLoader from "../../components/PageLoader/PageLoader";
+import PageLoader from "../../components/Feedback/PageLoader/PageLoader";
 import styles from "./Wishlist.module.css";
 
 const Wishlist = () => {

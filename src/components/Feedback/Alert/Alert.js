@@ -1,5 +1,5 @@
 import styles from "./Alert.module.css";
-import Icon, { ICON_TYPE } from "../Icon/Icon";
+import Icon, { ICON_TYPE } from "../../UI/Icon/Icon";
 import { useEffect } from "react";
 import { uiActions } from "../../../redux/slices/ui-slice";
 import { useDispatch } from "react-redux";

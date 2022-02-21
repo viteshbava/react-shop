@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import ModalContext from "../../../context/modal-context";
-import Icon, { ICON_TYPE } from "../Icon/Icon";
+import Icon, { ICON_TYPE } from "../../UI/Icon/Icon";
 import ModalOverlay from "./ModalOverlay";
-import Card from "../Card/Card";
+import Card from "../../UI/Card/Card";
 import styles from "./Modal.module.css";
-import Button from "../Button/Button";
+import Button from "../../UI/Button/Button";
 
 const Modal = (props) => {
   const { type } = props;

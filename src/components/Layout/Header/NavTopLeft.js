@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./NavTopLeft.module.css";
-import Hamburger from "../UI/Hamburger/Hamburger";
+import Hamburger from "../../UI/Hamburger/Hamburger";
 import Logo from "./Logo";
 
 const NavTopLeft = ({ className, hamburgerClickHandler }) => {

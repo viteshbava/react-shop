@@ -1,6 +1,6 @@
 import styles from "./FullScreenLoader.module.css";
-import ModalOverlay from "../UI/Modal/ModalOverlay";
-import Spinner from "../UI/Spinner/Spinner";
+import ModalOverlay from "..//Modal/ModalOverlay";
+import Spinner from "../../UI/Spinner/Spinner";
 
 const FullScreenLoader = () => {
   return (

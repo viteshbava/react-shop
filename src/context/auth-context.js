@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ALERT_TYPE } from "../components/UI/Alert/Alert";
+import { ALERT_TYPE } from "../components/Feedback/Alert/Alert";
 
 const AuthContext = React.createContext({
   isLoggedIn: false,

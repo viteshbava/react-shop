@@ -1,13 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+
 import localStyles from "./NavLeftCollapse.module.css";
 import globalStyles from "./_NavGlobal.module.css";
+
 import Logo from "./Logo";
-import { NavLink } from "react-router-dom";
-import Button from "../UI/Button/Button";
-import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
-import { useContext } from "react";
-import AuthContext from "../../context/auth-context";
-import { useNavigate } from "react-router-dom";
+import Button from "../../UI/Button/Button";
+import Icon, { ICON_TYPE } from "../../UI/Icon/Icon";
+
+import AuthContext from "../../../context/auth-context";
+import { useNavigate, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const NavLeftCollapse = ({ close }) => {

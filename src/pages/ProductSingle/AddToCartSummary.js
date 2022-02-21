@@ -1,7 +1,7 @@
 import React from "react";
-import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
-import Button from "../UI/Button/Button";
-import Card from "../UI/Card/Card";
+import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
+import Button from "../../components/UI/Button/Button";
+import Card from "../../components/UI/Card/Card";
 import styles from "./AddToCartSummary.module.css";
 import toDollars from "../../utilities/toDollars";
 import { useSelector } from "react-redux";

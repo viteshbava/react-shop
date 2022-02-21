@@ -1,10 +1,10 @@
 import localStyles from "./NavTopRightDesktop.module.css";
 import globalStyles from "./_NavGlobal.module.css";
-import Button from "../UI/Button/Button";
-import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
+import Button from "../../UI/Button/Button";
+import Icon, { ICON_TYPE } from "../../UI/Icon/Icon";
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
-import AuthContext from "../../context/auth-context";
+import AuthContext from "../../../context/auth-context";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 

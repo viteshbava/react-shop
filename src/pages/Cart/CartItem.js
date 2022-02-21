@@ -39,13 +39,13 @@ const CartItem = ({ product }) => {
 
   return (
     <li className={styles["item-wrapper"]}>
-      <Link className={styles["image-wrapper"]} to={`/product/${id}`}>
+      <Link className={styles["image-wrapper"]} to={`/products/${id}`}>
         <img className={styles.image} src={image} alt="Product Image" />
       </Link>
       <div className={styles["item-details"]}>
         <div className={styles["item-details__header"]}>
           <h3 className={styles["product-name"]}>
-            <Link to={`/product/${id}`}>{title}</Link>
+            <Link to={`/products/${id}`}>{title}</Link>
           </h3>
           <button onClick={removeProductHandler} className={styles.close}>
             &times;

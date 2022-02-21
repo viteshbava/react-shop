@@ -42,7 +42,7 @@ const ProductListItem = ({ product }) => {
 
   return (
     <li className={styles["grid-flex"]}>
-      <Link to={`/product/${product.id}`}>
+      <Link to={`/products/${product.id}`}>
         <Card className={styles.wrapper}>
           <div className={styles["image-wrapper"]}>
             <button

@@ -4,7 +4,7 @@ import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
 import NumberButtons from "../../components/UI/Control/NumberButtons";
 import Button from "../../components/UI/Button/Button";
 import { useParams } from "react-router-dom";
-import PageLoader from "../../components/UI/PageLoader/PageLoader";
+import PageLoader from "../../components/PageLoader/PageLoader";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import toDollars from "../../utilities/toDollars";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,0 +1,8 @@
+.help-buttons {
+  display: flex;
+  margin: 2rem 0;
+}
+
+.help-buttons button {
+  margin-right: 1rem;
+}

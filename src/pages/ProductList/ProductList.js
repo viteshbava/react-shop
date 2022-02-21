@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ProductListItem from "./ProductListItem";
 import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
-import PageLoader from "../../components/UI/PageLoader/PageLoader";
+import PageLoader from "../../components/PageLoader/PageLoader";
 import styles from "./ProductList.module.css";
 import { useSelector } from "react-redux";
 

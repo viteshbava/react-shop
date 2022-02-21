@@ -48,7 +48,7 @@
 }
 
 .item-details__header button:hover,
-.product-name:hover {
+.product-name a:hover {
   color: var(--primary-main-dark);
 }
 

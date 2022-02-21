@@ -22,6 +22,10 @@
   max-height: 100%;
 }
 
+.image:hover {
+  transform: scale(1.1);
+}
+
 .item-details {
   width: 100%;
   margin-left: 3rem;
@@ -48,7 +52,8 @@
   height: 1.5rem;
 }
 
-.item-details__header button:hover {
+.item-details__header button:hover,
+.product-name a:hover {
   color: var(--primary-main-dark);
 }
 

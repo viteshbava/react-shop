@@ -1,27 +1,32 @@
 import { useEffect, useContext } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import SignIn from "./components/Auth/SignIn";
-import Register from "./pages/Register";
-import ProductList from "./components/ProductList/ProductList";
-import ProductSingle from "./components/ProductSingle/ProductSingle";
-import Cart from "./components/Cart/Cart";
-import Wishlist from "./components/Wishlist/Wishlist";
-import Help from "./pages/Help";
-import About from "./pages/About";
-import ScrollToTop from "./utilities/ScrollToTop";
+import FloatingAlerts from "./components/UI/Alert/FloatingAlerts";
+import FullScreenLoader from "./components/UI/FullScreenLoader/FullScreenLoader";
 import InfoError, { INFO_ERROR_TYPE } from "./components/Error/InfoError";
+import Modal from "./components/UI/Modal/Modal";
+
+import ModalContext from "./context/modal-context";
+
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserCart } from "./redux/actions/cart-actions";
 import { fetchWishlist } from "./redux/actions/wishlist-actions";
 import { fetchProducts } from "./redux/actions/product-actions";
-import FloatingAlerts from "./components/UI/Alert/FloatingAlerts";
-import FullScreenLoader from "./components/UI/FullScreenLoader/FullScreenLoader";
 
-import Modal from "./components/UI/Modal/Modal";
-import ModalContext from "./context/modal-context";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import SignIn from "./pages/Signin/SignIn";
+import Register from "./pages/Register";
+import ProductList from "./pages/ProductList/ProductList";
+import ProductSingle from "./pages/ProductSingle/ProductSingle";
+import Help from "./pages/Help";
+import About from "./pages/About";
+import Wishlist from "./pages/Wishlist/Wishlist";
+import Cart from "./pages/Cart/Cart";
+
+import ScrollToTop from "./utilities/ScrollToTop";
 
 function App() {
   const isLoading = useSelector((state) => state.ui.loading);

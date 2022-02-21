@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef, useContext } from "react";
-import SectionHeading from "../UI/SectionHeading/SectionHeading";
-import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
-import NumberButtons from "../UI/Control/NumberButtons";
-import Button from "../UI/Button/Button";
+import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
+import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
+import NumberButtons from "../../components/UI/Control/NumberButtons";
+import Button from "../../components/UI/Button/Button";
 import { useParams } from "react-router-dom";
-import PageLoader from "../UI/PageLoader/PageLoader";
-import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
+import PageLoader from "../../components/UI/PageLoader/PageLoader";
+import InfoError, { INFO_ERROR_TYPE } from "../../components/Error/InfoError";
 import toDollars from "../../utilities/toDollars";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -20,7 +20,7 @@ import {
 import styles from "./ProductSingle.module.css";
 
 import ModalContext from "../../context/modal-context";
-import AddToCartSummary from "../AddToCartSummary/AddToCartSummary";
+import AddToCartSummary from "../../components/AddToCartSummary/AddToCartSummary";
 
 const ProductSingle = () => {
   const id = +useParams().id;

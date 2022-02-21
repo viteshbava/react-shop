@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import Card from "../UI/Card/Card";
-import Button from "../UI/Button/Button";
+import Card from "../../components/UI/Card/Card";
+import Button from "../../components/UI/Button/Button";
 import { useSelector } from "react-redux";
 import toDollars from "../../utilities/toDollars";
 import styles from "./CartOrderSummary.module.css";

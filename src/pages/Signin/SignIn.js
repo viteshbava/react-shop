@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import useInput from "../../hooks/use-input";
-import SectionHeading from "../UI/SectionHeading/SectionHeading";
-import TextField from "../UI/Control/TextField";
-import Button from "../UI/Button/Button";
+import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
+import TextField from "../../components/UI/Control/TextField";
+import Button from "../../components/UI/Button/Button";
 import styles from "./SignIn.module.css";
-import Alert from "../UI/Alert/Alert";
-import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
+import Alert from "../../components/UI/Alert/Alert";
+import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
 import AuthContext from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
 

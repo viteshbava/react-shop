@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import SectionHeading from "../UI/SectionHeading/SectionHeading";
+import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
 import WishlistItem from "./WishlistItem";
 import { useSelector } from "react-redux";
-import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
-import PageLoader from "../UI/PageLoader/PageLoader";
+import InfoError, { INFO_ERROR_TYPE } from "../../components/Error/InfoError";
+import PageLoader from "../../components/UI/PageLoader/PageLoader";
 import styles from "./Wishlist.module.css";
 
 const Wishlist = () => {

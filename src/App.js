@@ -16,6 +16,7 @@ import InfoError, { INFO_ERROR_TYPE } from "./components/Error/InfoError";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserCart } from "./redux/actions/cart-actions";
 import { fetchWishlist } from "./redux/actions/wishlist-actions";
+import { fetchProducts } from "./redux/actions/product-actions";
 import FloatingAlerts from "./components/UI/Alert/FloatingAlerts";
 import FullScreenLoader from "./components/UI/FullScreenLoader/FullScreenLoader";
 
@@ -34,6 +35,7 @@ function App() {
   useEffect(() => {
     dispatch(fetchUserCart(DUMMY_USERID));
     dispatch(fetchWishlist(DUMMY_USERID));
+    dispatch(fetchProducts());
   }, [DUMMY_USERID]);
 
   return (

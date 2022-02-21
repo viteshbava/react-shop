@@ -4,19 +4,15 @@ import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import PageLoader from "../UI/PageLoader/PageLoader";
 import styles from "./ProductList.module.css";
-
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../redux/actions/product-actions";
+import { useSelector } from "react-redux";
 
 const ProductList = () => {
   const { isLoading, error, products } = useSelector((state) => state.products);
-  const dispatch = useDispatch();
 
   const [initialRender, setInitialRender] = useState(true);
 
   useEffect(() => {
     setInitialRender(false);
-    dispatch(fetchProducts());
   }, []);
 
   const getProductListContent = () => {

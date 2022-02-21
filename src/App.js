@@ -1,9 +1,7 @@
 import { useEffect } from "react";
 import "./App.css";
 
-import Header from "./components/Layout/Header/Header";
-import Footer from "./components/Layout/Footer/Footer";
-import Feedback from "./components/Feedback/Feedback";
+import Layout from "./components/Layout/Layout";
 
 import { useDispatch } from "react-redux";
 import { fetchUserCart } from "./redux/actions/cart-actions";
@@ -24,8 +22,6 @@ import Wishlist from "./pages/Wishlist/Wishlist";
 import Cart from "./pages/Cart/Cart";
 import InfoError, { INFO_ERROR_TYPE } from "./pages/Error/InfoError";
 
-import ScrollToTop from "./utilities/ScrollToTop";
-
 function App() {
   const dispatch = useDispatch();
 
@@ -39,49 +35,42 @@ function App() {
 
   return (
     <Router>
-      <Feedback />
-      <ScrollToTop />
-      <Header />
-      <main>
-        <div className="container">
-          <Routes>
-            <Route exact path="/signin" element={<SignIn />} />
-            <Route exact path="/register" element={<Register />} />
-            <Route exact path="/products" element={<ProductList />} />
-            <Route path="/products/:id" element={<ProductSingle />} />
-            <Route exact path="/cart" element={<Cart />} />
-            <Route exact path="/wishlist" element={<Wishlist />} />
-            <Route exact path="/help" element={<Help />}>
-              <Route path="help1" element={<HelpText_1 />} />
-              <Route path="help2" element={<HelpText_2 />} />
-              <Route
-                path="*"
-                element={
-                  <InfoError
-                    type={INFO_ERROR_TYPE.ERROR}
-                    heading="Help Text Not Found!"
-                    message="Please check the URL."
-                  />
-                }
-              />
-            </Route>
-            <Route exact path="/about" element={<About />} />
-            <Route index element={<ProductList />} />
+      <Layout>
+        <Routes>
+          <Route exact path="/signin" element={<SignIn />} />
+          <Route exact path="/register" element={<Register />} />
+          <Route exact path="/products" element={<ProductList />} />
+          <Route path="/products/:id" element={<ProductSingle />} />
+          <Route exact path="/cart" element={<Cart />} />
+          <Route exact path="/wishlist" element={<Wishlist />} />
+          <Route exact path="/help" element={<Help />}>
+            <Route path="help1" element={<HelpText_1 />} />
+            <Route path="help2" element={<HelpText_2 />} />
             <Route
               path="*"
               element={
                 <InfoError
                   type={INFO_ERROR_TYPE.ERROR}
-                  heading="Page Not Found!"
+                  heading="Help Text Not Found!"
                   message="Please check the URL."
                 />
               }
             />
-          </Routes>
-        </div>
-      </main>
-
-      <Footer />
+          </Route>
+          <Route exact path="/about" element={<About />} />
+          <Route index element={<ProductList />} />
+          <Route
+            path="*"
+            element={
+              <InfoError
+                type={INFO_ERROR_TYPE.ERROR}
+                heading="Page Not Found!"
+                message="Please check the URL."
+              />
+            }
+          />
+        </Routes>
+      </Layout>
     </Router>
   );
 }

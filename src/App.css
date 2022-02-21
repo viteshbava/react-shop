@@ -2,11 +2,6 @@
   margin: 0 4rem;
 }
 
-main {
-  padding-bottom: 2rem;
-  background-color: var(--primary-white);
-}
-
 @media (max-width: 768px) {
   .container {
     margin: 0 2rem;

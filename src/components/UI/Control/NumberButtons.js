@@ -63,7 +63,10 @@ const NumberButtons = ({
         <button
           onClick={decrBtnHandler}
           type="button"
-          className={styles["number__minus"]}
+          className={
+            styles["number__minus"] +
+            (value <= +props.min ? ` ${styles["number--read-only"]}` : "")
+          }
         >
           -
         </button>
@@ -77,7 +80,10 @@ const NumberButtons = ({
         <button
           onClick={incrBtnHandler}
           type="button"
-          className={styles["number__plus"]}
+          className={
+            styles["number__plus"] +
+            (value >= +props.max ? ` ${styles["number--read-only"]}` : "")
+          }
         >
           +
         </button>

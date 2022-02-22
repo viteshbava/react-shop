@@ -1,7 +1,7 @@
 import { cartActions } from "../slices/cart-slice";
 import { uiActions } from "../slices/ui-slice";
 import { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
-import fakeStoreAPI from "../../apis/fakeStoreApi";
+import fakeStoreApi from "../../apis/fakeStoreApi";
 import store from "../store";
 
 const fetchUserCart = (userId) => async (dispatch) => {

@@ -11,7 +11,7 @@ const fetchWishlist = (userId) => async (dispatch) => {
     // const response_wishlist = await [API CALL GOES HERE]
     // Simulate lengthy API call using wait helper function
     await wait(5000);
-    /* No wishlist API in fakestoreAPI therefore using dummy wishlists */
+    /* No wishlist API in fakeStoreApi therefore using dummy wishlists */
     // const response_wishlist = []; /* empty dummy wishlist */
     const response_wishlist = [
       2, 4, 6, 9, 13, 15,
@@ -21,7 +21,7 @@ const fetchWishlist = (userId) => async (dispatch) => {
     dispatch(wishlistActions.setTotalQuantity(totalQuantity));
     // Fetch product data for each item in wishlist
     const promises = response_wishlist.map(
-      async (p) => await fakeStoreAPI.getProduct(p)
+      async (p) => await fakeStoreApi.getProduct(p)
     );
     const wishlist = await Promise.all(promises);
     // Update Redux state with wishlist

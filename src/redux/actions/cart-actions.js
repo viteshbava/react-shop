@@ -60,7 +60,7 @@ const changeQuantity =
     dispatch(uiActions.showLoadingState(true));
     const { id: cartId } = store.getState().cart;
     try {
-      const result = await fakeStoreAPI.updateCart(cartId, [
+      const result = await fakeStoreApi.updateCart(cartId, [
         { productId, quantity },
       ]);
       dispatch(cartActions.changeQuantity({ productId, quantity }));
@@ -89,7 +89,7 @@ const removeFromCart = (productId) => async (dispatch) => {
   const { id: cartId } = store.getState().cart;
 
   try {
-    const result = await fakeStoreAPI.updateCart(cartId, [
+    const result = await fakeStoreApi.updateCart(cartId, [
       { productId, quantity: 0 },
     ]);
     dispatch(cartActions.remove(productId));
@@ -118,7 +118,7 @@ export { fetchUserCart, addToCart, removeFromCart, changeQuantity };
 **********************************************************/
 const _fetchCartForUser = async (userId) => {
   // Fetch array of carts for supplied userId
-  const user_carts = await fakeStoreAPI.getUserCarts(userId);
+  const user_carts = await fakeStoreApi.getUserCarts(userId);
   // Assume that first element in array is the current cart for practice purposes.
   // In reality the API should somehow define the 'current' cart separately from 'cart history'
   return user_carts.length ? user_carts[0].id : null;
@@ -126,7 +126,7 @@ const _fetchCartForUser = async (userId) => {
 
 const _fetchCartData = async (cartId, dispatch) => {
   // Fetch cart data
-  const cart_data = await fakeStoreAPI.getCart(cartId);
+  const cart_data = await fakeStoreApi.getCart(cartId);
   // Update total quantity
   const totalQuantity = cart_data.products.reduce(
     (total, p) => total + p.quantity,
@@ -140,7 +140,7 @@ const _fetchCartData = async (cartId, dispatch) => {
 const _fetchCartProducts = async (cartProducts) => {
   // Fetch product data for each item in cart
   const promises = cartProducts.map(async (p) => {
-    const response_product = await fakeStoreAPI.getProduct(p.productId);
+    const response_product = await fakeStoreApi.getProduct(p.productId);
     return {
       ...response_product,
       quantity: p.quantity,
@@ -151,7 +151,7 @@ const _fetchCartProducts = async (cartProducts) => {
 };
 
 const _createNewCart = async (userId, product, quantity, dispatch) => {
-  const newCart = await fakeStoreAPI.createUserCart({
+  const newCart = await fakeStoreApi.createUserCart({
     userId,
     date: new Date(),
     products: [{ productId: product.id, quantity }],
@@ -161,7 +161,7 @@ const _createNewCart = async (userId, product, quantity, dispatch) => {
 };
 
 const _updateCart = async (cartId, product, quantity, dispatch) => {
-  const result = await fakeStoreAPI.updateCart(cartId, [
+  const result = await fakeStoreApi.updateCart(cartId, [
     { productId: product.id, quantity },
   ]);
   dispatch(cartActions.add({ product, quantity }));

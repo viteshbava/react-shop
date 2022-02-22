@@ -10,17 +10,20 @@ import { fetchProducts } from "./redux/actions/product-actions";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import ScrollToTop from "./utilities/ScrollToTop";
+
 import SignIn from "./pages/Signin/SignIn";
 import Register from "./pages/Register";
 import ProductList from "./pages/ProductList/ProductList";
 import ProductSingle from "./pages/ProductSingle/ProductSingle";
 import Help from "./pages/Help/Help";
-import HelpText_1 from "./pages/Help/HelpText_1";
-import HelpText_2 from "./pages/Help/HelpText_2";
-import About from "./pages/About";
+import About from "./pages/About/About";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import Cart from "./pages/Cart/Cart";
 import InfoError, { INFO_ERROR_TYPE } from "./pages/Error/InfoError";
+
+import AboutText_1 from "./pages/About/AboutText_1";
+import AboutText_2 from "./pages/About/AboutText_2";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,29 +38,22 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Layout>
         <Routes>
-          <Route exact path="/signin" element={<SignIn />} />
-          <Route exact path="/register" element={<Register />} />
-          <Route exact path="/products" element={<ProductList />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/products" element={<ProductList />} />
           <Route path="/products/:id" element={<ProductSingle />} />
-          <Route exact path="/cart" element={<Cart />} />
-          <Route exact path="/wishlist" element={<Wishlist />} />
-          <Route exact path="/help" element={<Help />}>
-            <Route path="help1" element={<HelpText_1 />} />
-            <Route path="help2" element={<HelpText_2 />} />
-            <Route
-              path="*"
-              element={
-                <InfoError
-                  type={INFO_ERROR_TYPE.ERROR}
-                  heading="Help Text Not Found!"
-                  message="Please check the URL."
-                />
-              }
-            />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/help/*" element={<Help />} />
+          <Route exact path="/about" element={<About />}>
+            <Route path="about1" element={<AboutText_1 />} />
+            <Route path="about2" element={<AboutText_2 />} />
+            <Route index element={<></>} />
+            <Route path="*" element={<div>About text not found!</div>} />
           </Route>
-          <Route exact path="/about" element={<About />} />
           <Route index element={<ProductList />} />
           <Route
             path="*"

@@ -9,7 +9,6 @@ import {
   addToWishlist,
 } from "../../redux/actions/wishlist-actions";
 import { Link } from "react-router-dom";
-import Spinner from "../../components/UI/Spinner/Spinner";
 
 const ProductListItem = ({ product }) => {
   const { products: wishlistProducts, isLoading: wishlistIsLoading } =

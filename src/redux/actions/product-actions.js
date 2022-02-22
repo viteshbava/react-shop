@@ -1,6 +1,6 @@
 import { productsActions } from "../slices/allProducts-slice";
 import { selectedProductActions } from "../slices/selectedProduct-slice";
-import fakeStoreApi from "../../apis/fakeStoreApi";
+import fakeStoreApi from "../../apis/fakeStoreApi_test";
 
 const fetchProducts = () => async (dispatch) => {
   try {

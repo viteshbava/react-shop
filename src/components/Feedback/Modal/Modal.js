@@ -7,14 +7,14 @@ import styles from "./Modal.module.css";
 import Button from "../../UI/Button/Button";
 
 const Modal = (props) => {
+  const modalCtx = useContext(ModalContext);
+  const closeModal = () => modalCtx.hideModal();
   const { type } = props;
   if (!type) {
     console.error("Modal type must be supplied!");
     return;
   }
 
-  const modalCtx = useContext(ModalContext);
-  const closeModal = () => modalCtx.hideModal();
   const modalContent = _getModalContent(props, closeModal);
 
   return (

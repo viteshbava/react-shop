@@ -24,8 +24,8 @@ const ProductSingle = React.lazy(() =>
 const Help = React.lazy(() => import("./pages/Help/Help"));
 const About = React.lazy(() => import("./pages/About/About"));
 const Wishlist = React.lazy(() => import("./pages/Wishlist/Wishlist"));
-const AboutText_1 = React.lazy(() => import("./pages/About/AboutText_one"));
-const AboutText_2 = React.lazy(() => import("./pages/About/AboutText_two"));
+const AboutTextOne = React.lazy(() => import("./pages/About/AboutTextOne"));
+const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
 
 function App() {
   const dispatch = useMemo(useDispatch, []);
@@ -52,8 +52,8 @@ function App() {
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/help/*" element={<Help />} />
             <Route exact path="/about" element={<About />}>
-              <Route path="about1" element={<AboutText_1 />} />
-              <Route path="about2" element={<AboutText_2 />} />
+              <Route path="about1" element={<AboutTextOne />} />
+              <Route path="about2" element={<AboutTextTwo />} />
               <Route index element={<></>} />
               <Route path="*" element={<div>About text not found!</div>} />
             </Route>

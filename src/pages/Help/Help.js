@@ -1,6 +1,6 @@
 import styles from "./Help.module.css";
-import HelpText_1 from "./HelpText_1";
-import HelpText_2 from "./HelpText_2";
+import HelpText_1 from "./HelpText_one";
+import HelpText_2 from "./HelpText_two";
 import { Routes, Route } from "react-router-dom";
 import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
 import Button from "../../components/UI/Button/Button";

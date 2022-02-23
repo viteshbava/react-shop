@@ -24,8 +24,8 @@ const ProductSingle = React.lazy(() =>
 const Help = React.lazy(() => import("./pages/Help/Help"));
 const About = React.lazy(() => import("./pages/About/About"));
 const Wishlist = React.lazy(() => import("./pages/Wishlist/Wishlist"));
-const AboutText_1 = React.lazy(() => import("./pages/About/AboutText_1"));
-const AboutText_2 = React.lazy(() => import("./pages/About/AboutText_2"));
+const AboutText_1 = React.lazy(() => import("./pages/About/AboutText_one"));
+const AboutText_2 = React.lazy(() => import("./pages/About/AboutText_two"));
 
 function App() {
   const dispatch = useMemo(useDispatch, []);

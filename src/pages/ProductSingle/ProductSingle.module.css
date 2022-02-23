@@ -77,7 +77,14 @@
 }
 
 @media (max-width: 440px) {
-  .add-to-cart-button svg {
-    display: none;
+  .add-to-cart-form {
+    flex-direction: column;
+  }
+  .add-to-cart-button {
+    margin: 0;
+    margin-top: 1rem;
+  }
+  .quantity {
+    width: 100%;
   }
 }

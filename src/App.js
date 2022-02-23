@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useContext } from "react";
 import "./App.css";
 
 import Layout from "./components/Layout/Layout";
@@ -27,8 +27,11 @@ const Wishlist = React.lazy(() => import("./pages/Wishlist/Wishlist"));
 const AboutTextOne = React.lazy(() => import("./pages/About/AboutTextOne"));
 const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
 
+import AuthContext from "./context/auth-context";
+
 function App() {
   const dispatch = useDispatch();
+  const ctx = useContext(AuthContext);
 
   const DUMMY_USERID = 1;
 
@@ -38,6 +41,8 @@ function App() {
     dispatch(fetchProducts());
   }, [DUMMY_USERID, dispatch]);
 
+  const authRequired = (element) => (ctx.isLoggedIn ? element : <SignIn />);
+
   return (
     <Router>
       <ScrollToTop />
@@ -46,10 +51,13 @@ function App() {
           <Routes>
             <Route path="/signin" element={<SignIn />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/products" element={<ProductList />} />
-            <Route path="/products/:id" element={<ProductSingle />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/products" element={authRequired(<ProductList />)} />
+            <Route
+              path="/products/:id"
+              element={authRequired(<ProductSingle />)}
+            />
+            <Route path="/cart" element={authRequired(<Cart />)} />
+            <Route path="/wishlist" element={authRequired(<Wishlist />)} />
             <Route path="/help/*" element={<Help />} />
             <Route exact path="/about" element={<About />}>
               <Route path="about1" element={<AboutTextOne />} />
@@ -57,7 +65,7 @@ function App() {
               <Route index element={<></>} />
               <Route path="*" element={<div>About text not found!</div>} />
             </Route>
-            <Route index element={<ProductList />} />
+            <Route index element={authRequired(<ProductList />)} />
             <Route
               path="*"
               element={

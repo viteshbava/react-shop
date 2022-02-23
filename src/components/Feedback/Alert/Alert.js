@@ -1,9 +1,5 @@
-import { useMemo, useCallback } from "react";
 import styles from "./Alert.module.css";
 import Icon, { ICON_TYPE } from "../../UI/Icon/Icon";
-import { useEffect } from "react";
-import { uiActions } from "../../../redux/slices/ui-slice";
-import { useDispatch } from "react-redux";
 
 const ALERT_TYPE = {
   ERROR: "error",
@@ -12,10 +8,8 @@ const ALERT_TYPE = {
   WARNING: "warning",
 };
 
-const Alert = ({ id, type, title, message, onClose }) => {
+const Alert = ({ type, title, message, onClose }) => {
   let containerClasses = `${styles.container} ${styles[`container--${type}`]}`;
-
-  const dispatch = useDispatch();
 
   let icon;
   switch (type) {
@@ -36,18 +30,6 @@ const Alert = ({ id, type, title, message, onClose }) => {
       break;
   }
 
-  const onCloseHandler = useCallback(() => {
-    console.log(id);
-    if (onClose) onClose();
-    if (id) dispatch(uiActions.removeAlert(id));
-  }, [id, dispatch, onClose]);
-
-  useEffect(() => {
-    console.log("Setting timeout for alert...");
-    const timeoutId = setTimeout(onCloseHandler, 4000);
-    return () => clearTimeout(timeoutId);
-  }, [onCloseHandler]);
-
   return (
     <div className={containerClasses}>
       <Icon className={styles.icon} icon={icon} />
@@ -58,7 +40,7 @@ const Alert = ({ id, type, title, message, onClose }) => {
         </p>
         <p className={styles["content__message"]}>{message}</p>
       </div>
-      <button className={styles.close} onClick={onCloseHandler}>
+      <button className={styles.close} onClick={onClose}>
         &times;
       </button>
     </div>

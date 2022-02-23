@@ -15,6 +15,9 @@ import ScrollToTop from "./utilities/ScrollToTop";
 
 import ProductList from "./pages/ProductList/ProductList";
 import InfoError, { INFO_ERROR_TYPE } from "./pages/Error/InfoError";
+
+import AuthContext from "./context/auth-context";
+
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));
 const SignIn = React.lazy(() => import("./pages/Signin/SignIn"));
 const Register = React.lazy(() => import("./pages/Register"));
@@ -26,8 +29,6 @@ const About = React.lazy(() => import("./pages/About/About"));
 const Wishlist = React.lazy(() => import("./pages/Wishlist/Wishlist"));
 const AboutTextOne = React.lazy(() => import("./pages/About/AboutTextOne"));
 const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
-
-import AuthContext from "./context/auth-context";
 
 function App() {
   const dispatch = useDispatch();

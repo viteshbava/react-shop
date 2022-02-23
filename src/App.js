@@ -67,7 +67,7 @@ function App() {
               <Route index element={<></>} />
               <Route path="*" element={<div>About text not found!</div>} />
             </Route>
-            <Route index element={authRequired(<PageLoader />)} />
+            <Route index element={authRequired(<ProductList />)} />
             <Route
               path="*"
               element={

@@ -28,7 +28,7 @@ const AboutTextOne = React.lazy(() => import("./pages/About/AboutTextOne"));
 const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
 
 function App() {
-  const dispatch = useMemo(useDispatch, []);
+  const dispatch = useDispatch();
 
   const DUMMY_USERID = 1;
 

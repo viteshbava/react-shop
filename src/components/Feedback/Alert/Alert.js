@@ -1,3 +1,4 @@
+import { useMemo, useCallback } from "react";
 import styles from "./Alert.module.css";
 import Icon, { ICON_TYPE } from "../../UI/Icon/Icon";
 import { useEffect } from "react";
@@ -35,15 +36,16 @@ const Alert = ({ id, type, title, message, onClose }) => {
       break;
   }
 
-  const onCloseHandler = () => {
+  const onCloseHandler = useCallback(() => {
     if (onClose) onClose();
     if (id) dispatch(uiActions.removeAlert(id));
-  };
+  }, [id]);
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => onCloseHandler(), 4000);
+    console.log("setting new timeout id for alert");
+    const timeoutId = setTimeout(onCloseHandler, 4000);
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [onCloseHandler]);
 
   return (
     <div className={containerClasses}>

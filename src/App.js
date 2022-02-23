@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useMemo } from "react";
 import "./App.css";
 
 import Layout from "./components/Layout/Layout";
@@ -28,7 +28,7 @@ const AboutText_1 = React.lazy(() => import("./pages/About/AboutText_1"));
 const AboutText_2 = React.lazy(() => import("./pages/About/AboutText_2"));
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useMemo(() => useDispatch(), []);
 
   const DUMMY_USERID = 1;
 
@@ -36,7 +36,7 @@ function App() {
     dispatch(fetchUserCart(DUMMY_USERID));
     dispatch(fetchWishlist(DUMMY_USERID));
     dispatch(fetchProducts());
-  }, [DUMMY_USERID]);
+  }, [DUMMY_USERID, dispatch]);
 
   return (
     <Router>

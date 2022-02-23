@@ -44,7 +44,6 @@ const addToWishlist = (product) => async (dispatch) => {
   /* if user has not wishlist, create one here */
   // const { id: userId } = store.getState().user;
   console.log("TO DO: get the user Id to update wishlist");
-  const userId = "1";
   try {
     // const result = await [API CALL GOES HERE]
     // Simulate lengthy API call using wait helper function

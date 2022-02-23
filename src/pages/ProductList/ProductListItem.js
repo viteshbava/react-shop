@@ -51,11 +51,7 @@ const ProductListItem = ({ product }) => {
             >
               <Icon icon={wishListIcon} />
             </button>
-            <img
-              className={styles.image}
-              src={product.image}
-              alt="Product Image"
-            />
+            <img className={styles.image} src={product.image} alt="product" />
           </div>
           <h2 className={styles.heading}>{trimText(product.title)}</h2>
           <h1 className={styles.price}>{toDollars(product.price)}</h1>

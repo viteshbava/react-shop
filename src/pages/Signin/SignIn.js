@@ -20,7 +20,6 @@ const SignIn = () => {
     setInputTouched: setUsernameTouched,
     inputChangeHandler: usernameChangeHandler,
     inputBlurHandler: usernameBlurHandler,
-    resetInput: resetUserName,
   } = useInput((val) => val.trim() !== "");
 
   const {
@@ -30,7 +29,6 @@ const SignIn = () => {
     setInputTouched: setPasswordTouched,
     inputChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
-    resetInput: resetPassword,
   } = useInput((val) => val.trim() !== "");
 
   const formValid = usernameValid && passwordValid;

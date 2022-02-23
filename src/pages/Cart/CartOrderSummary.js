@@ -6,12 +6,10 @@ import toDollars from "../../utilities/toDollars";
 import styles from "./CartOrderSummary.module.css";
 
 import ModalContext from "../../context/modal-context";
-import { useNavigate } from "react-router-dom";
 
 const CartOrderSummary = () => {
   const itemSubtotal = useSelector((state) => state.cart.totalItemPrice);
   const modal = useContext(ModalContext);
-  const navigate = useNavigate();
 
   const orderTotal =
     itemSubtotal; /* this is where additional fees etc would be added */

@@ -60,9 +60,7 @@ const changeQuantity =
     dispatch(uiActions.showLoadingState(true));
     const { id: cartId } = store.getState().cart;
     try {
-      const result = await fakeStoreApi.updateCart(cartId, [
-        { productId, quantity },
-      ]);
+      await fakeStoreApi.updateCart(cartId, [{ productId, quantity }]);
       dispatch(cartActions.changeQuantity({ productId, quantity }));
       dispatch(
         uiActions.addAlert({
@@ -89,9 +87,7 @@ const removeFromCart = (productId) => async (dispatch) => {
   const { id: cartId } = store.getState().cart;
 
   try {
-    const result = await fakeStoreApi.updateCart(cartId, [
-      { productId, quantity: 0 },
-    ]);
+    await fakeStoreApi.updateCart(cartId, [{ productId, quantity: 0 }]);
     dispatch(cartActions.remove(productId));
     dispatch(
       uiActions.addAlert({
@@ -161,8 +157,6 @@ const _createNewCart = async (userId, product, quantity, dispatch) => {
 };
 
 const _updateCart = async (cartId, product, quantity, dispatch) => {
-  const result = await fakeStoreApi.updateCart(cartId, [
-    { productId: product.id, quantity },
-  ]);
+  await fakeStoreApi.updateCart(cartId, [{ productId: product.id, quantity }]);
   dispatch(cartActions.add({ product, quantity }));
 };

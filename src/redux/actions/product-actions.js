@@ -34,4 +34,4 @@ const clearProduct = () => (dispatch) =>
 const clearAllProducts = (dispatch) =>
   dispatch(productsActions.clearAllProducts());
 
-export { fetchProducts, fetchProduct, clearProduct };
+export { fetchProducts, fetchProduct, clearProduct, clearAllProducts };

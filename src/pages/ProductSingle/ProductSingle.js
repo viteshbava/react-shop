@@ -41,7 +41,7 @@ const ProductSingle = () => {
     setInitialRender(false);
     dispatch(fetchProduct(id));
     return () => dispatch(clearProduct());
-  }, [id]);
+  }, [id, dispatch]);
 
   useEffect(() => {
     const foundProduct = wishlist.find((p) => p.id === id);
@@ -112,7 +112,7 @@ const ProductSingle = () => {
         <SectionHeading>{title}</SectionHeading>
         <div className={styles["grid-wrapper"]}>
           <div className={styles["image-wrapper"]}>
-            <img className={styles.image} src={image} alt="Product Image" />
+            <img className={styles.image} src={image} alt="product" />
           </div>
           <div className={styles["details-wrapper"]}>
             <p className={styles.category}>{category}</p>

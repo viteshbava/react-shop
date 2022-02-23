@@ -40,7 +40,7 @@ const CartItem = ({ product }) => {
   return (
     <li className={styles["item-wrapper"]}>
       <Link className={styles["image-wrapper"]} to={`/products/${id}`}>
-        <img className={styles.image} src={image} alt="Product Image" />
+        <img className={styles.image} src={image} alt="product" />
       </Link>
       <div className={styles["item-details"]}>
         <div className={styles["item-details__header"]}>

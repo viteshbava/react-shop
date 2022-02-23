@@ -32,7 +32,7 @@ const ICON_TYPE = {
   WARNING: "warning",
 };
 
-const Icon = ({ className, icon, badge }) => {
+const Icon = ({ className, icon, badge, badgeClasses }) => {
   let iconReturn;
   switch (icon) {
     case ICON_TYPE.SIGNIN:
@@ -75,10 +75,11 @@ const Icon = ({ className, icon, badge }) => {
       console.error(`Invalid icon type: ${icon}`);
   }
   const spanClasses = styles.wrapper + (className ? ` ${className}` : "");
+  const badgeStyles = styles.badge + (badgeClasses ? ` ${badgeClasses}` : "");
   return (
     <span className={spanClasses}>
       {iconReturn}
-      {badge && <Badge className={styles.badge}>{badge}</Badge>}
+      {badge && <Badge className={badgeStyles}>{badge}</Badge>}
     </span>
   );
 };

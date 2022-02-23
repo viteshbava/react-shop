@@ -39,32 +39,30 @@ const CartItem = ({ product }) => {
 
   return (
     <li className={styles["item-wrapper"]}>
+      <button onClick={removeProductHandler} className={styles.close}>
+        &times;
+      </button>
       <Link className={styles["image-wrapper"]} to={`/products/${id}`}>
         <img className={styles.image} src={image} alt="product" />
       </Link>
       <div className={styles["item-details"]}>
-        <div className={styles["item-details__header"]}>
-          <h3 className={styles["product-name"]}>
-            <Link to={`/products/${id}`}>{title}</Link>
-          </h3>
-          <button onClick={removeProductHandler} className={styles.close}>
-            &times;
-          </button>
-        </div>
-        <p className={styles["product-id"]}>
+        <h3 className={styles["item-details__product-name"]}>
+          <Link to={`/products/${id}`}>{title}</Link>
+        </h3>
+        <p className={styles["item-details__product-id"]}>
           Product ID: <span>{id}</span>
         </p>
-        <p className={styles.price}>{toDollars(price)}</p>
+        <p className={styles["item-details__price"]}>{toDollars(price)}</p>
         <div className={styles["item-details__footer"]}>
           <NumberButtons
-            className={styles.quantity}
+            className={styles.footer__quantity}
             label="Quantity"
             id="quantity"
             min="1"
             value={quantity}
             onUpdate={qtyUpdateHandler}
           />
-          <p className={styles.subtotal}>
+          <p className={styles.footer__subtotal}>
             Subtotal:{" "}
             <span className={styles["subtotal__value"]}>
               {toDollars(subTotal)}

@@ -1,13 +1,14 @@
-.wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-footer {
+.main-footer {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: auto;
-  height: 3rem;
+  padding: 1rem 0;
   background-color: var(--primary-grey);
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }

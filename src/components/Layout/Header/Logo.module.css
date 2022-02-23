@@ -17,3 +17,9 @@
     font-size: 2rem;
   }
 }
+
+@media (max-width: 400px) {
+  .logo-link__text {
+    font-size: 1.5rem;
+  }
+}

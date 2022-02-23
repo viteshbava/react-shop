@@ -24,3 +24,9 @@
 .wrapper a {
   position: relative;
 }
+
+@media (max-width: 400px) {
+  .wrapper ul li {
+    margin-left: 1.25rem;
+  }
+}

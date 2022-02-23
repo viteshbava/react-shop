@@ -33,3 +33,9 @@ header {
     display: block;
   }
 }
+
+@media (max-width: 400px) {
+  .wrapper {
+    padding: 1rem 0;
+  }
+}

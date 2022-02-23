@@ -2,7 +2,7 @@
   border-style: solid;
   border-color: var(--primary-grey);
   border-top-style: solid;
-  border-top-color: var(--primary-darkgrey);
+  border-top-color: grey;
   border-radius: 50%;
   animation: spin 2s linear infinite;
 }

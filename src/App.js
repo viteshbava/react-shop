@@ -41,6 +41,7 @@ function App() {
     dispatch(fetchProducts());
   }, [DUMMY_USERID, dispatch]);
 
+  // This is temporary auth which will be replaced soon...
   const authRequired = (element) => (ctx.isLoggedIn ? element : <SignIn />);
 
   return (

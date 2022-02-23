@@ -12,7 +12,6 @@ const FloatingAlert = ({ id, ...props }) => {
   );
 
   useEffect(() => {
-    console.log("Setting timeout for alert!");
     const timeoutId = setTimeout(closeAlert, 4000);
     return () => clearTimeout(timeoutId);
   }, [closeAlert]);

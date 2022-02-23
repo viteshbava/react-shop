@@ -34,12 +34,12 @@ const NumberButtons = ({
   };
 
   const decrBtnHandler = () => {
-    if (props.min && value == props.min) return;
+    if (props.min && value === props.min) return;
     changeHandler(value - 1);
   };
 
   const incrBtnHandler = () => {
-    if (props.max && value == props.max) return;
+    if (props.max && value === props.max) return;
     changeHandler(value + 1);
   };
 

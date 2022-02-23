@@ -37,12 +37,13 @@ const Alert = ({ id, type, title, message, onClose }) => {
   }
 
   const onCloseHandler = useCallback(() => {
+    console.log(id);
     if (onClose) onClose();
     if (id) dispatch(uiActions.removeAlert(id));
-  }, [id]);
+  }, [id, dispatch, onClose]);
 
   useEffect(() => {
-    console.log("setting new timeout id for alert");
+    console.log("Setting timeout for alert...");
     const timeoutId = setTimeout(onCloseHandler, 4000);
     return () => clearTimeout(timeoutId);
   }, [onCloseHandler]);

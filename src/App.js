@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useMemo } from "react";
+import React, { Suspense, useEffect } from "react";
 import "./App.css";
 
 import Layout from "./components/Layout/Layout";

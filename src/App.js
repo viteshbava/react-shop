@@ -20,7 +20,7 @@ import AuthContext from "./context/auth-context";
 
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));
 const SignIn = React.lazy(() => import("./pages/Signin/SignIn"));
-const Register = React.lazy(() => import("./pages/Register"));
+const Register = React.lazy(() => import("./pages/Register/Register"));
 const ProductSingle = React.lazy(() =>
   import("./pages/ProductSingle/ProductSingle")
 );

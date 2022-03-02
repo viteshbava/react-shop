@@ -12,11 +12,11 @@ const Header = () => {
   const toggleLeftNav = () => setShowNavLeftCollapse((prev) => !prev);
 
   return (
-    <header>
+    <header className={styles.header}>
       <div className={`container ${styles.wrapper}`}>
         <NavTopLeft hamburgerClickHandler={toggleLeftNav} />
-        <NavTopRightDesktop className={styles["nav-top-right-desktop"]} />
-        <NavTopRightMobile className={styles["nav-top-right-mobile"]} />
+        <NavTopRightDesktop />
+        <NavTopRightMobile />
         {showNavLeftCollapse && <NavLeftCollapse close={toggleLeftNav} />}
       </div>
     </header>

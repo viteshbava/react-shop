@@ -4,7 +4,6 @@
 }
 
 .hamburger-display-control {
-  display: none;
   margin-right: 1.5rem;
 }
 
@@ -14,11 +13,6 @@
   height: 1.5rem;
 }
 
-@media (max-width: 900px) {
-  .hamburger-display-control {
-    display: block;
-  }
-}
 @media (max-width: 400px) {
   .hamburger-display-control {
     margin-right: 1rem;

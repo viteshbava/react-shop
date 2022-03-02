@@ -3,6 +3,7 @@ import { useEffect, useContext } from "react";
 import localStyles from "./NavLeftCollapse.module.css";
 import globalStyles from "./_NavGlobal.module.css";
 
+import SignedInInfo from "./SignedInInfo";
 import Logo from "./Logo";
 import Button from "../../UI/Button/Button";
 import Icon, { ICON_TYPE } from "../../UI/Icon/Icon";
@@ -50,6 +51,10 @@ const NavLeftCollapse = ({ close }) => {
               &times;
             </button>
           </div>
+
+          {ctx.isLoggedIn && (
+            <SignedInInfo className={localStyles["signed-in-info"]} />
+          )}
 
           <nav className={localStyles.nav}>
             <ul>

@@ -4,6 +4,7 @@ import AuthContext from "../../../context/auth-context";
 import Icon, { ICON_TYPE } from "../../UI/Icon/Icon";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import SignedInInfo from "./SignedInInfo";
 
 const NavTopRightMobile = ({ className }) => {
   const ctx = useContext(AuthContext);
@@ -52,6 +53,7 @@ const NavTopRightMobile = ({ className }) => {
 
   return (
     <nav className={navClasses}>
+      <SignedInInfo className={styles["signed-in-info"]} />
       <ul>{ctx.isLoggedIn ? nav_signed_in : nav_signed_out}</ul>
     </nav>
   );

@@ -29,7 +29,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1rem 0 2rem;
 }
 
 .close {
@@ -42,6 +41,15 @@
 
 .close:hover {
   opacity: 0.7;
+}
+
+.signed-in-info {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.nav {
+  margin-top: 1rem;
 }
 
 .nav ul li {

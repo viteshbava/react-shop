@@ -1,4 +1,4 @@
-header {
+.header {
   border-bottom: 1px solid var(--primary-grey);
   background-color: var(--primary-main-light);
   position: sticky;
@@ -13,24 +13,9 @@ header {
   padding: 1rem 0;
 }
 
-.nav-top-right-mobile {
-  display: none;
-}
-
 @media (max-width: 900px) {
   .wrapper {
     padding: 0.5rem 0;
-  }
-
-  .nav-top-right-desktop {
-    display: none;
-  }
-  .nav-top-right-mobile {
-    display: block;
-  }
-
-  .nav-mobile-collapse {
-    display: block;
   }
 }
 

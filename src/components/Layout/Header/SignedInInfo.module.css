@@ -1,0 +1,13 @@
+.wrapper {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--primary-main-dark);
+}
+
+.label {
+  margin-right: 0.5rem;
+}
+
+.username {
+  font-weight: bold;
+}

@@ -1,3 +1,7 @@
+.wrapper {
+  display: none;
+}
+
 .wrapper ul {
   display: flex;
   color: var(--primary-main-dark);
@@ -23,6 +27,22 @@
 
 .wrapper a {
   position: relative;
+}
+
+.signed-in-info {
+  margin-right: 1rem;
+}
+
+@media (max-width: 900px) {
+  .wrapper {
+    display: flex;
+  }
+}
+
+@media (max-width: 660px) {
+  .signed-in-info {
+    display: none;
+  }
 }
 
 @media (max-width: 400px) {

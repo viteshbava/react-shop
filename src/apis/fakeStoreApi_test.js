@@ -8,25 +8,16 @@ const URL = {
 };
 
 const fakeStoreApi = {
-  getProduct: async (productId) => {
+  getProduct: (productId) => {
     if (!productId)
       throw new ReactError({
         message: "Empty product ID was supplied to fakeStoreApi!",
         statusCode: 400,
       });
-    try {
-      const product = await sendHttpRequest({
-        url: `${URL.PRODUCTS}/${productId}`,
-      });
-      return product;
-    } catch (err) {
-      console.error(err.message);
-      if (err.statusCode === 400)
-        err.message = "That failed sorry!  Please try again later";
-      if (err.statusCode === 404)
-        err.message = `A product with that ID (${productId}) could not be found!`;
-      throw err;
-    }
+    const product = sendHttpRequest({
+      url: `${URL.PRODUCTS}/${productId}`,
+    });
+    return product;
   },
 
   getProducts: () => {

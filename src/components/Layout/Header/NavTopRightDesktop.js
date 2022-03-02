@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 
 const NavTopRightDesktop = ({ className }) => {
   const ctx = useContext(AuthContext);
+  const { user: loggedInUser } = useSelector((state) => state.auth);
   const cartTotalQty = useSelector((state) => state.cart.totalQuantity);
   const wishlistTotalQty = useSelector((state) => state.wishlist.totalQuantity);
 
@@ -87,7 +88,7 @@ const NavTopRightDesktop = ({ className }) => {
             About
           </NavLink>
         </li>
-        {ctx.isLoggedIn ? nav_signed_in : nav_signed_out}
+        {loggedInUser ? nav_signed_in : nav_signed_out}
       </ul>
     </nav>
   );

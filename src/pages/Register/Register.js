@@ -1,17 +1,19 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import useInput from "../../hooks/use-input";
 import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
 import TextField from "../../components/UI/Control/TextField";
 import Button from "../../components/UI/Button/Button";
 import Alert, { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
 import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
-import { useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../redux/actions/auth-actions";
+import { reset } from "../../redux/slices/auth-slice";
 import styles from "./Register.module.css";
 
 const Register = () => {
   const [showFormError, setFormError] = useState(null);
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector((state) => state.auth);
 
   const {
     input: username,
@@ -42,7 +44,15 @@ const Register = () => {
 
   const formValid = usernameValid && passwordValid && confirmPasswordValid;
 
-  // const ctx = useContext(AuthContext);
+  useEffect(() => {
+    if (error)
+      setFormError({
+        type: ALERT_TYPE.ERROR,
+        title: "Unable to register",
+        message: error.message,
+      });
+    dispatch(reset());
+  }, [error]);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -63,13 +73,7 @@ const Register = () => {
     }
 
     console.log("Register user...");
-
-    // const result = ctx.onLogin(username, password);
-    // if (result.success) {
-    //   navigate("/");
-    // } else {
-    //   setFormError(result.alert);
-    // }
+    dispatch(register({ username, password }));
   };
 
   return (
@@ -115,7 +119,7 @@ const Register = () => {
             icon={<Icon icon={ICON_TYPE.REGISTER} />}
             type="submit"
           >
-            Sign in
+            Register
           </Button>
         </form>
       </div>

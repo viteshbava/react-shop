@@ -4,12 +4,17 @@ import "./App.css";
 import Layout from "./components/Layout/Layout";
 import PageLoader from "./components/Feedback/PageLoader/PageLoader";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUserCart } from "./redux/actions/cart-actions";
 import { fetchWishlist } from "./redux/actions/wishlist-actions";
 import { fetchProducts } from "./redux/actions/product-actions";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import ScrollToTop from "./utilities/ScrollToTop";
 
@@ -33,6 +38,7 @@ const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
 function App() {
   const dispatch = useDispatch();
   const ctx = useContext(AuthContext);
+  const isLoggedIn = useSelector((state) => state.auth.user);
 
   const DUMMY_USERID = 1;
 
@@ -43,7 +49,8 @@ function App() {
   }, [DUMMY_USERID, dispatch]);
 
   // This is temporary auth which will be replaced soon...
-  const authRequired = (element) => (ctx.isLoggedIn ? element : <SignIn />);
+  const authRequired = (element) => (isLoggedIn ? element : <SignIn />);
+  const anonRequired = (element) => (isLoggedIn ? <ProductList /> : element);
 
   return (
     <Router>
@@ -52,7 +59,12 @@ function App() {
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/signin" element={<SignIn />} />
-            <Route path="/register" element={<Register />} />
+            <Route
+              path="/register"
+              element={
+                isLoggedIn ? <Navigate replace to={"/"} /> : <Register />
+              }
+            />
             <Route path="/products" element={authRequired(<ProductList />)} />
             <Route
               path="/products/:id"

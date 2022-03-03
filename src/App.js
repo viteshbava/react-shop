@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useContext } from "react";
+import React, { Suspense, useEffect } from "react";
 import "./App.css";
 
 import Layout from "./components/Layout/Layout";
@@ -21,8 +21,6 @@ import ScrollToTop from "./utilities/ScrollToTop";
 import ProductList from "./pages/ProductList/ProductList";
 import InfoError, { INFO_ERROR_TYPE } from "./pages/Error/InfoError";
 
-import AuthContext from "./context/auth-context";
-
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));
 const SignIn = React.lazy(() => import("./pages/Signin/SignIn"));
 const Register = React.lazy(() => import("./pages/Register/Register"));
@@ -37,16 +35,15 @@ const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
 
 function App() {
   const dispatch = useDispatch();
-  const ctx = useContext(AuthContext);
   const isLoggedIn = useSelector((state) => state.auth.user);
 
   const DUMMY_USERID = 1;
 
   useEffect(() => {
-    dispatch(fetchUserCart(DUMMY_USERID));
+    if (isLoggedIn) dispatch(fetchUserCart(DUMMY_USERID));
     dispatch(fetchWishlist(DUMMY_USERID));
     dispatch(fetchProducts());
-  }, [DUMMY_USERID, dispatch]);
+  }, [isLoggedIn, DUMMY_USERID, dispatch]);
 
   // This is temporary auth which will be replaced soon...
   const authRequired = (element) => (isLoggedIn ? element : <SignIn />);
@@ -58,7 +55,10 @@ function App() {
       <Layout>
         <Suspense fallback={<PageLoader />}>
           <Routes>
-            <Route path="/signin" element={<SignIn />} />
+            <Route
+              path="/signin"
+              element={isLoggedIn ? <Navigate replace to={"/"} /> : <SignIn />}
+            />
             <Route
               path="/register"
               element={

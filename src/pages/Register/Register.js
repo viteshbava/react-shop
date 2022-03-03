@@ -13,7 +13,7 @@ import styles from "./Register.module.css";
 const Register = () => {
   const [showFormError, setFormError] = useState(null);
   const dispatch = useDispatch();
-  const { isLoading, error } = useSelector((state) => state.auth);
+  const { error } = useSelector((state) => state.auth);
 
   const {
     input: username,
@@ -72,8 +72,7 @@ const Register = () => {
       return;
     }
 
-    console.log("Register user...");
-    dispatch(register({ username, password }));
+    dispatch(register(username, password));
   };
 
   return (

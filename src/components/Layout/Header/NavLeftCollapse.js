@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 
 import localStyles from "./NavLeftCollapse.module.css";
 import globalStyles from "./_NavGlobal.module.css";
@@ -8,14 +8,17 @@ import Logo from "./Logo";
 import Button from "../../UI/Button/Button";
 import Icon, { ICON_TYPE } from "../../UI/Icon/Icon";
 
-import AuthContext from "../../../context/auth-context";
 import { useNavigate, NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../redux/actions/auth-actions";
+import { uiActions } from "../../../redux/slices/ui-slice";
+import { ALERT_TYPE } from "../../Feedback/Alert/Alert";
 
 const NavLeftCollapse = ({ close }) => {
-  const ctx = useContext(AuthContext);
+  const { user: loggedInUser } = useSelector((state) => state.auth);
   const cartTotalQty = useSelector((state) => state.cart.totalQuantity);
   const wishlistTotalQty = useSelector((state) => state.wishlist.totalQuantity);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,9 +38,22 @@ const NavLeftCollapse = ({ close }) => {
     (isActive ? ` ${globalStyles["navlink--active"]}` : "");
 
   const onSignOutHandler = () => {
-    ctx.onLogout();
-    navigate("/");
-    close();
+    dispatch(
+      logout({
+        onSuccess: () => {
+          navigate("/");
+          close();
+        },
+        onError: () =>
+          dispatch(
+            uiActions.addAlert({
+              type: ALERT_TYPE.ERROR,
+              title: "Sign out fail",
+              message: "Failed to sign out!",
+            })
+          ),
+      })
+    );
   };
 
   return (
@@ -52,13 +68,13 @@ const NavLeftCollapse = ({ close }) => {
             </button>
           </div>
 
-          {ctx.isLoggedIn && (
+          {loggedInUser && (
             <SignedInInfo className={localStyles["signed-in-info"]} />
           )}
 
           <nav className={localStyles.nav}>
             <ul>
-              {ctx.isLoggedIn && (
+              {loggedInUser && (
                 <>
                   <li>
                     <NavLink
@@ -106,7 +122,7 @@ const NavLeftCollapse = ({ close }) => {
             </ul>
           </nav>
           <ul className={localStyles.actions}>
-            {ctx.isLoggedIn && (
+            {loggedInUser && (
               <li>
                 <Button
                   onClick={onSignOutHandler}
@@ -117,7 +133,7 @@ const NavLeftCollapse = ({ close }) => {
                 </Button>
               </li>
             )}
-            {!ctx.isLoggedIn && (
+            {!loggedInUser && (
               <>
                 <li>
                   <Button

@@ -62,7 +62,7 @@ const NavTopRightDesktop = ({ className }) => {
 
   return (
     <nav className={navClasses}>
-      <SignedInInfo />
+      {loggedInUser && <SignedInInfo />}
       <ul>{loggedInUser ? nav_signed_in : nav_signed_out}</ul>
     </nav>
   );

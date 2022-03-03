@@ -1,13 +1,11 @@
 import styles from "./NavTopRightMobile.module.css";
-import { useContext } from "react";
-import AuthContext from "../../../context/auth-context";
 import Icon, { ICON_TYPE } from "../../UI/Icon/Icon";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SignedInInfo from "./SignedInInfo";
 
 const NavTopRightMobile = ({ className }) => {
-  const ctx = useContext(AuthContext);
+  const { user: loggedInUser } = useSelector((state) => state.auth);
   const cartTotalQty = useSelector((state) => state.cart.totalQuantity);
   const wishlistTotalQty = useSelector((state) => state.wishlist.totalQuantity);
 
@@ -53,8 +51,8 @@ const NavTopRightMobile = ({ className }) => {
 
   return (
     <nav className={navClasses}>
-      <SignedInInfo className={styles["signed-in-info"]} />
-      <ul>{ctx.isLoggedIn ? nav_signed_in : nav_signed_out}</ul>
+      {loggedInUser && <SignedInInfo className={styles["signed-in-info"]} />}
+      <ul>{loggedInUser ? nav_signed_in : nav_signed_out}</ul>
     </nav>
   );
 };

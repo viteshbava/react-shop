@@ -26,6 +26,7 @@ const authServerApi = {
       return response;
     } catch (error) {
       let niceErrMessage;
+      console.error(error?.error?.message);
       switch (error?.error?.message) {
         case "EMAIL_EXISTS":
           niceErrMessage =

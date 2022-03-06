@@ -72,7 +72,7 @@ const Register = () => {
       return;
     }
 
-    dispatch(register(username, password));
+    dispatch(register({ username, password }));
   };
 
   return (

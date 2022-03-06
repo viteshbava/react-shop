@@ -6,7 +6,6 @@ import Button from "../../components/UI/Button/Button";
 import styles from "./SignIn.module.css";
 import Alert, { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
 import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
-import AuthContext from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/actions/auth-actions";
@@ -38,8 +37,6 @@ const SignIn = () => {
   } = useInput((val) => val.trim() !== "");
 
   const formValid = usernameValid && passwordValid;
-
-  const ctx = useContext(AuthContext);
 
   useEffect(() => {
     if (error)

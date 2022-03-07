@@ -2,8 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import authServerApi from "../../apis/authServerApi";
 import { uiActions } from "../slices/ui-slice";
 import { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
-import { cartActions } from "../slices/cart-slice";
-import { wishlistActions } from "../slices/wishlist-slice";
 
 // Register User
 export const register = createAsyncThunk(

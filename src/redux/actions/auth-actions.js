@@ -47,7 +47,6 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
         message: "Happy shopping!",
       })
     );
-    // dispatch(fetchUserCart(1));
     return response;
   } catch (error) {
     thunkAPI.dispatch(uiActions.showLoadingState(false));

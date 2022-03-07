@@ -7,7 +7,7 @@ import PageLoader from "./components/Feedback/PageLoader/PageLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserCart } from "./redux/actions/cart-actions";
 import { fetchWishlist } from "./redux/actions/wishlist-actions";
-import { fetchProducts } from "./redux/actions/product-actions";
+import { fetchProducts } from "./redux/slices/allProducts-slice";
 
 import {
   BrowserRouter as Router,

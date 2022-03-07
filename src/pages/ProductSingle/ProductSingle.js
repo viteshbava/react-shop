@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProduct,
   clearProduct,
-} from "../../redux/actions/product-actions";
+} from "../../redux/slices/selectedProduct-slice";
 import { addToCart } from "../../redux/actions/cart-actions";
 import {
   addToWishlist,

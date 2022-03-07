@@ -1,8 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { logout } from "../actions/auth-actions";
-import { fetchProducts } from "../actions/product-actions";
+import fakeStoreApi from "../../apis/fakeStoreApi_test";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const STATE_INIT = { products: null, isLoading: false, error: null };
+
+/******************************************
+createAsyncThunk Actions
+*******************************************/
+
+const fetchProducts = createAsyncThunk(
+  "allProducts/fetchProducts",
+  async (_, thunkAPI) => {
+    try {
+      return await fakeStoreApi.getProducts();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message || error.toString());
+    }
+  }
+);
+
+/******************************************
+Slice
+*******************************************/
 
 const productsSlice = createSlice({
   name: "products",
@@ -39,7 +59,6 @@ const productsSlice = createSlice({
   },
 });
 
-const productsActions = productsSlice.actions;
-
+export const { clearAllProducts } = productsSlice.actions;
+export { fetchProducts };
 export default productsSlice.reducer;
-export { productsActions };

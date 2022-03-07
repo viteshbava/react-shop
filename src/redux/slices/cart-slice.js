@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { logout } from "../actions/auth-actions";
 
 const STATE_INIT = {
   isLoading: false,
@@ -71,9 +72,14 @@ const cartSlice = createSlice({
     setTotalQuantity(state, action) {
       state.totalQuantity = action.payload;
     },
-    clearCart(state, action) {
+    clearCart() {
       return { ...STATE_INIT, totalQuantity: 0, totalItemPrice: 0 };
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout.fulfilled, () => {
+      return { ...STATE_INIT, totalQuantity: 0, totalItemPrice: 0 };
+    });
   },
 });
 

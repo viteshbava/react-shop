@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { logout } from "../actions/auth-actions";
 
 const STATE_INIT = { products: null, isLoading: false, error: null };
 
@@ -18,6 +19,11 @@ const productsSlice = createSlice({
     clearAllProducts(state, action) {
       return { ...STATE_INIT };
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout.fulfilled, () => {
+      return { ...STATE_INIT };
+    });
   },
 });
 

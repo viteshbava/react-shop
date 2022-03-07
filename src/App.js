@@ -40,9 +40,11 @@ function App() {
   const DUMMY_USERID = 1;
 
   useEffect(() => {
-    if (isLoggedIn) dispatch(fetchUserCart(DUMMY_USERID));
-    dispatch(fetchWishlist(DUMMY_USERID));
-    dispatch(fetchProducts());
+    if (isLoggedIn) {
+      dispatch(fetchUserCart(DUMMY_USERID));
+      dispatch(fetchWishlist(DUMMY_USERID));
+      dispatch(fetchProducts());
+    }
   }, [isLoggedIn, DUMMY_USERID, dispatch]);
 
   // This is temporary auth which will be replaced soon...

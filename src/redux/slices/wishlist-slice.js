@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { logout } from "../actions/auth-actions";
 
 const STATE_INIT = {
   isLoading: false,
@@ -46,6 +47,11 @@ const wishlistSlice = createSlice({
     setTotalQuantity(state, action) {
       state.totalQuantity = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout.fulfilled, (state, action) => {
+      return { ...STATE_INIT };
+    });
   },
 });
 

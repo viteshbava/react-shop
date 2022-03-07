@@ -2,6 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import authServerApi from "../../apis/authServerApi";
 import { uiActions } from "../slices/ui-slice";
 import { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
+import { cartActions } from "../slices/cart-slice";
+import { wishlistActions } from "../slices/wishlist-slice";
 
 // Register User
 export const register = createAsyncThunk(
@@ -47,6 +49,7 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
         message: "Happy shopping!",
       })
     );
+    // dispatch(fetchUserCart(1));
     return response;
   } catch (error) {
     thunkAPI.dispatch(uiActions.showLoadingState(false));
@@ -62,9 +65,6 @@ export const logout = createAsyncThunk(
     try {
       // If there was any async logic to await, it would go here
       localStorage.removeItem("user");
-      // remove cart from state
-      // remove wishlist from state
-      // I THINK WE CAN USE A DIFFERENT SLICE IN TEH AUTH-SLICE???
       thunkAPI.dispatch(
         uiActions.addAlert({
           type: ALERT_TYPE.SUCCESS,

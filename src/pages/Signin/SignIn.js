@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import useInput from "../../hooks/use-input";
 import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
 import TextField from "../../components/UI/Control/TextField";
@@ -6,7 +6,6 @@ import Button from "../../components/UI/Button/Button";
 import styles from "./SignIn.module.css";
 import Alert, { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
 import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/actions/auth-actions";
 import { reset } from "../../redux/slices/auth-slice";
@@ -15,7 +14,6 @@ const SignIn = () => {
   const { error } = useSelector((state) => state.auth);
 
   const [showSignInFailure, setShowSignInFailure] = useState(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const {

@@ -37,11 +37,12 @@ const NavLeftCollapse = ({ close }) => {
     globalStyles.navlink +
     (isActive ? ` ${globalStyles["navlink--active"]}` : "");
 
-  const onSignOutHandler = () => {
+  const onSignOutHandler = async () => {
     dispatch(
       logout({
         onSuccess: () => {
-          navigate("/");
+          console.log("running the navigate now!...");
+          // navigate("/");
           close();
         },
         onError: () =>
@@ -53,7 +54,7 @@ const NavLeftCollapse = ({ close }) => {
             })
           ),
       })
-    );
+    ).then(() => console.log("This is where my logic will go"));
   };
 
   return (

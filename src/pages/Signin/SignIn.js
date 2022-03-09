@@ -8,11 +8,13 @@ import Alert, { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
 import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/actions/auth-actions";
-import { reset } from "../../redux/slices/auth-slice";
+import { resetUserState } from "../../redux/slices/auth-slice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const { error } = useSelector((state) => state.auth);
-
+  const { user, error } = useSelector((state) => state.auth);
+  const location = useLocation();
+  const navigate = useNavigate();
   const [showSignInFailure, setShowSignInFailure] = useState(null);
   const dispatch = useDispatch();
 
@@ -36,6 +38,15 @@ const SignIn = () => {
 
   const formValid = usernameValid && passwordValid;
 
+  // If user is already logged in, either navigate back to root or back to the previous attempted visit if it exists
+  useEffect(() => {
+    if (user) {
+      location?.state?.from
+        ? navigate(location.state.from, { replace: true })
+        : navigate("/", { replace: true });
+    }
+  }, [user, navigate, location]);
+
   useEffect(() => {
     if (error)
       setShowSignInFailure({
@@ -43,7 +54,7 @@ const SignIn = () => {
         title: "Unable to sign in",
         message: error.message,
       });
-    dispatch(reset());
+    dispatch(resetUserState());
   }, [error]);
 
   const formSubmitHandler = (e) => {
@@ -54,14 +65,7 @@ const SignIn = () => {
 
     if (!formValid) return;
 
-    dispatch(login({ username, password }));
-
-    // const result = ctx.onLogin(username, password);
-    // if (result.success) {
-    //   navigate("/");
-    // } else {
-    //   setShowSignInFailure(result.alert);
-    // }
+    dispatch(login({ user: { username, password } }));
   };
 
   return (

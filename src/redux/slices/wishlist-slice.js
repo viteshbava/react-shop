@@ -55,7 +55,5 @@ const wishlistSlice = createSlice({
   },
 });
 
-const wishlistActions = wishlistSlice.actions;
-
+export const wishlistActions = wishlistSlice.actions;
 export default wishlistSlice.reducer;
-export { wishlistActions };

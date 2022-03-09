@@ -110,8 +110,11 @@ const removeFromCart = (productId) => async (dispatch) => {
 export { fetchUserCart, addToCart, removeFromCart, changeQuantity };
 
 /**********************************************************
+/**********************************************************
   Helper functions for cart-actions  
 **********************************************************/
+/**********************************************************/
+
 const _fetchCartForUser = async (userId) => {
   // Fetch array of carts for supplied userId
   const user_carts = await fakeStoreApi.getUserCarts(userId);

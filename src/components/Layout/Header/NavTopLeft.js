@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./NavTopLeft.module.css";
+import navStyles from "./_NavGlobal.module.css";
 import Hamburger from "../../UI/Hamburger/Hamburger";
 import Logo from "./Logo";
 

@@ -31,28 +31,32 @@ export const register = createAsyncThunk(
 );
 
 // Login user
-export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
-  thunkAPI.dispatch(uiActions.showLoadingState(true));
-  try {
-    const response = await authServerApi.login({
-      email: user.username,
-      password: user.password,
-    });
-    localStorage.setItem("user", JSON.stringify(response));
-    thunkAPI.dispatch(uiActions.showLoadingState(false));
-    thunkAPI.dispatch(
-      uiActions.addAlert({
-        type: ALERT_TYPE.SUCCESS,
-        title: `Signed in as ${response.email}`,
-        message: "Happy shopping!",
-      })
-    );
-    return response;
-  } catch (error) {
-    thunkAPI.dispatch(uiActions.showLoadingState(false));
-    return thunkAPI.rejectWithValue(error?.message || error.toString());
+export const login = createAsyncThunk(
+  "auth/login",
+  async ({ user, onSuccess }, thunkAPI) => {
+    thunkAPI.dispatch(uiActions.showLoadingState(true));
+    try {
+      const response = await authServerApi.login({
+        email: user.username,
+        password: user.password,
+      });
+      localStorage.setItem("user", JSON.stringify(response));
+      thunkAPI.dispatch(uiActions.showLoadingState(false));
+      thunkAPI.dispatch(
+        uiActions.addAlert({
+          type: ALERT_TYPE.SUCCESS,
+          title: `Signed in as ${response.email}`,
+          message: "Happy shopping!",
+        })
+      );
+      if (onSuccess) onSuccess();
+      return response;
+    } catch (error) {
+      thunkAPI.dispatch(uiActions.showLoadingState(false));
+      return thunkAPI.rejectWithValue(error?.message || error.toString());
+    }
   }
-});
+);
 
 // Logout user
 export const logout = createAsyncThunk(

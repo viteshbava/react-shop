@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect } from "react";
 import "./App.css";
 
+import Feedback from "./components/Feedback/Feedback";
 import Layout from "./components/Layout/Layout";
 import PageLoader from "./components/Feedback/PageLoader/PageLoader";
 
@@ -20,6 +21,9 @@ import ScrollToTop from "./utilities/ScrollToTop";
 
 import ProductList from "./pages/ProductList/ProductList";
 import InfoError, { INFO_ERROR_TYPE } from "./pages/Error/InfoError";
+
+import AuthRequired from "./pages/Redirects/AuthRequired";
+import AnonOnly from "./pages/Redirects/AnonOnly";
 
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));
 const SignIn = React.lazy(() => import("./pages/Signin/SignIn"));
@@ -47,33 +51,54 @@ function App() {
     }
   }, [isLoggedIn, DUMMY_USERID, dispatch]);
 
-  // This is temporary auth which will be replaced soon...
   const authRequired = (element) => (isLoggedIn ? element : <SignIn />);
   const anonRequired = (element) => (isLoggedIn ? <ProductList /> : element);
 
   return (
     <Router>
       <ScrollToTop />
+      <Feedback />
       <Layout>
         <Suspense fallback={<PageLoader />}>
           <Routes>
+            {/* <Route path="/signin" element={<SignIn />} /> */}
             <Route
               path="/signin"
-              element={isLoggedIn ? <Navigate replace to={"/"} /> : <SignIn />}
+              element={
+                <AnonOnly>
+                  <SignIn />
+                </AnonOnly>
+              }
             />
             <Route
               path="/register"
               element={
-                isLoggedIn ? <Navigate replace to={"/"} /> : <Register />
+                <AnonOnly>
+                  <Register />
+                </AnonOnly>
               }
             />
-            <Route path="/products" element={authRequired(<ProductList />)} />
+            <Route
+              path="/products"
+              element={
+                <AuthRequired>
+                  <ProductList />
+                </AuthRequired>
+              }
+            />
             <Route
               path="/products/:id"
               element={authRequired(<ProductSingle />)}
             />
             <Route path="/cart" element={authRequired(<Cart />)} />
-            <Route path="/wishlist" element={authRequired(<Wishlist />)} />
+            <Route
+              path="/wishlist"
+              element={
+                <AuthRequired>
+                  <Wishlist />
+                </AuthRequired>
+              }
+            />
             <Route path="/help/*" element={<Help />} />
             <Route exact path="/about" element={<About />}>
               <Route path="about1" element={<AboutTextOne />} />
@@ -81,7 +106,7 @@ function App() {
               <Route index element={<></>} />
               <Route path="*" element={<div>About text not found!</div>} />
             </Route>
-            <Route index element={authRequired(<ProductList />)} />
+            <Route index element={isLoggedIn ? <ProductList /> : <SignIn />} />
             <Route
               path="*"
               element={

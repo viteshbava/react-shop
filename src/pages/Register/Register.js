@@ -7,7 +7,7 @@ import Alert, { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
 import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../redux/actions/auth-actions";
-import { reset } from "../../redux/slices/auth-slice";
+import { resetUserState } from "../../redux/slices/auth-slice";
 import styles from "./Register.module.css";
 
 const Register = () => {
@@ -51,7 +51,7 @@ const Register = () => {
         title: "Unable to register",
         message: error.message,
       });
-    dispatch(reset());
+    dispatch(resetUserState());
   }, [error]);
 
   const formSubmitHandler = (e) => {

@@ -22,8 +22,7 @@ import ScrollToTop from "./utilities/ScrollToTop";
 import ProductList from "./pages/ProductList/ProductList";
 import InfoError, { INFO_ERROR_TYPE } from "./pages/Error/InfoError";
 
-import AuthRequired from "./pages/Redirects/AuthRequired";
-import AnonOnly from "./pages/Redirects/AnonOnly";
+import AuthRequired from "./components/AuthRequired";
 
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));
 const SignIn = React.lazy(() => import("./pages/Signin/SignIn"));
@@ -51,9 +50,6 @@ function App() {
     }
   }, [isLoggedIn, DUMMY_USERID, dispatch]);
 
-  const authRequired = (element) => (isLoggedIn ? element : <SignIn />);
-  const anonRequired = (element) => (isLoggedIn ? <ProductList /> : element);
-
   return (
     <Router>
       <ScrollToTop />
@@ -61,23 +57,8 @@ function App() {
       <Layout>
         <Suspense fallback={<PageLoader />}>
           <Routes>
-            {/* <Route path="/signin" element={<SignIn />} /> */}
-            <Route
-              path="/signin"
-              element={
-                <AnonOnly>
-                  <SignIn />
-                </AnonOnly>
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                <AnonOnly>
-                  <Register />
-                </AnonOnly>
-              }
-            />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/register" element={<Register />} />
             <Route
               path="/products"
               element={
@@ -88,9 +69,20 @@ function App() {
             />
             <Route
               path="/products/:id"
-              element={authRequired(<ProductSingle />)}
+              element={
+                <AuthRequired>
+                  <ProductSingle />
+                </AuthRequired>
+              }
             />
-            <Route path="/cart" element={authRequired(<Cart />)} />
+            <Route
+              path="/cart"
+              element={
+                <AuthRequired>
+                  <Cart />
+                </AuthRequired>
+              }
+            />
             <Route
               path="/wishlist"
               element={
@@ -106,7 +98,10 @@ function App() {
               <Route index element={<></>} />
               <Route path="*" element={<div>About text not found!</div>} />
             </Route>
-            <Route index element={isLoggedIn ? <ProductList /> : <SignIn />} />
+            <Route
+              index
+              element={<Navigate to={isLoggedIn ? "/products" : "signin"} />}
+            />
             <Route
               path="*"
               element={

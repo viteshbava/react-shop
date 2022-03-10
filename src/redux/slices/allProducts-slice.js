@@ -36,19 +36,16 @@ const productsSlice = createSlice({
     builder
       // FETCH PRODUCTS - PENDING
       .addCase(fetchProducts.pending, (state) => {
-        console.log("Made it to extraReducer, fetchProducts.pending!");
         state.isLoading = true;
       })
       // FETCH PRODUCTS - FULLFILLED
       .addCase(fetchProducts.fulfilled, (state, action) => {
-        console.log("Made it to extraReducer, fetchProducts.fulfilled!");
         state.products = action.payload;
         state.isLoading = false;
         state.error = null;
       })
       // FETCH PRODUCTS - REJECTED
       .addCase(fetchProducts.rejected, (state, action) => {
-        console.log("Made it to extraReducer, fetchProducts.rejected!");
         state.products = null;
         state.isLoading = false;
         state.error = { message: action.payload };

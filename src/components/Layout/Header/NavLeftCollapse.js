@@ -41,8 +41,7 @@ const NavLeftCollapse = ({ close }) => {
     dispatch(
       logout({
         onSuccess: () => {
-          console.log("running the navigate now!...");
-          // navigate("/");
+          navigate("/");
           close();
         },
         onError: () =>
@@ -54,7 +53,7 @@ const NavLeftCollapse = ({ close }) => {
             })
           ),
       })
-    ).then(() => console.log("This is where my logic will go"));
+    );
   };
 
   return (

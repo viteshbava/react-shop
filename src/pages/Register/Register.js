@@ -9,11 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../redux/actions/auth-actions";
 import { resetUserState } from "../../redux/slices/auth-slice";
 import styles from "./Register.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [showFormError, setFormError] = useState(null);
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const { user, error } = useSelector((state) => state.auth);
 
   const {
     input: username,
@@ -43,6 +45,11 @@ const Register = () => {
   } = useInput((val) => val.trim() !== "");
 
   const formValid = usernameValid && passwordValid && confirmPasswordValid;
+
+  // If user is already logged in, reirect to root page
+  useEffect(() => {
+    if (user) navigate("/", { replace: true });
+  }, [user, navigate]);
 
   useEffect(() => {
     if (error)

@@ -40,31 +40,23 @@ const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
 
 const useAbortController = () => {
   const [controller, setController] = useState(new AbortController());
-  // return {
-  //   abortSignal: controller.signal,
-  //   abortFetchCalls: () => {
-  //     controller.abort.bind(controller)();
-  //     setController(new AbortController());
-  //   },
-
-  const { signal } = controller;
-
-  const abortSignal = useMemo(() => signal, [signal]);
-
   return {
-    abortSignal,
+    abortSignal: controller.signal,
     abortFetchCalls: useCallback(() => {
       controller.abort.bind(controller)();
-      // setController(new AbortController());
+      setController(new AbortController());
     }, []),
-    setController,
   };
 };
 
 function App() {
   const dispatch = useDispatch();
-  const { user: isLoggedIn, hasLoggedOut } = useSelector((state) => state.auth);
-  const { abortSignal, abortFetchCalls, setController } = useAbortController();
+  const { user: isLoggedIn } = useSelector((state) => state.auth);
+
+  const { abortSignal, abortFetchCalls } = useAbortController();
+  const [fetchInProgress, setFetchInProgress] = useState(false);
+  const runFetchCalls = isLoggedIn && !fetchInProgress;
+  const cancelFetchCalls = !isLoggedIn && fetchInProgress;
 
   const DUMMY_USERID = 1;
 
@@ -72,24 +64,46 @@ function App() {
 
   useEffect(() => {
     console.log("Running the useEffect");
-    if (isLoggedIn) {
-      setController(new AbortController());
+    if (runFetchCalls) {
+      setFetchInProgress(true);
       dispatch(fetchUserCart(DUMMY_USERID, abortSignal));
       dispatch(fetchWishlist(DUMMY_USERID, abortSignal));
       dispatch(fetchProducts(abortSignal));
     }
-    if (!isLoggedIn && hasLoggedOut) {
+    if (cancelFetchCalls) {
       console.log("Cancelling fetch calls...");
+      setFetchInProgress(false);
       abortFetchCalls();
     }
   }, [
-    isLoggedIn,
-    hasLoggedOut,
-    DUMMY_USERID,
+    runFetchCalls,
+    cancelFetchCalls,
     dispatch,
-    abortSignal,
+    DUMMY_USERID,
     abortFetchCalls,
+    abortSignal,
   ]);
+
+  // useEffect(() => {
+  //   console.log("Running the useEffect");
+  //   if (isLoggedIn) {
+  //     setController(new AbortController());
+  //     dispatch(fetchUserCart(DUMMY_USERID, abortSignal));
+  //     dispatch(fetchWishlist(DUMMY_USERID, abortSignal));
+  //     dispatch(fetchProducts(abortSignal));
+  //   }
+  //   if (!isLoggedIn && hasLoggedOut) {
+  //     console.log("Cancelling fetch calls...");
+  //     abortFetchCalls();
+  //   }
+  // }, [
+  //   isLoggedIn,
+  //   hasLoggedOut,
+  //   DUMMY_USERID,
+  //   dispatch,
+  //   abortSignal,
+  //   abortFetchCalls,
+  // ]);
   // [isLoggedIn, DUMMY_USERID, dispatch, abortSignal, abortFetchCalls]
 
   return (

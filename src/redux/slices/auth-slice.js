@@ -56,18 +56,15 @@ const authSlice = createSlice({
       })
       // LOGOUT - PENDING
       .addCase(logout.pending, (state) => {
-        console.log("logout pending");
         state.isLoading = true;
       })
       // lOGOUT - FULFILLED
       .addCase(logout.fulfilled, (state) => {
-        console.log("logout fulfilled");
         state.isLoading = false;
         state.user = null;
       })
       // LOGOUT - REJECTED
       .addCase(logout.rejected, (state, action) => {
-        console.log("logout rejected");
         state.isLoading = false;
         state.error = { message: action.payload };
       });

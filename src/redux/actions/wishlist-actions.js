@@ -17,7 +17,7 @@ const fetchWishlist = (userId, abortSignal) => async (dispatch) => {
       2, 4, 6, 9, 13, 15,
     ]; /* dummy wishlist with products */
     // Update total quantity
-    // The abortSignal.aborted check is temporarily placed here to simulate the cencellation of the lengthy API call above
+    // The abortSignal.aborted check is temporarily placed here to simulate the cencellation of the fake lengthy API call above
     if (!abortSignal.aborted) {
       const totalQuantity = response_wishlist.length;
       dispatch(wishlistActions.setTotalQuantity(totalQuantity));

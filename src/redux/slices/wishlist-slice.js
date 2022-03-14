@@ -14,7 +14,6 @@ const wishlistSlice = createSlice({
 
   reducers: {
     replaceWishlist(state, action) {
-      console.log("REPLACING WISHLIST!");
       const wishlist = action.payload;
       state.products = wishlist;
     },

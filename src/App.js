@@ -38,14 +38,20 @@ const Wishlist = React.lazy(() => import("./pages/Wishlist/Wishlist"));
 const AboutTextOne = React.lazy(() => import("./pages/About/AboutTextOne"));
 const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
 
-const useAbortController = () => {
+const useAbortController = (isLoggedIn) => {
   const [controller, setController] = useState(new AbortController());
+  const [fetchInProgress, setFetchInProgress] = useState(false);
+  const runFetchCalls = isLoggedIn && !fetchInProgress;
+  const cancelFetchCalls = !isLoggedIn && fetchInProgress;
   return {
     abortSignal: controller.signal,
     abortFetchCalls: useCallback(() => {
       controller.abort.bind(controller)();
       setController(new AbortController());
     }, []),
+    runFetchCalls,
+    cancelFetchCalls,
+    setFetchInProgress,
   };
 };
 
@@ -53,17 +59,17 @@ function App() {
   const dispatch = useDispatch();
   const { user: isLoggedIn } = useSelector((state) => state.auth);
 
-  const { abortSignal, abortFetchCalls } = useAbortController();
-  const [fetchInProgress, setFetchInProgress] = useState(false);
-  const runFetchCalls = isLoggedIn && !fetchInProgress;
-  const cancelFetchCalls = !isLoggedIn && fetchInProgress;
+  const {
+    abortSignal,
+    abortFetchCalls,
+    runFetchCalls,
+    cancelFetchCalls,
+    setFetchInProgress,
+  } = useAbortController(isLoggedIn);
 
   const DUMMY_USERID = 1;
 
-  console.log("Rendering App.js - abortSignal: ", abortSignal);
-
   useEffect(() => {
-    console.log("Running the useEffect");
     if (runFetchCalls) {
       setFetchInProgress(true);
       dispatch(fetchUserCart(DUMMY_USERID, abortSignal));
@@ -71,7 +77,6 @@ function App() {
       dispatch(fetchProducts(abortSignal));
     }
     if (cancelFetchCalls) {
-      console.log("Cancelling fetch calls...");
       setFetchInProgress(false);
       abortFetchCalls();
     }
@@ -83,28 +88,6 @@ function App() {
     abortFetchCalls,
     abortSignal,
   ]);
-
-  // useEffect(() => {
-  //   console.log("Running the useEffect");
-  //   if (isLoggedIn) {
-  //     setController(new AbortController());
-  //     dispatch(fetchUserCart(DUMMY_USERID, abortSignal));
-  //     dispatch(fetchWishlist(DUMMY_USERID, abortSignal));
-  //     dispatch(fetchProducts(abortSignal));
-  //   }
-  //   if (!isLoggedIn && hasLoggedOut) {
-  //     console.log("Cancelling fetch calls...");
-  //     abortFetchCalls();
-  //   }
-  // }, [
-  //   isLoggedIn,
-  //   hasLoggedOut,
-  //   DUMMY_USERID,
-  //   dispatch,
-  //   abortSignal,
-  //   abortFetchCalls,
-  // ]);
-  // [isLoggedIn, DUMMY_USERID, dispatch, abortSignal, abortFetchCalls]
 
   return (
     <Router>

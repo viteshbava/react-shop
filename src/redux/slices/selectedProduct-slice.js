@@ -44,7 +44,6 @@ const selectedProductSlice = createSlice({
       })
       // FETCH PRODUCT - FULLFILLED
       .addCase(fetchProduct.fulfilled, (state, action) => {
-        console.log("SINGLE PRODUCT COMPLETE!");
         state.product = action.payload;
         state.isLoading = false;
         state.error = null;

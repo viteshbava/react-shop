@@ -137,7 +137,6 @@ const _fetchCartData = async (cartId, abortSignal, dispatch) => {
     0
   );
   // Display total quantity as we load products
-  console.log("ADDING CART TOTAL QUANTITY NOW");
   dispatch(cartActions.setTotalQuantity(totalQuantity));
   return cart_data;
 };

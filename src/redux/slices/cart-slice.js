@@ -17,7 +17,6 @@ const cartSlice = createSlice({
   reducers: {
     replaceCart(state, action) {
       const { products } = action.payload;
-      console.log("Replacing cart!");
       return {
         ...state,
         ...action.payload,

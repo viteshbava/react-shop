@@ -19,7 +19,6 @@ const fetchProducts = createAsyncThunk(
   async (signal, thunkAPI) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 5000));
-      console.log("Signal from fetchProducts: ", signal);
       return await fakeStoreApi.getProducts(signal);
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.message || error.toString());
@@ -48,14 +47,12 @@ const productsSlice = createSlice({
       })
       // FETCH PRODUCTS - FULLFILLED
       .addCase(fetchProducts.fulfilled, (state, action) => {
-        console.log("Products fetching complete!");
         state.products = action.payload;
         state.isLoading = false;
         state.error = null;
       })
       // FETCH PRODUCTS - REJECTED
       .addCase(fetchProducts.rejected, (state, action) => {
-        console.log("Products rejected!");
         state.products = null;
         state.isLoading = false;
         state.error = { message: action.payload };

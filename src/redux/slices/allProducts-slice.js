@@ -18,7 +18,6 @@ const fetchProducts = createAsyncThunk(
   "allProducts/fetchProducts",
   async (signal, thunkAPI) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 5000));
       return await fakeStoreApi.getProducts(signal);
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.message || error.toString());

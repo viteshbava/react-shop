@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect } from "react";
 import "./App.css";
 
 import Feedback from "./components/Feedback/Feedback";
@@ -9,8 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserCart } from "./redux/actions/cart-actions";
 import { fetchWishlist } from "./redux/actions/wishlist-actions";
 import { fetchProducts } from "./redux/slices/allProducts-slice";
-
-import { useMemo, useCallback } from "react";
 
 import {
   BrowserRouter as Router,
@@ -25,6 +23,7 @@ import ProductList from "./pages/ProductList/ProductList";
 import InfoError, { INFO_ERROR_TYPE } from "./pages/Error/InfoError";
 
 import AuthRequired from "./components/AuthRequired";
+import useAbortController from "./hooks/use-abortController";
 
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));
 const SignIn = React.lazy(() => import("./pages/Signin/SignIn"));
@@ -37,23 +36,6 @@ const About = React.lazy(() => import("./pages/About/About"));
 const Wishlist = React.lazy(() => import("./pages/Wishlist/Wishlist"));
 const AboutTextOne = React.lazy(() => import("./pages/About/AboutTextOne"));
 const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
-
-const useAbortController = (isLoggedIn) => {
-  const [controller, setController] = useState(new AbortController());
-  const [fetchInProgress, setFetchInProgress] = useState(false);
-  const runFetchCalls = isLoggedIn && !fetchInProgress;
-  const cancelFetchCalls = !isLoggedIn && fetchInProgress;
-  return {
-    abortSignal: controller.signal,
-    abortFetchCalls: useCallback(() => {
-      controller.abort.bind(controller)();
-      setController(new AbortController());
-    }, []),
-    runFetchCalls,
-    cancelFetchCalls,
-    setFetchInProgress,
-  };
-};
 
 function App() {
   const dispatch = useDispatch();

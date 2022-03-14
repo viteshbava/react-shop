@@ -79,7 +79,6 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     // CLEAR CART ON LOGOUT
     builder.addCase(logout.fulfilled, () => {
-      console.log("Clearing cart after logout");
       return { ...STATE_INIT, totalQuantity: 0, totalItemPrice: 0 };
     });
   },

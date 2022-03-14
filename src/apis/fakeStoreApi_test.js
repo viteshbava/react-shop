@@ -8,7 +8,7 @@ const URL = {
 };
 
 const fakeStoreApi = {
-  getProduct: (productId) => {
+  getProduct: (productId, signal = null) => {
     if (!productId)
       throw new ReactError({
         message: "Empty product ID was supplied to fakeStoreApi!",
@@ -16,21 +16,23 @@ const fakeStoreApi = {
       });
     const product = sendHttpRequest({
       url: `${URL.PRODUCTS}/${productId}`,
+      signal,
     });
     return product;
   },
 
-  getProducts: () => {
+  getProducts: (signal = null) => {
     const products = sendHttpRequest({
       url: URL.PRODUCTS,
       headers: {
         "content-type": "application/json",
       },
+      signal,
     });
     return products;
   },
 
-  getCart: (cartId) => {
+  getCart: (cartId, signal = null) => {
     if (!cartId)
       throw new ReactError({
         message: "Empty cart ID was supplied to fakeStoreApi!",
@@ -41,6 +43,7 @@ const fakeStoreApi = {
       headers: {
         "content-type": "application/json",
       },
+      signal,
     });
     return cart;
   },
@@ -79,7 +82,7 @@ const fakeStoreApi = {
     return result;
   },
 
-  getUserCarts: (userId) => {
+  getUserCarts: (userId, signal = null) => {
     if (!userId)
       throw new ReactError({
         message: "Empty user ID was supplied to fakeStoreApi!",
@@ -90,6 +93,7 @@ const fakeStoreApi = {
       headers: {
         "content-type": "application/json",
       },
+      signal,
     });
     return userCarts;
   },

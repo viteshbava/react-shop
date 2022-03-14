@@ -4,7 +4,7 @@ import { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
 import fakeStoreApi from "../../apis/fakeStoreApi_test";
 // import store from "../store";
 
-const fetchWishlist = (userId) => async (dispatch) => {
+const fetchWishlist = (userId, abortSignal) => async (dispatch) => {
   dispatch(wishlistActions.isLoading(true));
   try {
     // Fetch wishlist for supplied userId
@@ -17,24 +17,29 @@ const fetchWishlist = (userId) => async (dispatch) => {
       2, 4, 6, 9, 13, 15,
     ]; /* dummy wishlist with products */
     // Update total quantity
-    const totalQuantity = response_wishlist.length;
-    dispatch(wishlistActions.setTotalQuantity(totalQuantity));
+    // The abortSignal.aborted check is temporarily placed here to simulate the cencellation of the lengthy API call above
+    if (!abortSignal.aborted) {
+      const totalQuantity = response_wishlist.length;
+      dispatch(wishlistActions.setTotalQuantity(totalQuantity));
+    }
     // Fetch product data for each item in wishlist
     const promises = response_wishlist.map(
-      async (p) => await fakeStoreApi.getProduct(p)
+      async (p) => await fakeStoreApi.getProduct(p, abortSignal)
     );
     const wishlist = await Promise.all(promises);
     // Update Redux state with wishlist
     dispatch(wishlistActions.replaceWishlist(wishlist));
   } catch (err) {
-    dispatch(wishlistActions.setError({ message: err.message }));
-    dispatch(
-      uiActions.addAlert({
-        type: ALERT_TYPE.ERROR,
-        title: "Unable to fetch wishlist data!",
-      })
-    );
-    console.error(err);
+    if (err.name !== "AbortError") {
+      dispatch(wishlistActions.setError({ message: err.message }));
+      dispatch(
+        uiActions.addAlert({
+          type: ALERT_TYPE.ERROR,
+          title: "Unable to fetch wishlist data!",
+        })
+      );
+      console.error(err);
+    }
   }
   dispatch(wishlistActions.isLoading(false));
 };

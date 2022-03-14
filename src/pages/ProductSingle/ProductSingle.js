@@ -39,8 +39,11 @@ const ProductSingle = () => {
 
   useEffect(() => {
     setInitialRender(false);
-    dispatch(fetchProduct(id));
-    return () => dispatch(clearProduct());
+    const { abort: abortFetchProduct } = dispatch(fetchProduct(id));
+    return () => {
+      abortFetchProduct();
+      dispatch(clearProduct());
+    };
   }, [id, dispatch]);
 
   useEffect(() => {

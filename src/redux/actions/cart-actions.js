@@ -4,27 +4,32 @@ import { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
 import fakeStoreApi from "../../apis/fakeStoreApi_test";
 import store from "../store";
 
-const fetchUserCart = (userId) => async (dispatch) => {
+const fetchUserCart = (userId, abortSignal) => async (dispatch) => {
   dispatch(cartActions.isLoading(true));
   try {
-    const cartId = await _fetchCartForUser(userId);
+    const cartId = await _fetchCartForUser(userId, abortSignal);
     if (cartId) {
-      const cart_data = await _fetchCartData(cartId, dispatch);
-      const cart_products = await _fetchCartProducts(cart_data.products);
+      const cart_data = await _fetchCartData(cartId, abortSignal, dispatch);
+      const cart_products = await _fetchCartProducts(
+        cart_data.products,
+        abortSignal
+      );
       // Swap product array in cart with new product data array
       cart_data.products = cart_products;
       // Update cart in Redux
       dispatch(cartActions.replaceCart(cart_data));
     } else dispatch(cartActions.clearCart());
   } catch (err) {
-    dispatch(cartActions.setError({ message: err.message }));
-    dispatch(
-      uiActions.addAlert({
-        type: ALERT_TYPE.ERROR,
-        title: "Unable to fetch cart data!",
-      })
-    );
-    console.error(err);
+    if (err.name !== "AbortError") {
+      dispatch(cartActions.setError({ message: err.message }));
+      dispatch(
+        uiActions.addAlert({
+          type: ALERT_TYPE.ERROR,
+          title: "Unable to fetch cart data!",
+        })
+      );
+      console.error(err);
+    }
   }
   dispatch(cartActions.isLoading(false));
 };
@@ -115,31 +120,35 @@ export { fetchUserCart, addToCart, removeFromCart, changeQuantity };
 **********************************************************/
 /**********************************************************/
 
-const _fetchCartForUser = async (userId) => {
+const _fetchCartForUser = async (userId, abortSignal) => {
   // Fetch array of carts for supplied userId
-  const user_carts = await fakeStoreApi.getUserCarts(userId);
+  const user_carts = await fakeStoreApi.getUserCarts(userId, abortSignal);
   // Assume that first element in array is the current cart for practice purposes.
   // In reality the API should somehow define the 'current' cart separately from 'cart history'
   return user_carts.length ? user_carts[0].id : null;
 };
 
-const _fetchCartData = async (cartId, dispatch) => {
+const _fetchCartData = async (cartId, abortSignal, dispatch) => {
   // Fetch cart data
-  const cart_data = await fakeStoreApi.getCart(cartId);
+  const cart_data = await fakeStoreApi.getCart(cartId, abortSignal);
   // Update total quantity
   const totalQuantity = cart_data.products.reduce(
     (total, p) => total + p.quantity,
     0
   );
   // Display total quantity as we load products
+  console.log("ADDING CART TOTAL QUANTITY NOW");
   dispatch(cartActions.setTotalQuantity(totalQuantity));
   return cart_data;
 };
 
-const _fetchCartProducts = async (cartProducts) => {
+const _fetchCartProducts = async (cartProducts, abortSignal) => {
   // Fetch product data for each item in cart
   const promises = cartProducts.map(async (p) => {
-    const response_product = await fakeStoreApi.getProduct(p.productId);
+    const response_product = await fakeStoreApi.getProduct(
+      p.productId,
+      abortSignal
+    );
     return {
       ...response_product,
       quantity: p.quantity,

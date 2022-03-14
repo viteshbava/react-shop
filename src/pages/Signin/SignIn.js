@@ -41,7 +41,6 @@ const SignIn = () => {
   // If user is already logged in, either navigate back to root or back to the previous attempted visit if it exists
   useEffect(() => {
     if (user) {
-      console.log("We are rendering signin but we are already logged in!!");
       location?.state?.from
         ? navigate(location.state.from, { replace: true })
         : navigate("/", { replace: true });

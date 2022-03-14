@@ -1,8 +1,9 @@
-const sendHttpRequest = async ({ method, body, headers, url }) => {
+const sendHttpRequest = async ({ method, body, headers, url, signal }) => {
   const init = {
     method: method ? method : "GET",
     body: body ? JSON.stringify(body) : null,
     headers: headers ? headers : {},
+    signal: signal ? signal : null,
   };
   try {
     const response = await fetch(url, init);

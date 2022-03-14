@@ -14,6 +14,7 @@ const wishlistSlice = createSlice({
 
   reducers: {
     replaceWishlist(state, action) {
+      console.log("REPLACING WISHLIST!");
       const wishlist = action.payload;
       state.products = wishlist;
     },
@@ -49,7 +50,8 @@ const wishlistSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(logout.fulfilled, (state, action) => {
+    // CLEAR WISHLIST UPON LOGOUT
+    builder.addCase(logout.fulfilled, () => {
       return { ...STATE_INIT };
     });
   },

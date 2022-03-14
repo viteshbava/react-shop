@@ -8,6 +8,7 @@ const STATE_INIT = {
   user: localStorageUser ? localStorageUser : null,
   isLoading: false,
   error: null,
+  hasLoggedOut: false,
 };
 
 const authSlice = createSlice({
@@ -63,6 +64,7 @@ const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         console.log("logout fulfilled");
         state.isLoading = false;
+        state.hasLoggedOut = true;
         state.user = null;
       })
       // LOGOUT - REJECTED

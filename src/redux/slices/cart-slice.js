@@ -17,6 +17,7 @@ const cartSlice = createSlice({
   reducers: {
     replaceCart(state, action) {
       const { products } = action.payload;
+      console.log("Replacing cart!");
       return {
         ...state,
         ...action.payload,
@@ -77,7 +78,9 @@ const cartSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // CLEAR CART ON LOGOUT
     builder.addCase(logout.fulfilled, () => {
+      console.log("Clearing cart after logout");
       return { ...STATE_INIT, totalQuantity: 0, totalItemPrice: 0 };
     });
   },

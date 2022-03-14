@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import "./App.css";
 
 import Feedback from "./components/Feedback/Feedback";
@@ -8,10 +8,9 @@ import PageLoader from "./components/Feedback/PageLoader/PageLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserCart } from "./redux/actions/cart-actions";
 import { fetchWishlist } from "./redux/actions/wishlist-actions";
-import {
-  fetchProducts,
-  clearAllProducts,
-} from "./redux/slices/allProducts-slice";
+import { fetchProducts } from "./redux/slices/allProducts-slice";
+
+import { useMemo, useCallback } from "react";
 
 import {
   BrowserRouter as Router,
@@ -39,19 +38,59 @@ const Wishlist = React.lazy(() => import("./pages/Wishlist/Wishlist"));
 const AboutTextOne = React.lazy(() => import("./pages/About/AboutTextOne"));
 const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
 
+const useAbortController = () => {
+  const [controller, setController] = useState(new AbortController());
+  // return {
+  //   abortSignal: controller.signal,
+  //   abortFetchCalls: () => {
+  //     controller.abort.bind(controller)();
+  //     setController(new AbortController());
+  //   },
+
+  const { signal } = controller;
+
+  const abortSignal = useMemo(() => signal, [signal]);
+
+  return {
+    abortSignal,
+    abortFetchCalls: useCallback(() => {
+      controller.abort.bind(controller)();
+      // setController(new AbortController());
+    }, []),
+    setController,
+  };
+};
+
 function App() {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.auth.user);
+  const { user: isLoggedIn, hasLoggedOut } = useSelector((state) => state.auth);
+  const { abortSignal, abortFetchCalls, setController } = useAbortController();
 
   const DUMMY_USERID = 1;
 
+  console.log("Rendering App.js - abortSignal: ", abortSignal);
+
   useEffect(() => {
+    console.log("Running the useEffect");
     if (isLoggedIn) {
-      dispatch(fetchUserCart(DUMMY_USERID));
-      dispatch(fetchWishlist(DUMMY_USERID));
-      dispatch(fetchProducts());
+      setController(new AbortController());
+      dispatch(fetchUserCart(DUMMY_USERID, abortSignal));
+      dispatch(fetchWishlist(DUMMY_USERID, abortSignal));
+      dispatch(fetchProducts(abortSignal));
     }
-  }, [isLoggedIn, DUMMY_USERID, dispatch]);
+    if (!isLoggedIn && hasLoggedOut) {
+      console.log("Cancelling fetch calls...");
+      abortFetchCalls();
+    }
+  }, [
+    isLoggedIn,
+    hasLoggedOut,
+    DUMMY_USERID,
+    dispatch,
+    abortSignal,
+    abortFetchCalls,
+  ]);
+  // [isLoggedIn, DUMMY_USERID, dispatch, abortSignal, abortFetchCalls]
 
   return (
     <Router>

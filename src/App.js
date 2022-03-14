@@ -23,7 +23,7 @@ import ProductList from "./pages/ProductList/ProductList";
 import InfoError, { INFO_ERROR_TYPE } from "./pages/Error/InfoError";
 
 import AuthRequired from "./components/AuthRequired";
-import useAbortController from "./hooks/use-abortController";
+import useAbortFetch from "./hooks/use-abortFetch";
 
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));
 const SignIn = React.lazy(() => import("./pages/Signin/SignIn"));
@@ -47,7 +47,7 @@ function App() {
     runFetchCalls,
     cancelFetchCalls,
     setFetchInProgress,
-  } = useAbortController(isLoggedIn);
+  } = useAbortFetch(isLoggedIn);
 
   const DUMMY_USERID = 1;
 

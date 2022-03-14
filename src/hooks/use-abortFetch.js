@@ -20,7 +20,7 @@ It will return the following data:
 
 import { useState, useCallback } from "react";
 
-const useAbortController = (isLoggedIn) => {
+const useAbortFetch = (isLoggedIn) => {
   const [controller, setController] = useState(new AbortController());
   const [fetchInProgress, setFetchInProgress] = useState(false);
 
@@ -39,4 +39,4 @@ const useAbortController = (isLoggedIn) => {
   };
 };
 
-export default useAbortController;
+export default useAbortFetch;

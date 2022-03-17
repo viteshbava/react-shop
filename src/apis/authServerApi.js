@@ -10,6 +10,7 @@ const URL = {
   REGISTER: construct("accounts:signUp"),
   LOGIN: construct("accounts:signInWithPassword"),
   UPDATE_ACCOUNT: construct("accounts:update"),
+  NEW_TOKEN: construct("token"),
 };
 
 const authServerApi = {
@@ -23,6 +24,10 @@ const authServerApi = {
         },
         body: { email, password, returnSecureToken: true },
       });
+      // ...
+      // TEMP MODIFICATION OF EXPIRESIN FOR TESTING
+      response.expiresIn = 5;
+      // ...
       return response;
     } catch (error) {
       let niceErrMessage;
@@ -60,6 +65,10 @@ const authServerApi = {
         },
         body: { email, password, returnSecureToken: true },
       });
+      // ...
+      // TEMP MODIFICATION OF EXPIRESIN FOR TESTING
+      response.expiresIn = 10;
+      // ...
       return response;
     } catch (error) {
       let niceErrMessage;
@@ -83,6 +92,24 @@ const authServerApi = {
       throw new ReactError({
         statusCode: error.code || 500,
         message: niceErrMessage,
+      });
+    }
+  },
+  refreshAccessToken: async (refresh_token) => {
+    try {
+      const response = await sendHttpRequest({
+        method: "POST",
+        url: URL.NEW_TOKEN,
+        headers: {
+          "content-type": "application/json",
+        },
+        body: { grant_type: "refresh_token", refresh_token },
+      });
+      return response;
+    } catch (error) {
+      throw new ReactError({
+        statusCode: error.code || 500,
+        message: error?.error?.message || error?.error || error,
       });
     }
   },

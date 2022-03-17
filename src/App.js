@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserCart } from "./redux/actions/cart-actions";
 import { fetchWishlist } from "./redux/actions/wishlist-actions";
 import { fetchProducts } from "./redux/slices/allProducts-slice";
+import { startRefreshTokenCycle } from "./redux/actions/auth-actions";
 
 import {
   BrowserRouter as Router,
@@ -39,7 +40,8 @@ const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
 
 function App() {
   const dispatch = useDispatch();
-  const { user: isLoggedIn } = useSelector((state) => state.auth);
+  const { user, accessTokenTimer } = useSelector((state) => state.auth);
+  const isLoggedIn = !!user;
 
   const {
     abortSignal,
@@ -69,6 +71,25 @@ function App() {
     DUMMY_USERID,
     abortFetchCalls,
     abortSignal,
+  ]);
+
+  useEffect(() => {
+    if (isLoggedIn && !accessTokenTimer) {
+      console.log("Refresh and already logged in");
+      dispatch(
+        startRefreshTokenCycle({
+          immediately: true,
+          expiresIn: user.expiresIn,
+          refreshToken: user.refreshToken + "1",
+        })
+      );
+    }
+  }, [
+    user?.expiresIn,
+    user?.refreshToken,
+    isLoggedIn,
+    accessTokenTimer,
+    dispatch,
   ]);
 
   return (

@@ -8,6 +8,7 @@ const STATE_INIT = {
   user: localStorageUser ? localStorageUser : null,
   isLoading: false,
   error: null,
+  accessTokenTimer: null,
 };
 
 const authSlice = createSlice({
@@ -15,9 +16,17 @@ const authSlice = createSlice({
   initialState: STATE_INIT,
 
   reducers: {
+    setAccessToken: (state, action) => {
+      state.user.idToken = action.payload;
+    },
+    setAccessTokenTimer: (state, action) => {
+      state.accessTokenTimer = action.payload;
+    },
     resetUserState: (state) => {
+      state.user = null;
       state.isLoading = false;
       state.error = null;
+      state.accessTokenTimer = null;
     },
   },
   extraReducers: (builder) => {
@@ -60,7 +69,9 @@ const authSlice = createSlice({
       })
       // lOGOUT - FULFILLED
       .addCase(logout.fulfilled, (state) => {
+        clearTimeout(state.accessTokenTimer);
         state.isLoading = false;
+        state.accessTokenTimer = null;
         state.user = null;
       })
       // LOGOUT - REJECTED
@@ -71,5 +82,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { resetUserState } = authSlice.actions;
+export const { resetUserState, setAccessTokenTimer, setAccessToken } =
+  authSlice.actions;
 export default authSlice.reducer;

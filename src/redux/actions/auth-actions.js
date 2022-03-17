@@ -2,6 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import authServerApi from "../../apis/authServerApi";
 import { uiActions } from "../slices/ui-slice";
 import { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
+import {
+  setAccessTokenTimer,
+  setAccessToken,
+  resetUserState,
+} from "../slices/auth-slice";
 
 // Register User
 export const register = createAsyncThunk(
@@ -14,6 +19,13 @@ export const register = createAsyncThunk(
         password: user.password,
       });
       localStorage.setItem("user", JSON.stringify(response));
+      thunkAPI.dispatch(
+        startRefreshTokenCycle({
+          immediately: false,
+          expiresIn: response.expiresIn,
+          refreshToken: response.refreshToken,
+        })
+      );
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       thunkAPI.dispatch(
         uiActions.addAlert({
@@ -41,6 +53,13 @@ export const login = createAsyncThunk(
         password: user.password,
       });
       localStorage.setItem("user", JSON.stringify(response));
+      thunkAPI.dispatch(
+        startRefreshTokenCycle({
+          immediately: false,
+          expiresIn: response.expiresIn,
+          refreshToken: response.refreshToken,
+        })
+      );
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       thunkAPI.dispatch(
         uiActions.addAlert({
@@ -80,5 +99,45 @@ export const logout = createAsyncThunk(
       onError();
       return thunkAPI.rejectWithValue(error?.message || error.toString());
     }
+  }
+);
+
+// Refresh access token
+export const startRefreshTokenCycle = createAsyncThunk(
+  "auth/startRefreshTokenCycle",
+  async ({ immediately, expiresIn, refreshToken }, thunkAPI) => {
+    const refreshAccessToken = async (interval) => {
+      try {
+        const response = await authServerApi.refreshAccessToken(refreshToken);
+        thunkAPI.dispatch(setAccessToken(response.access_token));
+        const timerId = setTimeout(
+          () => refreshAccessToken(interval),
+          interval
+        );
+        thunkAPI.dispatch(setAccessTokenTimer(timerId));
+      } catch (error) {
+        console.log(error);
+        localStorage.removeItem("user");
+        thunkAPI.dispatch(resetUserState());
+        // if immediately is true, it means we have come from starting the app (e.g. refreshing the page), therefore no real need to show alert warning.  Alert warning only makes sense if user is already using app and they are logged out becuase of invalid refresh token
+        if (!immediately)
+          thunkAPI.dispatch(
+            uiActions.addAlert({
+              type: ALERT_TYPE.WARNING,
+              title: "Your session has expired",
+              message: "Please sign in again to keep shopping.",
+            })
+          );
+      }
+    };
+
+    // Use a refresh interval that is a percentage shorter than the actual interval to ensure the token is obtained in time
+    const interval = expiresIn * 1000 * 0.6;
+
+    const timerId = setTimeout(
+      () => refreshAccessToken(interval),
+      immediately ? 0 : interval
+    );
+    thunkAPI.dispatch(setAccessTokenTimer(timerId));
   }
 );

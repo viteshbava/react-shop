@@ -82,9 +82,9 @@ const Settings = () => {
     <>
       <SectionHeading>Settings</SectionHeading>
       <Card className={styles["setting-wrapper"]}>
-        <h3>Change Password</h3>
+        <h3 className={styles.setting__heading}>Change Password</h3>
 
-        <form className={styles["setting__form"]} onSubmit={formSubmitHandler}>
+        <form className={styles.setting__form} onSubmit={formSubmitHandler}>
           {showFormError && (
             <Alert
               className={styles.alert}

@@ -1,9 +1,15 @@
 .setting-wrapper {
   padding: 1rem 2rem;
+  max-width: 27rem;
+  margin: 0 auto;
+}
+
+.setting__heading {
+  text-align: center;
 }
 
 .setting__form {
-  width: 50%;
+  /* width: 50%; */
   margin: 2rem 0 1rem;
 }
 

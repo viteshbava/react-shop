@@ -20,12 +20,12 @@ It will return the following data:
 
 import { useState, useCallback } from "react";
 
-const useAbortFetch = (isLoggedIn) => {
+const useAbortFetch = (readyForFetch) => {
   const [controller, setController] = useState(new AbortController());
   const [fetchInProgress, setFetchInProgress] = useState(false);
 
-  const runFetchCalls = isLoggedIn && !fetchInProgress;
-  const cancelFetchCalls = !isLoggedIn && fetchInProgress;
+  const runFetchCalls = readyForFetch && !fetchInProgress;
+  const cancelFetchCalls = !readyForFetch && fetchInProgress;
 
   return {
     abortSignal: controller.signal,

@@ -14,6 +14,7 @@ const STATE_INIT = {
   isLoading: false,
   error: null,
   accessTokenTimer: null,
+  accessTokenReady: false,
 };
 
 const authSlice = createSlice({
@@ -23,8 +24,10 @@ const authSlice = createSlice({
   reducers: {
     setAccessToken: (state, action) => {
       state.user.idToken = action.payload;
+      if (!state.accessTokenReady) state.accessTokenReady = true;
     },
     setAccessTokenTimer: (state, action) => {
+      console.log("Timer being set: ", action.payload);
       state.accessTokenTimer = action.payload;
     },
     resetUserState: (state, action) => {
@@ -45,6 +48,7 @@ const authSlice = createSlice({
         state.user = action.payload;
         state.isLoading = false;
         state.error = null;
+        state.accessTokenReady = true;
       })
       // REGISTER - REJECTED
       .addCase(register.rejected, (state, action) => {
@@ -61,6 +65,7 @@ const authSlice = createSlice({
         state.user = action.payload;
         state.isLoading = false;
         state.error = null;
+        state.accessTokenReady = true;
       })
       // LOGIN - REJECTED
       .addCase(login.rejected, (state, action) => {
@@ -78,6 +83,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.accessTokenTimer = null;
         state.user = null;
+        state.accessTokenReady = false;
       })
       // LOGOUT - REJECTED
       .addCase(logout.rejected, (state, action) => {
@@ -89,8 +95,10 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       // CHANGE PASSWORD - FULFILLED
-      .addCase(changePassword.fulfilled, (state) => {
+      .addCase(changePassword.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.error = null;
+        state.user = action.payload;
       })
       // CHANGE PASSWORD - REJECTED
       .addCase(changePassword.rejected, (state, action) => {

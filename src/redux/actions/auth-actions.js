@@ -110,7 +110,6 @@ export const changePassword = createAsyncThunk(
     console.log(newPassword);
     thunkAPI.dispatch(uiActions.showLoadingState(true));
     const { idToken } = thunkAPI.getState().auth.user;
-    // console.log("token from change password: ", idToken);
     try {
       const response = await authServerApi.changePassword({
         idToken,
@@ -118,9 +117,25 @@ export const changePassword = createAsyncThunk(
       });
       console.log("Change password successful");
       thunkAPI.dispatch(uiActions.showLoadingState(false));
-      // WE NEED TO ADD STUFF HERE (LIKE CALLING REFRESH LOGIC AGAIN AND CANCELLING THE OLD ONE)
-      const { idToken, refreshToken } = response;
-      return { idToken, refreshToken };
+      const { idToken: newIdToken, refreshToken, expiresIn } = response;
+      const { accessTokenTimer } = thunkAPI.getState().auth;
+      console.log("Timer being cleared: ", accessTokenTimer);
+      clearTimeout(accessTokenTimer);
+      thunkAPI.dispatch(
+        startRefreshTokenCycle({
+          immediately: false,
+          expiresIn,
+          refreshToken,
+        })
+      );
+      const user = {
+        ...thunkAPI.getState().auth.user,
+        idToken: newIdToken,
+        refreshToken,
+        expiresIn,
+      };
+      localStorage.setItem("user", JSON.stringify(user));
+      return user;
     } catch (error) {
       console.log("Change password failed");
       console.log(error);
@@ -133,15 +148,13 @@ export const changePassword = createAsyncThunk(
 export const startRefreshTokenCycle = createAsyncThunk(
   "auth/startRefreshTokenCycle",
   async ({ immediately, expiresIn, refreshToken }, thunkAPI) => {
-    if (immediately) thunkAPI.dispatch(uiActions.showLoadingState(true));
-
     const refreshAccessToken = async (interval) => {
       try {
         console.log("Refreshing access token");
-        console.log("Using this refresh token: ", refreshToken);
+        // console.log("Using this refresh token: ", refreshToken);
         const response = await authServerApi.refreshAccessToken(refreshToken);
         thunkAPI.dispatch(setAccessToken(response.access_token));
-        console.log("Setting off the next timer now.");
+        console.log("Setting off the next timer now: ", interval);
         const timerId = setTimeout(
           () => refreshAccessToken(interval),
           interval
@@ -161,11 +174,13 @@ export const startRefreshTokenCycle = createAsyncThunk(
             })
           );
       }
-      if (immediately) thunkAPI.dispatch(uiActions.showLoadingState(false));
     };
 
     // Use a refresh interval that is a percentage shorter than the actual interval to ensure the token is obtained in time
     const interval = expiresIn * 1000 * 0.6;
+
+    console.log("Starting refresh cycle...");
+    console.log(expiresIn);
 
     const timerId = setTimeout(
       () => refreshAccessToken(interval),

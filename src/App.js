@@ -10,6 +10,7 @@ import { fetchUserCart } from "./redux/actions/cart-actions";
 import { fetchWishlist } from "./redux/actions/wishlist-actions";
 import { fetchProducts } from "./redux/slices/allProducts-slice";
 import { startRefreshTokenCycle } from "./redux/actions/auth-actions";
+import { uiActions } from "./redux/slices/ui-slice";
 
 import {
   BrowserRouter as Router,
@@ -41,10 +42,8 @@ const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
 
 function App() {
   const dispatch = useDispatch();
-  const { user, accessTokenTimer } = useSelector((state) => state.auth);
-  const isLoggedIn = user && accessTokenTimer;
-
-  console.log(isLoggedIn);
+  const { user, accessTokenReady } = useSelector((state) => state.auth);
+  const isLoggedIn = !!user;
 
   const {
     abortSignal,
@@ -52,7 +51,7 @@ function App() {
     runFetchCalls,
     cancelFetchCalls,
     setFetchInProgress,
-  } = useAbortFetch(isLoggedIn);
+  } = useAbortFetch(isLoggedIn && accessTokenReady);
 
   const DUMMY_USERID = 1;
 
@@ -76,9 +75,11 @@ function App() {
     abortSignal,
   ]);
 
+  const displayContent = !isLoggedIn || (isLoggedIn && accessTokenReady);
   useEffect(() => {
-    if (user && !accessTokenTimer) {
+    if (isLoggedIn && !accessTokenReady) {
       console.log("APP START OR REFRESH!");
+      dispatch(uiActions.showLoadingState(true));
       dispatch(
         startRefreshTokenCycle({
           immediately: true,
@@ -87,80 +88,90 @@ function App() {
         })
       );
     }
-  }, [user?.expiresIn, user?.refreshToken, accessTokenTimer, dispatch]);
+    if (displayContent) dispatch(uiActions.showLoadingState(false));
+  }, [
+    user?.expiresIn,
+    user?.refreshToken,
+    isLoggedIn,
+    accessTokenReady,
+    dispatch,
+    displayContent,
+  ]);
 
   return (
     <Router>
       <ScrollToTop />
       <Feedback />
       <Layout>
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/register" element={<Register />} />
-            <Route
-              path="/products"
-              element={
-                <AuthRequired>
-                  <ProductList />
-                </AuthRequired>
-              }
-            />
-            <Route
-              path="/products/:id"
-              element={
-                <AuthRequired>
-                  <ProductSingle />
-                </AuthRequired>
-              }
-            />
-            <Route
-              path="/cart"
-              element={
-                <AuthRequired>
-                  <Cart />
-                </AuthRequired>
-              }
-            />
-            <Route
-              path="/wishlist"
-              element={
-                <AuthRequired>
-                  <Wishlist />
-                </AuthRequired>
-              }
-            />
-            <Route
-              path="/settings"
-              element={
-                <AuthRequired>
-                  <Settings />
-                </AuthRequired>
-              }
-            />
-            <Route path="/help/*" element={<Help />} />
-            <Route exact path="/about" element={<About />}>
-              <Route path="about1" element={<AboutTextOne />} />
-              <Route path="about2" element={<AboutTextTwo />} />
-              <Route index element={<></>} />
-              <Route path="*" element={<div>About text not found!</div>} />
-            </Route>
-            <Route
-              index
-              element={<Navigate to={isLoggedIn ? "/products" : "signin"} />}
-            />
-            <Route
-              path="*"
-              element={
-                <InfoError
-                  type={INFO_ERROR_TYPE.ERROR}
-                  heading="Page Not Found!"
-                  message="Please check the URL."
-                />
-              }
-            />
-          </Routes>
-        </Suspense>
+        {displayContent && (
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/register" element={<Register />} />
+              <Route
+                path="/products"
+                element={
+                  <AuthRequired>
+                    <ProductList />
+                  </AuthRequired>
+                }
+              />
+              <Route
+                path="/products/:id"
+                element={
+                  <AuthRequired>
+                    <ProductSingle />
+                  </AuthRequired>
+                }
+              />
+              <Route
+                path="/cart"
+                element={
+                  <AuthRequired>
+                    <Cart />
+                  </AuthRequired>
+                }
+              />
+              <Route
+                path="/wishlist"
+                element={
+                  <AuthRequired>
+                    <Wishlist />
+                  </AuthRequired>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <AuthRequired>
+                    <Settings />
+                  </AuthRequired>
+                }
+              />
+              <Route path="/help/*" element={<Help />} />
+              <Route exact path="/about" element={<About />}>
+                <Route path="about1" element={<AboutTextOne />} />
+                <Route path="about2" element={<AboutTextTwo />} />
+                <Route index element={<></>} />
+                <Route path="*" element={<div>About text not found!</div>} />
+              </Route>
+              <Route
+                index
+                element={<Navigate to={isLoggedIn ? "/products" : "signin"} />}
+              />
+              <Route
+                path="*"
+                element={
+                  <InfoError
+                    type={INFO_ERROR_TYPE.ERROR}
+                    heading="Page Not Found!"
+                    message="Please check the URL."
+                  />
+                }
+              />
+            </Routes>
+          </Suspense>
+        )}
       </Layout>
     </Router>
   );

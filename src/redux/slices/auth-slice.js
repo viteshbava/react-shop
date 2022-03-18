@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { register, login, logout } from "../actions/auth-actions";
+import {
+  register,
+  login,
+  logout,
+  changePassword,
+} from "../actions/auth-actions";
 
 // Get user from localStorage
 const localStorageUser = JSON.parse(localStorage.getItem("user"));
@@ -22,8 +27,8 @@ const authSlice = createSlice({
     setAccessTokenTimer: (state, action) => {
       state.accessTokenTimer = action.payload;
     },
-    resetUserState: (state) => {
-      state.user = null;
+    resetUserState: (state, action) => {
+      if (!action?.payload?.keepUser) state.user = null;
       state.isLoading = false;
       state.error = null;
       state.accessTokenTimer = null;
@@ -67,7 +72,7 @@ const authSlice = createSlice({
       .addCase(logout.pending, (state) => {
         state.isLoading = true;
       })
-      // lOGOUT - FULFILLED
+      // LOGOUT - FULFILLED
       .addCase(logout.fulfilled, (state) => {
         clearTimeout(state.accessTokenTimer);
         state.isLoading = false;
@@ -76,6 +81,19 @@ const authSlice = createSlice({
       })
       // LOGOUT - REJECTED
       .addCase(logout.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = { message: action.payload };
+      })
+      // CHANGE PASSWORD - PENDING
+      .addCase(changePassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      // CHANGE PASSWORD - FULFILLED
+      .addCase(changePassword.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      // CHANGE PASSWORD - REJECTED
+      .addCase(changePassword.rejected, (state, action) => {
         state.isLoading = false;
         state.error = { message: action.payload };
       });

@@ -35,13 +35,16 @@ const ProductSingle = React.lazy(() =>
 const Help = React.lazy(() => import("./pages/Help/Help"));
 const About = React.lazy(() => import("./pages/About/About"));
 const Wishlist = React.lazy(() => import("./pages/Wishlist/Wishlist"));
+const Settings = React.lazy(() => import("./pages/Settings/Settings"));
 const AboutTextOne = React.lazy(() => import("./pages/About/AboutTextOne"));
 const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
 
 function App() {
   const dispatch = useDispatch();
   const { user, accessTokenTimer } = useSelector((state) => state.auth);
-  const isLoggedIn = !!user;
+  const isLoggedIn = user && accessTokenTimer;
+
+  console.log(isLoggedIn);
 
   const {
     abortSignal,
@@ -74,23 +77,17 @@ function App() {
   ]);
 
   useEffect(() => {
-    if (isLoggedIn && !accessTokenTimer) {
-      console.log("Refresh and already logged in");
+    if (user && !accessTokenTimer) {
+      console.log("APP START OR REFRESH!");
       dispatch(
         startRefreshTokenCycle({
           immediately: true,
           expiresIn: user.expiresIn,
-          refreshToken: user.refreshToken + "1",
+          refreshToken: user.refreshToken,
         })
       );
     }
-  }, [
-    user?.expiresIn,
-    user?.refreshToken,
-    isLoggedIn,
-    accessTokenTimer,
-    dispatch,
-  ]);
+  }, [user?.expiresIn, user?.refreshToken, accessTokenTimer, dispatch]);
 
   return (
     <Router>
@@ -130,6 +127,14 @@ function App() {
               element={
                 <AuthRequired>
                   <Wishlist />
+                </AuthRequired>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <AuthRequired>
+                  <Settings />
                 </AuthRequired>
               }
             />

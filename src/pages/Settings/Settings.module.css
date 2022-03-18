@@ -1,0 +1,17 @@
+.setting-wrapper {
+  padding: 1rem 2rem;
+}
+
+.setting__form {
+  width: 50%;
+  margin: 2rem 0 1rem;
+}
+
+.form__button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.alert {
+  width: 50%;
+}

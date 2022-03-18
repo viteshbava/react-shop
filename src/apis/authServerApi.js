@@ -97,6 +97,8 @@ const authServerApi = {
   },
   refreshAccessToken: async (refresh_token) => {
     try {
+      console.log("Calling API now...");
+      await new Promise((resolve) => setTimeout(resolve, 5000));
       const response = await sendHttpRequest({
         method: "POST",
         url: URL.NEW_TOKEN,
@@ -104,6 +106,24 @@ const authServerApi = {
           "content-type": "application/json",
         },
         body: { grant_type: "refresh_token", refresh_token },
+      });
+      return response;
+    } catch (error) {
+      throw new ReactError({
+        statusCode: error.code || 500,
+        message: error?.error?.message || error?.error || error,
+      });
+    }
+  },
+  changePassword: async ({ idToken, password }) => {
+    try {
+      const response = await sendHttpRequest({
+        method: "POST",
+        url: URL.UPDATE_ACCOUNT,
+        headers: {
+          "content-type": "application/json",
+        },
+        body: { idToken, password, returnSecureToken: true },
       });
       return response;
     } catch (error) {

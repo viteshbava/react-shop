@@ -103,6 +103,15 @@ const NavLeftCollapse = ({ close }) => {
                       {wishlistTotalQty !== null && ` (${wishlistTotalQty})`}
                     </NavLink>
                   </li>
+                  <li>
+                    <NavLink
+                      onClick={close}
+                      to={"/settings"}
+                      className={navLinkActive}
+                    >
+                      Settings
+                    </NavLink>
+                  </li>
                 </>
               )}
               <li>

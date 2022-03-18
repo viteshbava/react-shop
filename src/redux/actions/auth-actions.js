@@ -102,14 +102,46 @@ export const logout = createAsyncThunk(
   }
 );
 
+// Change password
+export const changePassword = createAsyncThunk(
+  "auth/changePassword",
+  async ({ newPassword }, thunkAPI) => {
+    console.log("Change password");
+    console.log(newPassword);
+    thunkAPI.dispatch(uiActions.showLoadingState(true));
+    const { idToken } = thunkAPI.getState().auth.user;
+    // console.log("token from change password: ", idToken);
+    try {
+      const response = await authServerApi.changePassword({
+        idToken,
+        password: newPassword,
+      });
+      console.log("Change password successful");
+      thunkAPI.dispatch(uiActions.showLoadingState(false));
+      // WE NEED TO ADD STUFF HERE (LIKE CALLING REFRESH LOGIC AGAIN AND CANCELLING THE OLD ONE)
+      const { idToken, refreshToken } = response;
+      return { idToken, refreshToken };
+    } catch (error) {
+      console.log("Change password failed");
+      console.log(error);
+      thunkAPI.dispatch(uiActions.showLoadingState(false));
+    }
+  }
+);
+
 // Refresh access token
 export const startRefreshTokenCycle = createAsyncThunk(
   "auth/startRefreshTokenCycle",
   async ({ immediately, expiresIn, refreshToken }, thunkAPI) => {
+    if (immediately) thunkAPI.dispatch(uiActions.showLoadingState(true));
+
     const refreshAccessToken = async (interval) => {
       try {
+        console.log("Refreshing access token");
+        console.log("Using this refresh token: ", refreshToken);
         const response = await authServerApi.refreshAccessToken(refreshToken);
         thunkAPI.dispatch(setAccessToken(response.access_token));
+        console.log("Setting off the next timer now.");
         const timerId = setTimeout(
           () => refreshAccessToken(interval),
           interval
@@ -129,6 +161,7 @@ export const startRefreshTokenCycle = createAsyncThunk(
             })
           );
       }
+      if (immediately) thunkAPI.dispatch(uiActions.showLoadingState(false));
     };
 
     // Use a refresh interval that is a percentage shorter than the actual interval to ensure the token is obtained in time

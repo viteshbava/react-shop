@@ -54,6 +54,7 @@ const SignIn = () => {
         title: "Unable to sign in",
         message: error.message,
       });
+    console.log("RESETUSERSTATE FROM SIGNIN");
     dispatch(resetUserState());
   }, [error]);
 

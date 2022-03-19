@@ -105,7 +105,7 @@ export const logout = createAsyncThunk(
 // Change password
 export const changePassword = createAsyncThunk(
   "auth/changePassword",
-  async ({ newPassword }, thunkAPI) => {
+  async ({ newPassword, onSuccess = () => {} }, thunkAPI) => {
     console.log("Change password");
     console.log(newPassword);
     thunkAPI.dispatch(uiActions.showLoadingState(true));
@@ -135,11 +135,16 @@ export const changePassword = createAsyncThunk(
         expiresIn,
       };
       localStorage.setItem("user", JSON.stringify(user));
+      onSuccess();
       return user;
     } catch (error) {
-      console.log("Change password failed");
+      console.log(
+        "Change password failed. User: ",
+        thunkAPI.getState().auth.user
+      );
       console.log(error);
       thunkAPI.dispatch(uiActions.showLoadingState(false));
+      return thunkAPI.rejectWithValue(error?.message || error.toString());
     }
   }
 );
@@ -150,10 +155,15 @@ export const startRefreshTokenCycle = createAsyncThunk(
   async ({ immediately, expiresIn, refreshToken }, thunkAPI) => {
     const refreshAccessToken = async (interval) => {
       try {
+        const user = thunkAPI.getState().auth.user;
         console.log("Refreshing access token");
-        // console.log("Using this refresh token: ", refreshToken);
+        console.log("THE CURRENT USER IN STATE: ", user);
         const response = await authServerApi.refreshAccessToken(refreshToken);
-        thunkAPI.dispatch(setAccessToken(response.access_token));
+        console.log("RESPONSE from refreshAccessToken: ", response);
+        const { expires_in, id_token } = response;
+        thunkAPI.dispatch(
+          setAccessToken({ expiresIn: expires_in, idToken: id_token })
+        );
         console.log("Setting off the next timer now: ", interval);
         const timerId = setTimeout(
           () => refreshAccessToken(interval),
@@ -161,6 +171,9 @@ export const startRefreshTokenCycle = createAsyncThunk(
         );
         thunkAPI.dispatch(setAccessTokenTimer(timerId));
       } catch (error) {
+        console.log(
+          "EITHER REFRESH TOKEN HAS EXPIRED OR THERE WAS AN ERROR TRYING TO REFRESH THE ACCESS TOKEN!"
+        );
         console.log(error);
         localStorage.removeItem("user");
         thunkAPI.dispatch(resetUserState());

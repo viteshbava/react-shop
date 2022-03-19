@@ -45,6 +45,8 @@ function App() {
   const { user, accessTokenReady } = useSelector((state) => state.auth);
   const isLoggedIn = !!user;
 
+  console.log("Rendering App.js - logged in: ", isLoggedIn);
+
   const {
     abortSignal,
     abortFetchCalls,

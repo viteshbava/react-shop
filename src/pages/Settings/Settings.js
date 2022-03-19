@@ -23,6 +23,7 @@ const Settings = () => {
     setInputTouched: setCurrentPasswordTouched,
     inputChangeHandler: currentPasswordChangeHandler,
     inputBlurHandler: currentPasswordBlurHandler,
+    resetInput: resetCurrentPassword,
   } = useInput((val) => val.trim() !== "");
 
   const {
@@ -32,6 +33,7 @@ const Settings = () => {
     setInputTouched: setNewPasswordTouched,
     inputChangeHandler: newPasswordChangeHandler,
     inputBlurHandler: newPasswordBlurHandler,
+    resetInput: resetNewPassword,
   } = useInput((val) => val.trim() !== "");
 
   const {
@@ -41,6 +43,7 @@ const Settings = () => {
     setInputTouched: setConfirmPasswordTouched,
     inputChangeHandler: confirmPasswordChangeHandler,
     inputBlurHandler: confirmPasswordBlurHandler,
+    resetInput: resetConfirmPassword,
   } = useInput((val) => val.trim() !== "");
 
   const formValid =
@@ -53,6 +56,7 @@ const Settings = () => {
         title: "Cannot change password",
         message: error.message,
       });
+      console.log("About to run resetUserState...");
       dispatch(resetUserState({ keepUser: true }));
     }
   }, [error]);
@@ -75,7 +79,16 @@ const Settings = () => {
       return;
     }
 
-    dispatch(changePassword({ newPassword }));
+    dispatch(
+      changePassword({
+        newPassword,
+        onSuccess: () => {
+          resetConfirmPassword();
+          resetCurrentPassword();
+          resetNewPassword();
+        },
+      })
+    );
   };
 
   return (
@@ -111,6 +124,7 @@ const Settings = () => {
             label="New Password"
             type="password"
             id="new-password"
+            value={newPassword}
             placeholder="Enter new password ..."
             onChange={newPasswordChangeHandler}
             onBlur={newPasswordBlurHandler}
@@ -121,6 +135,7 @@ const Settings = () => {
             label="Confirm Password"
             type="password"
             id="confirm-password"
+            value={confirmPassword}
             placeholder="Confirm new password ..."
             onChange={confirmPasswordChangeHandler}
             onBlur={confirmPasswordBlurHandler}

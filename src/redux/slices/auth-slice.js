@@ -4,6 +4,7 @@ import {
   login,
   logout,
   changePassword,
+  startRefreshTokenCycle,
 } from "../actions/auth-actions";
 
 // Get user from localStorage
@@ -23,7 +24,10 @@ const authSlice = createSlice({
 
   reducers: {
     setAccessToken: (state, action) => {
-      state.user.idToken = action.payload;
+      console.log("SETTING ACCESS TOKEN - token: ", action.payload);
+      console.log("SETTING ACCESS TOKEN - current token: ", state.user.idToken);
+      state.user.idToken = action.payload.idToken;
+      state.user.expiresIn = action.payload.expiresIn;
       if (!state.accessTokenReady) state.accessTokenReady = true;
     },
     setAccessTokenTimer: (state, action) => {
@@ -31,6 +35,7 @@ const authSlice = createSlice({
       state.accessTokenTimer = action.payload;
     },
     resetUserState: (state, action) => {
+      console.log("RESET USER TAKING PLACE! ", action?.payload?.keepUser);
       if (!action?.payload?.keepUser) state.user = null;
       state.isLoading = false;
       state.error = null;
@@ -79,6 +84,8 @@ const authSlice = createSlice({
       })
       // LOGOUT - FULFILLED
       .addCase(logout.fulfilled, (state) => {
+        console.log("Logout fulfilled!");
+
         clearTimeout(state.accessTokenTimer);
         state.isLoading = false;
         state.accessTokenTimer = null;
@@ -96,14 +103,21 @@ const authSlice = createSlice({
       })
       // CHANGE PASSWORD - FULFILLED
       .addCase(changePassword.fulfilled, (state, action) => {
+        console.log("Change password fulfilled!");
+
         state.isLoading = false;
         state.error = null;
         state.user = action.payload;
       })
       // CHANGE PASSWORD - REJECTED
       .addCase(changePassword.rejected, (state, action) => {
+        console.log("Change password rejected!");
         state.isLoading = false;
         state.error = { message: action.payload };
+      })
+      // REFRESH ACCESS - FULFILLED
+      .addCase(startRefreshTokenCycle.fulfilled, (state, action) => {
+        console.log("Refresh access token fulfilled!");
       });
   },
 });

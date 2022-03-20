@@ -45,7 +45,6 @@ const Settings = () => {
         title: "Cannot change password",
         message: error.message,
       });
-      console.log("About to run resetUserState...");
       dispatch(resetUserState({ keepUser: true }));
     }
   }, [error]);

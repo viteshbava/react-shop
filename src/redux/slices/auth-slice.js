@@ -24,19 +24,15 @@ const authSlice = createSlice({
 
   reducers: {
     setAccessToken: (state, action) => {
-      console.log("SETTING ACCESS TOKEN - token: ", action.payload);
-      console.log("SETTING ACCESS TOKEN - current token: ", state.user.idToken);
       state.user.idToken = action.payload.idToken;
       state.user.expiresIn = action.payload.expiresIn;
       state.accessTokenTimer = action.payload.timerId;
       state.accessTokenReady = true;
     },
     setAccessTokenTimer: (state, action) => {
-      console.log("Timer being set: ", action.payload);
       state.accessTokenTimer = action.payload;
     },
     resetUserState: (state, action) => {
-      console.log("RESET USER TAKING PLACE! ", action?.payload?.keepUser);
       if (!action?.payload?.keepUser) {
         state.user = null;
         state.accessTokenReady = false;
@@ -95,7 +91,6 @@ const authSlice = createSlice({
       })
       // LOGOUT - FULFILLED
       .addCase(logout.fulfilled, (state) => {
-        console.log("Logout fulfilled!");
         return { ...STATE_INIT, user: null };
       })
       // LOGOUT - REJECTED
@@ -109,21 +104,14 @@ const authSlice = createSlice({
       })
       // CHANGE PASSWORD - FULFILLED
       .addCase(changePassword.fulfilled, (state, action) => {
-        console.log("Change password fulfilled!");
-
         state.isLoading = false;
         state.error = null;
         state.user = action.payload;
       })
       // CHANGE PASSWORD - REJECTED
       .addCase(changePassword.rejected, (state, action) => {
-        console.log("Change password rejected!");
         state.isLoading = false;
         state.error = { message: action.payload };
-      })
-      // REFRESH ACCESS - FULFILLED
-      .addCase(startRefreshTokenCycle.fulfilled, (state, action) => {
-        console.log("Starting of refresh access token cycle fulfilled!");
       });
   },
 });

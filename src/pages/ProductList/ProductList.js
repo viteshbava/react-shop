@@ -7,17 +7,17 @@ import styles from "./ProductList.module.css";
 import { useSelector } from "react-redux";
 
 const ProductList = () => {
-  const { isLoading, error, products } = useSelector((state) => state.products);
+  const { isLoading, hasLoaded, error, products } = useSelector(
+    (state) => state.products
+  );
 
-  const [initialRender, setInitialRender] = useState(true);
-
-  useEffect(() => {
-    setInitialRender(false);
-  }, []);
+  // useEffect(() => {
+  //   setInitialRender(false);
+  // }, []);
 
   const getProductListContent = () => {
-    if (initialRender) return <></>;
-    if (isLoading)
+    // if (!hasLoaded) return <></>;
+    if (isLoading || !hasLoaded)
       return (
         <>
           <SectionHeading>Products</SectionHeading>
@@ -35,7 +35,6 @@ const ProductList = () => {
       );
 
     if (!products || !products.length) {
-      console.log("NO PRODUCTS TO SHOW INFO!");
       return (
         <InfoError
           type={INFO_ERROR_TYPE.INFO}

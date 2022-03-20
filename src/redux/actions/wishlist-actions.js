@@ -48,7 +48,6 @@ const addToWishlist = (product) => async (dispatch) => {
   dispatch(uiActions.showLoadingState(true));
   /* if user has not wishlist, create one here */
   // const { id: userId } = store.getState().user;
-  console.log("TO DO: get the user Id to update wishlist");
   try {
     // const result = await [API CALL GOES HERE]
     // Simulate lengthy API call using wait helper function
@@ -78,7 +77,6 @@ const addToWishlist = (product) => async (dispatch) => {
 const removeFromWishlist = (productId) => async (dispatch) => {
   dispatch(uiActions.showLoadingState(true));
   // const { id: userId } = store.getState().user;
-  console.log("TO DO: get the user Id to update wishlist");
   try {
     // const result = await [API CALL GOES HERE]
     // Simulate lengthy API call using wait helper function

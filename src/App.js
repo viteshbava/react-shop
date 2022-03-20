@@ -47,8 +47,6 @@ function App() {
   );
   const isLoggedIn = !!user;
 
-  console.log("Rendering App.js - logged in: ", isLoggedIn);
-
   const {
     abortSignal,
     abortFetchCalls,
@@ -86,7 +84,6 @@ function App() {
 
   useEffect(() => {
     if (appStartAlreadyLoggedIn) {
-      console.log("APP START OR REFRESH!");
       dispatch(uiActions.showLoadingState(true));
       dispatch(
         startRefreshTokenCycle({
@@ -94,18 +91,13 @@ function App() {
         })
       );
     }
-    if (startAccessTokenTimer) {
-      console.log("Starting refresh token cycle (from App.js) ...");
+    if (startAccessTokenTimer)
       dispatch(
         startRefreshTokenCycle({
           immediately: false,
         })
       );
-    }
-    if (displayContent) {
-      console.log("Display content from App.js...");
-      dispatch(uiActions.showLoadingState(false));
-    }
+    if (displayContent) dispatch(uiActions.showLoadingState(false));
   }, [
     appStartAlreadyLoggedIn,
     startAccessTokenTimer,

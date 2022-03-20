@@ -39,7 +39,6 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk(
   "auth/login",
   async ({ user, onSuccess }, thunkAPI) => {
-    console.log("auth-actions: login createAsyncThunk...");
     thunkAPI.dispatch(uiActions.showLoadingState(true));
     try {
       const response = await authServerApi.login({
@@ -47,9 +46,6 @@ export const login = createAsyncThunk(
         password: user.password,
       });
       localStorage.setItem("user", JSON.stringify(response));
-      console.log(
-        "Logged in, about to call thunkAPI.dispatch start refresh cycle..."
-      );
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       thunkAPI.dispatch(
         uiActions.addAlert({
@@ -61,8 +57,6 @@ export const login = createAsyncThunk(
       if (onSuccess) onSuccess();
       return response;
     } catch (error) {
-      console.log("Error in login!");
-      console.log(error);
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       return thunkAPI.rejectWithValue(error?.message || error.toString());
     }
@@ -85,7 +79,6 @@ export const logout = createAsyncThunk(
         })
       );
       const { accessTokenTimer } = thunkAPI.getState().auth;
-      console.log("Timer being cleared: ", accessTokenTimer);
       clearTimeout(accessTokenTimer);
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       onSuccess();
@@ -101,8 +94,6 @@ export const logout = createAsyncThunk(
 export const changePassword = createAsyncThunk(
   "auth/changePassword",
   async ({ newPassword, onSuccess = () => {} }, thunkAPI) => {
-    console.log("Change password");
-    console.log(newPassword);
     thunkAPI.dispatch(uiActions.showLoadingState(true));
     const { idToken } = thunkAPI.getState().auth.user;
     try {
@@ -110,7 +101,6 @@ export const changePassword = createAsyncThunk(
         idToken,
         password: newPassword,
       });
-      console.log("Change password successful");
       thunkAPI.dispatch(
         uiActions.addAlert({
           type: ALERT_TYPE.SUCCESS,
@@ -121,7 +111,6 @@ export const changePassword = createAsyncThunk(
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       const { idToken: newIdToken, refreshToken, expiresIn } = response;
       const { accessTokenTimer } = thunkAPI.getState().auth;
-      console.log("Timer being cleared: ", accessTokenTimer);
       clearTimeout(accessTokenTimer);
       thunkAPI.dispatch(
         startRefreshTokenCycle({
@@ -138,11 +127,6 @@ export const changePassword = createAsyncThunk(
       onSuccess();
       return user;
     } catch (error) {
-      console.log(
-        "Change password failed. User: ",
-        thunkAPI.getState().auth.user
-      );
-      console.log(error);
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       return thunkAPI.rejectWithValue(error?.message || error.toString());
     }
@@ -158,22 +142,14 @@ export const startRefreshTokenCycle = createAsyncThunk(
       try {
         const user = thunkAPI.getState().auth.user;
         const refreshToken = thunkAPI.getState().auth.user.refreshToken;
-        console.log("Refreshing access token");
-        console.log("THE CURRENT USER IN STATE: ", user);
         const response = await authServerApi.refreshAccessToken(refreshToken);
-        console.log("RESPONSE from refreshAccessToken: ", response);
         const { expires_in, id_token } = response;
         const interval = _convertExpiresInToInterval(expires_in);
-        console.log("Setting off the next timer now: ", interval);
         const timerId = setTimeout(() => _refreshAccessToken(), interval);
         thunkAPI.dispatch(
           setAccessToken({ expiresIn: expires_in, idToken: id_token, timerId })
         );
       } catch (error) {
-        console.log(
-          "EITHER REFRESH TOKEN HAS EXPIRED OR THERE WAS AN ERROR TRYING TO REFRESH THE ACCESS TOKEN!"
-        );
-        console.log(error);
         localStorage.removeItem("user");
         thunkAPI.dispatch(resetUserState());
         // if immediately is true, it means we have come from starting the app (e.g. refreshing the page), therefore no real need to show alert warning.  Alert warning only makes sense if user is already using app and they are logged out becuase of invalid refresh token
@@ -188,16 +164,8 @@ export const startRefreshTokenCycle = createAsyncThunk(
       }
     };
 
-    console.log("Starting refresh cycle...");
-    console.log(thunkAPI.getState().auth);
-    console.log(thunkAPI.getState().auth.user);
-    console.log("hello");
-
     // Use a refresh interval that is a percentage shorter than the actual interval to ensure the token is obtained in time
     const currentExpiresIn = thunkAPI.getState().auth.user.expiresIn;
-    console.log(currentExpiresIn);
-    console.log(_convertExpiresInToInterval(currentExpiresIn));
-
     const timerId = setTimeout(
       () => _refreshAccessToken(),
       immediately ? 0 : _convertExpiresInToInterval(currentExpiresIn)

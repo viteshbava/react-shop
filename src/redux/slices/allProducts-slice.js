@@ -6,6 +6,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 const STATE_INIT = {
   products: null,
   isLoading: false,
+  hasLoaded: false,
   error: null,
   fetchController: null,
 };
@@ -48,12 +49,14 @@ const productsSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.products = action.payload;
         state.isLoading = false;
+        state.hasLoaded = true;
         state.error = null;
       })
       // FETCH PRODUCTS - REJECTED
       .addCase(fetchProducts.rejected, (state, action) => {
         state.products = null;
         state.isLoading = false;
+        state.hasLoaded = true;
         state.error = { message: action.payload };
       })
       // CLEAR PRODUCTS ON LOGOUT

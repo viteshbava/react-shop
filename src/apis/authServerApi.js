@@ -24,10 +24,6 @@ const authServerApi = {
         },
         body: { email, password, returnSecureToken: true },
       });
-      // ...
-      // TEMP MODIFICATION OF EXPIRESIN FOR TESTING
-      response.expiresIn = 5;
-      // ...
       return response;
     } catch (error) {
       let niceErrMessage;
@@ -65,10 +61,6 @@ const authServerApi = {
         },
         body: { email, password, returnSecureToken: true },
       });
-      // ...
-      // TEMP MODIFICATION OF EXPIRESIN FOR TESTING
-      response.expiresIn = 10;
-      // ...
       return response;
     } catch (error) {
       let niceErrMessage;
@@ -97,11 +89,6 @@ const authServerApi = {
   },
   refreshAccessToken: async (refresh_token) => {
     try {
-      console.log("Calling API now...");
-      console.log(
-        "Refresh token about to be used in refreshAccessToken: ",
-        refresh_token
-      );
       const response = await sendHttpRequest({
         method: "POST",
         url: URL.NEW_TOKEN,
@@ -110,11 +97,6 @@ const authServerApi = {
         },
         body: { grant_type: "refresh_token", refresh_token },
       });
-      console.log("The latest valid access token: ", response.access_token);
-      // ...
-      // TEMP MODIFICATION OF EXPIRESIN FOR TESTING
-      response.expires_in = 10;
-      // ...
       return response;
     } catch (error) {
       throw new ReactError({
@@ -125,10 +107,6 @@ const authServerApi = {
   },
   changePassword: async ({ idToken, password }) => {
     try {
-      console.log(
-        "Access token about to be used in change password: ",
-        idToken
-      );
       const response = await sendHttpRequest({
         method: "POST",
         url: URL.UPDATE_ACCOUNT,
@@ -137,15 +115,6 @@ const authServerApi = {
         },
         body: { idToken, password, returnSecureToken: true },
       });
-      console.log(
-        "The latest valid access token after change password: ",
-        response.idToken
-      );
-      console.log("The latest valid refresh token: ", response.refreshToken);
-      // ...
-      // TEMP MODIFICATION OF EXPIRESIN FOR TESTING
-      response.expiresIn = 10;
-      // ...
       return response;
     } catch (error) {
       throw new ReactError({

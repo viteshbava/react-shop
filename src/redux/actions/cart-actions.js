@@ -80,7 +80,6 @@ const changeQuantity =
           title: "Unable to change quantity!",
         })
       );
-      console.log(onError);
       if (onError) onError();
       console.error(err);
     }

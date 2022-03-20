@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
 import WishlistItem from "./WishlistItem";
 import { useSelector } from "react-redux";
@@ -7,19 +6,12 @@ import PageLoader from "../../components/Feedback/PageLoader/PageLoader";
 import styles from "./Wishlist.module.css";
 
 const Wishlist = () => {
-  const { isLoading, error, products, totalQuantity } = useSelector(
+  const { isLoading, hasLoaded, error, products, totalQuantity } = useSelector(
     (state) => state.wishlist
   );
 
-  const [initialRender, setInitialRender] = useState(true);
-
-  useEffect(() => {
-    setInitialRender(false);
-  }, []);
-
   const getWishlistContent = () => {
-    if (initialRender) return <></>;
-    if (isLoading)
+    if (isLoading || !hasLoaded)
       return (
         <>
           <SectionHeading>Wishlist</SectionHeading>

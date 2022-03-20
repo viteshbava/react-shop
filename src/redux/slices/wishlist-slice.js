@@ -3,6 +3,7 @@ import { logout } from "../actions/auth-actions";
 
 const STATE_INIT = {
   isLoading: false,
+  hasLoaded: false,
   error: null,
   products: [],
   totalQuantity: null,
@@ -16,6 +17,7 @@ const wishlistSlice = createSlice({
     replaceWishlist(state, action) {
       const wishlist = action.payload;
       state.products = wishlist;
+      state.hasLoaded = true;
     },
 
     add(state, action) {

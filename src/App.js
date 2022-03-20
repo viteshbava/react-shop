@@ -85,8 +85,6 @@ function App() {
       dispatch(
         startRefreshTokenCycle({
           immediately: true,
-          expiresIn: user.expiresIn,
-          refreshToken: user.refreshToken,
         })
       );
     }

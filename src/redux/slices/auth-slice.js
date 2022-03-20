@@ -117,7 +117,7 @@ const authSlice = createSlice({
       })
       // REFRESH ACCESS - FULFILLED
       .addCase(startRefreshTokenCycle.fulfilled, (state, action) => {
-        console.log("Refresh access token fulfilled!");
+        console.log("Starting of refresh access token cycle fulfilled!");
       });
   },
 });

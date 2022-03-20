@@ -111,6 +111,10 @@ const authServerApi = {
         body: { grant_type: "refresh_token", refresh_token },
       });
       console.log("The latest valid access token: ", response.access_token);
+      // ...
+      // TEMP MODIFICATION OF EXPIRESIN FOR TESTING
+      response.expires_in = 10;
+      // ...
       return response;
     } catch (error) {
       throw new ReactError({

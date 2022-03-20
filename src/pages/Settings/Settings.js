@@ -17,16 +17,6 @@ const Settings = () => {
   const { error } = useSelector((state) => state.auth);
 
   const {
-    input: currentPassword,
-    inputValid: currentPasswordValid,
-    inputShowError: currentPasswordShowError,
-    setInputTouched: setCurrentPasswordTouched,
-    inputChangeHandler: currentPasswordChangeHandler,
-    inputBlurHandler: currentPasswordBlurHandler,
-    resetInput: resetCurrentPassword,
-  } = useInput((val) => val.trim() !== "");
-
-  const {
     input: newPassword,
     inputValid: newPasswordValid,
     inputShowError: newPasswordShowError,
@@ -46,8 +36,7 @@ const Settings = () => {
     resetInput: resetConfirmPassword,
   } = useInput((val) => val.trim() !== "");
 
-  const formValid =
-    currentPasswordValid && newPasswordValid && confirmPasswordValid;
+  const formValid = newPasswordValid && confirmPasswordValid;
 
   useEffect(() => {
     if (error) {
@@ -64,7 +53,6 @@ const Settings = () => {
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    setCurrentPasswordTouched(true);
     setNewPasswordTouched(true);
     setConfirmPasswordTouched(true);
 
@@ -84,7 +72,6 @@ const Settings = () => {
         newPassword,
         onSuccess: () => {
           resetConfirmPassword();
-          resetCurrentPassword();
           resetNewPassword();
         },
       })
@@ -105,19 +92,6 @@ const Settings = () => {
               {...showFormError}
             />
           )}
-          <TextField
-            invalid={currentPasswordShowError && true}
-            feedback={
-              currentPasswordShowError && "Current Password must be entered"
-            }
-            label="Current Password"
-            type="password"
-            id="currentPassword"
-            placeholder="Enter current password ..."
-            value={currentPassword}
-            onChange={currentPasswordChangeHandler}
-            onBlur={currentPasswordBlurHandler}
-          />
           <TextField
             invalid={newPasswordShowError && true}
             feedback={newPasswordShowError && "New Password must be entered"}

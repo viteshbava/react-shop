@@ -111,6 +111,13 @@ export const changePassword = createAsyncThunk(
         password: newPassword,
       });
       console.log("Change password successful");
+      thunkAPI.dispatch(
+        uiActions.addAlert({
+          type: ALERT_TYPE.SUCCESS,
+          title: "Password Updated",
+          message: "Your password has been updated.",
+        })
+      );
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       const { idToken: newIdToken, refreshToken, expiresIn } = response;
       const { accessTokenTimer } = thunkAPI.getState().auth;

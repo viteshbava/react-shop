@@ -4,6 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const STATE_INIT = {
   isLoading: false,
+  hasLoaded: false,
   product: null,
   error: null,
 };
@@ -45,12 +46,14 @@ const selectedProductSlice = createSlice({
       .addCase(fetchProduct.fulfilled, (state, action) => {
         state.product = action.payload;
         state.isLoading = false;
+        state.hasLoaded = true;
         state.error = null;
       })
       // FETCH PRODUCT - REJECTED
       .addCase(fetchProduct.rejected, (state, action) => {
         state.product = null;
         state.isLoading = false;
+        state.hasLoaded = true;
         state.error = { message: action.payload };
       });
   },

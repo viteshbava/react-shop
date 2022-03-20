@@ -24,7 +24,7 @@ import AddToCartSummary from "./AddToCartSummary";
 
 const ProductSingle = () => {
   const id = +useParams().id;
-  const { isLoading, error, product } = useSelector(
+  const { isLoading, hasLoaded, error, product } = useSelector(
     (state) => state.selectedProduct
   );
   const wishlist = useSelector((state) => state.wishlist.products);
@@ -34,11 +34,9 @@ const ProductSingle = () => {
   const qtyRef = useRef();
   const modal = useContext(ModalContext);
 
-  const [initialRender, setInitialRender] = useState(true);
   const [inWishlist, setInWishlist] = useState(false);
 
   useEffect(() => {
-    setInitialRender(false);
     const { abort: abortFetchProduct } = dispatch(fetchProduct(id));
     return () => {
       abortFetchProduct();
@@ -77,9 +75,7 @@ const ProductSingle = () => {
   };
 
   const getProductContent = () => {
-    if (initialRender) return <></>;
-
-    if (isLoading) return <PageLoader />;
+    if (isLoading || !hasLoaded) return <PageLoader />;
 
     if (error)
       return (

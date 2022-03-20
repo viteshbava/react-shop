@@ -28,7 +28,8 @@ const authSlice = createSlice({
       console.log("SETTING ACCESS TOKEN - current token: ", state.user.idToken);
       state.user.idToken = action.payload.idToken;
       state.user.expiresIn = action.payload.expiresIn;
-      if (!state.accessTokenReady) state.accessTokenReady = true;
+      state.accessTokenTimer = action.payload.timerId;
+      state.accessTokenReady = true;
     },
     setAccessTokenTimer: (state, action) => {
       console.log("Timer being set: ", action.payload);
@@ -36,7 +37,10 @@ const authSlice = createSlice({
     },
     resetUserState: (state, action) => {
       console.log("RESET USER TAKING PLACE! ", action?.payload?.keepUser);
-      if (!action?.payload?.keepUser) state.user = null;
+      if (!action?.payload?.keepUser) {
+        state.user = null;
+        state.accessTokenReady = false;
+      }
       state.isLoading = false;
       state.error = null;
       state.accessTokenTimer = null;
@@ -57,9 +61,11 @@ const authSlice = createSlice({
       })
       // REGISTER - REJECTED
       .addCase(register.rejected, (state, action) => {
-        state.user = null;
-        state.isLoading = false;
-        state.error = { message: action.payload };
+        return {
+          ...STATE_INIT,
+          user: null,
+          error: { message: action.payload },
+        };
       })
       // LOGIN - PENDING
       .addCase(login.pending, (state) => {
@@ -73,10 +79,15 @@ const authSlice = createSlice({
         state.accessTokenReady = true;
       })
       // LOGIN - REJECTED
-      .addCase(login.rejected, (state, action) => {
-        state.user = null;
-        state.isLoading = false;
-        state.error = { message: action.payload };
+      .addCase(login.rejected, (_, action) => {
+        return {
+          ...STATE_INIT,
+          user: null,
+          error: { message: action.payload },
+        };
+        // state.user = null;
+        // state.isLoading = false;
+        // state.error = { message: action.payload };
       })
       // LOGOUT - PENDING
       .addCase(logout.pending, (state) => {
@@ -85,12 +96,7 @@ const authSlice = createSlice({
       // LOGOUT - FULFILLED
       .addCase(logout.fulfilled, (state) => {
         console.log("Logout fulfilled!");
-
-        clearTimeout(state.accessTokenTimer);
-        state.isLoading = false;
-        state.accessTokenTimer = null;
-        state.user = null;
-        state.accessTokenReady = false;
+        return { ...STATE_INIT, user: null };
       })
       // LOGOUT - REJECTED
       .addCase(logout.rejected, (state, action) => {

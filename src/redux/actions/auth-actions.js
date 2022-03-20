@@ -19,13 +19,6 @@ export const register = createAsyncThunk(
         password: user.password,
       });
       localStorage.setItem("user", JSON.stringify(response));
-      thunkAPI.dispatch(
-        startRefreshTokenCycle({
-          immediately: false,
-          expiresIn: response.expiresIn,
-          refreshToken: response.refreshToken,
-        })
-      );
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       thunkAPI.dispatch(
         uiActions.addAlert({
@@ -46,6 +39,7 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk(
   "auth/login",
   async ({ user, onSuccess }, thunkAPI) => {
+    console.log("auth-actions: login createAsyncThunk...");
     thunkAPI.dispatch(uiActions.showLoadingState(true));
     try {
       const response = await authServerApi.login({
@@ -55,11 +49,6 @@ export const login = createAsyncThunk(
       localStorage.setItem("user", JSON.stringify(response));
       console.log(
         "Logged in, about to call thunkAPI.dispatch start refresh cycle..."
-      );
-      thunkAPI.dispatch(
-        startRefreshTokenCycle({
-          immediately: false,
-        })
       );
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       thunkAPI.dispatch(
@@ -72,6 +61,8 @@ export const login = createAsyncThunk(
       if (onSuccess) onSuccess();
       return response;
     } catch (error) {
+      console.log("Error in login!");
+      console.log(error);
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       return thunkAPI.rejectWithValue(error?.message || error.toString());
     }
@@ -93,6 +84,9 @@ export const logout = createAsyncThunk(
           message: "See you next time!",
         })
       );
+      const { accessTokenTimer } = thunkAPI.getState().auth;
+      console.log("Timer being cleared: ", accessTokenTimer);
+      clearTimeout(accessTokenTimer);
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       onSuccess();
     } catch (error) {
@@ -162,13 +156,12 @@ export const startRefreshTokenCycle = createAsyncThunk(
         const response = await authServerApi.refreshAccessToken(refreshToken);
         console.log("RESPONSE from refreshAccessToken: ", response);
         const { expires_in, id_token } = response;
-        thunkAPI.dispatch(
-          setAccessToken({ expiresIn: expires_in, idToken: id_token })
-        );
         const interval = _convertExpiresInToInterval(expires_in);
         console.log("Setting off the next timer now: ", interval);
         const timerId = setTimeout(() => _refreshAccessToken(), interval);
-        thunkAPI.dispatch(setAccessTokenTimer(timerId));
+        thunkAPI.dispatch(
+          setAccessToken({ expiresIn: expires_in, idToken: id_token, timerId })
+        );
       } catch (error) {
         console.log(
           "EITHER REFRESH TOKEN HAS EXPIRED OR THERE WAS AN ERROR TRYING TO REFRESH THE ACCESS TOKEN!"

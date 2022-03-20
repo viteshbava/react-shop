@@ -42,7 +42,9 @@ const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
 
 function App() {
   const dispatch = useDispatch();
-  const { user, accessTokenReady } = useSelector((state) => state.auth);
+  const { user, accessTokenReady, accessTokenTimer } = useSelector(
+    (state) => state.auth
+  );
   const isLoggedIn = !!user;
 
   console.log("Rendering App.js - logged in: ", isLoggedIn);
@@ -77,9 +79,13 @@ function App() {
     abortSignal,
   ]);
 
+  const appStartAlreadyLoggedIn = isLoggedIn && !accessTokenReady;
+  const startAccessTokenTimer =
+    isLoggedIn && accessTokenReady && !accessTokenTimer;
   const displayContent = !isLoggedIn || (isLoggedIn && accessTokenReady);
+
   useEffect(() => {
-    if (isLoggedIn && !accessTokenReady) {
+    if (appStartAlreadyLoggedIn) {
       console.log("APP START OR REFRESH!");
       dispatch(uiActions.showLoadingState(true));
       dispatch(
@@ -88,14 +94,23 @@ function App() {
         })
       );
     }
-    if (displayContent) dispatch(uiActions.showLoadingState(false));
+    if (startAccessTokenTimer) {
+      console.log("Starting refresh token cycle (from App.js) ...");
+      dispatch(
+        startRefreshTokenCycle({
+          immediately: false,
+        })
+      );
+    }
+    if (displayContent) {
+      console.log("Display content from App.js...");
+      dispatch(uiActions.showLoadingState(false));
+    }
   }, [
-    user?.expiresIn,
-    user?.refreshToken,
-    isLoggedIn,
-    accessTokenReady,
-    dispatch,
+    appStartAlreadyLoggedIn,
+    startAccessTokenTimer,
     displayContent,
+    dispatch,
   ]);
 
   return (

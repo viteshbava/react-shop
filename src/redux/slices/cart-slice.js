@@ -3,6 +3,7 @@ import { logout } from "../actions/auth-actions";
 
 const STATE_INIT = {
   isLoading: false,
+  hasLoaded: false,
   error: null,
   products: [],
   totalQuantity: null,
@@ -20,6 +21,7 @@ const cartSlice = createSlice({
       return {
         ...state,
         ...action.payload,
+        hasLoaded: true,
         totalQuantity: products.reduce((total, p) => total + p.quantity, 0),
         totalItemPrice: products.reduce(
           (total, p) => total + p.quantity * p.price,

@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import ProductListItem from "./ProductListItem";
 import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
@@ -11,12 +10,7 @@ const ProductList = () => {
     (state) => state.products
   );
 
-  // useEffect(() => {
-  //   setInitialRender(false);
-  // }, []);
-
   const getProductListContent = () => {
-    // if (!hasLoaded) return <></>;
     if (isLoading || !hasLoaded)
       return (
         <>

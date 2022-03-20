@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
 import CartItem from "./CartItem";
 import CartOrderSummary from "./CartOrderSummary";
@@ -8,19 +7,12 @@ import { useSelector } from "react-redux";
 import styles from "./Cart.module.css";
 
 const Cart = () => {
-  const { isLoading, error, products, totalQuantity } = useSelector(
+  const { isLoading, hasLoaded, error, products, totalQuantity } = useSelector(
     (state) => state.cart
   );
 
-  const [initialRender, setInitialRender] = useState(true);
-
-  useEffect(() => {
-    setInitialRender(false);
-  }, []);
-
   const getCartContent = () => {
-    if (initialRender) return <></>;
-    if (isLoading)
+    if (isLoading || !hasLoaded)
       return (
         <>
           <SectionHeading>Cart</SectionHeading>

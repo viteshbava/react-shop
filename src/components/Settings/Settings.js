@@ -47,7 +47,7 @@ const Settings = () => {
       });
       dispatch(resetUserState({ keepUser: true }));
     }
-  }, [error]);
+  }, [error, dispatch]);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();

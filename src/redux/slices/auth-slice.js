@@ -4,7 +4,6 @@ import {
   login,
   logout,
   changePassword,
-  startRefreshTokenCycle,
 } from "../actions/auth-actions";
 
 // Get user from localStorage

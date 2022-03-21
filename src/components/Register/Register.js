@@ -59,7 +59,7 @@ const Register = () => {
         message: error.message,
       });
     dispatch(resetUserState());
-  }, [error]);
+  }, [error, dispatch]);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();

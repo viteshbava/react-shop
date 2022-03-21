@@ -32,7 +32,7 @@ const useAbortFetch = (readyForFetch) => {
     abortFetchCalls: useCallback(() => {
       controller.abort.bind(controller)();
       setController(new AbortController());
-    }, []),
+    }, [controller]),
     runFetchCalls,
     cancelFetchCalls,
     setFetchInProgress,

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import Card from "../../components/UI/Card/Card";
+import Card from "../UI/Card/Card";
 import styles from "./ProductListItem.module.css";
 import toDollars from "../../utilities/toDollars";
-import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
+import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import { useDispatch, useSelector } from "react-redux";
 import {
   removeFromWishlist,

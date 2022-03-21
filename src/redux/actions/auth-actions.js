@@ -140,7 +140,6 @@ export const startRefreshTokenCycle = createAsyncThunk(
     const _convertExpiresInToInterval = (expiresIn) => expiresIn * 1000 * 0.6;
     const _refreshAccessToken = async () => {
       try {
-        const user = thunkAPI.getState().auth.user;
         const refreshToken = thunkAPI.getState().auth.user.refreshToken;
         const response = await authServerApi.refreshAccessToken(refreshToken);
         const { expires_in, id_token } = response;

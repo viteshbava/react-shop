@@ -21,24 +21,26 @@ import {
 
 import ScrollToTop from "./utilities/ScrollToTop";
 
-import ProductList from "./pages/ProductList/ProductList";
-import InfoError, { INFO_ERROR_TYPE } from "./pages/Error/InfoError";
+import InfoError, { INFO_ERROR_TYPE } from "./components/Error/InfoError";
 
 import AuthRequired from "./components/AuthRequired";
 import useAbortFetch from "./hooks/use-abortFetch";
 
-const Cart = React.lazy(() => import("./pages/Cart/Cart"));
-const SignIn = React.lazy(() => import("./pages/Signin/SignIn"));
-const Register = React.lazy(() => import("./pages/Register/Register"));
-const ProductSingle = React.lazy(() =>
-  import("./pages/ProductSingle/ProductSingle")
+const ProductListPage = React.lazy(() => import("./pages/ProductListPage"));
+const CartPage = React.lazy(() => import("./pages/CartPage"));
+const SignInPage = React.lazy(() => import("./pages/SignInPage"));
+const RegisterPage = React.lazy(() => import("./pages/RegisterPage"));
+const ProductSinglePage = React.lazy(() => import("./pages/ProductSinglePage"));
+const HelpPage = React.lazy(() => import("./pages/HelpPage"));
+const AboutPage = React.lazy(() => import("./pages/AboutPage"));
+const WishlistPage = React.lazy(() => import("./pages/WishlistPage"));
+const SettingsPage = React.lazy(() => import("./pages/SettingsPage"));
+const AboutTextOne = React.lazy(() =>
+  import("./components/About/AboutTextOne")
 );
-const Help = React.lazy(() => import("./pages/Help/Help"));
-const About = React.lazy(() => import("./pages/About/About"));
-const Wishlist = React.lazy(() => import("./pages/Wishlist/Wishlist"));
-const Settings = React.lazy(() => import("./pages/Settings/Settings"));
-const AboutTextOne = React.lazy(() => import("./pages/About/AboutTextOne"));
-const AboutTextTwo = React.lazy(() => import("./pages/About/AboutTextTwo"));
+const AboutTextTwo = React.lazy(() =>
+  import("./components/About/AboutTextTwo")
+);
 
 function App() {
   const dispatch = useDispatch();
@@ -113,13 +115,13 @@ function App() {
         {displayContent && (
           <Suspense fallback={<PageLoader />}>
             <Routes>
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/signin" element={<SignInPage />} />
+              <Route path="/register" element={<RegisterPage />} />
               <Route
                 path="/products"
                 element={
                   <AuthRequired>
-                    <ProductList />
+                    <ProductListPage />
                   </AuthRequired>
                 }
               />
@@ -127,7 +129,7 @@ function App() {
                 path="/products/:id"
                 element={
                   <AuthRequired>
-                    <ProductSingle />
+                    <ProductSinglePage />
                   </AuthRequired>
                 }
               />
@@ -135,7 +137,7 @@ function App() {
                 path="/cart"
                 element={
                   <AuthRequired>
-                    <Cart />
+                    <CartPage />
                   </AuthRequired>
                 }
               />
@@ -143,7 +145,7 @@ function App() {
                 path="/wishlist"
                 element={
                   <AuthRequired>
-                    <Wishlist />
+                    <WishlistPage />
                   </AuthRequired>
                 }
               />
@@ -151,12 +153,12 @@ function App() {
                 path="/settings"
                 element={
                   <AuthRequired>
-                    <Settings />
+                    <SettingsPage />
                   </AuthRequired>
                 }
               />
-              <Route path="/help/*" element={<Help />} />
-              <Route exact path="/about" element={<About />}>
+              <Route path="/help/*" element={<HelpPage />} />
+              <Route exact path="/about" element={<AboutPage />}>
                 <Route path="about1" element={<AboutTextOne />} />
                 <Route path="about2" element={<AboutTextTwo />} />
                 <Route index element={<></>} />

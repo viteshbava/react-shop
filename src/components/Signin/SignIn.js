@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import useInput from "../../hooks/use-input";
-import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
-import TextField from "../../components/UI/Control/TextField";
-import Button from "../../components/UI/Button/Button";
+import SectionHeading from "../UI/SectionHeading/SectionHeading";
+import TextField from "../UI/Control/TextField";
+import Button from "../UI/Button/Button";
 import styles from "./SignIn.module.css";
-import Alert, { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
-import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
+import Alert, { ALERT_TYPE } from "../Feedback/Alert/Alert";
+import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/actions/auth-actions";
 import { resetUserState } from "../../redux/slices/auth-slice";

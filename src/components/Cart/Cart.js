@@ -1,7 +1,7 @@
-import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
+import SectionHeading from "../UI/SectionHeading/SectionHeading";
 import CartItem from "./CartItem";
 import CartOrderSummary from "./CartOrderSummary";
-import PageLoader from "../../components/Feedback/PageLoader/PageLoader";
+import PageLoader from "../Feedback/PageLoader/PageLoader";
 import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
 import { useSelector } from "react-redux";
 import styles from "./Cart.module.css";

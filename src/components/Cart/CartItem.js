@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import NumberButtons from "../../components/UI/Control/NumberButtons";
+import NumberButtons from "../UI/Control/NumberButtons";
 import toDollars from "../../utilities/toDollars";
 import styles from "./CartItem.module.css";
 import { Link } from "react-router-dom";

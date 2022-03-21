@@ -77,6 +77,7 @@ function App() {
     DUMMY_USERID,
     abortFetchCalls,
     abortSignal,
+    setFetchInProgress,
   ]);
 
   const appStartAlreadyLoggedIn = isLoggedIn && !accessTokenReady;

@@ -4,8 +4,11 @@ import HelpTexTwo from "./HelpTextTwo";
 import { Routes, Route } from "react-router-dom";
 import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
 import Button from "../../components/UI/Button/Button";
+import useSetDocumentTitle from "../../hooks/use-setDocumentTitle";
 
 const Help = () => {
+  useSetDocumentTitle("Help");
+
   return (
     <section className={styles.wrapper}>
       <SectionHeading>Help</SectionHeading>

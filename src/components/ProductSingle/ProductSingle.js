@@ -21,6 +21,7 @@ import styles from "./ProductSingle.module.css";
 
 import ModalContext from "../../context/modal-context";
 import AddToCartSummary from "./AddToCartSummary";
+import useSetDocumentTitle from "../../hooks/use-setDocumentTitle";
 
 const ProductSingle = () => {
   const id = +useParams().id;
@@ -33,7 +34,6 @@ const ProductSingle = () => {
   const dispatch = useDispatch();
   const qtyRef = useRef();
   const modal = useContext(ModalContext);
-
   const [inWishlist, setInWishlist] = useState(false);
 
   useEffect(() => {
@@ -48,6 +48,8 @@ const ProductSingle = () => {
     const foundProduct = wishlist.find((p) => p.id === id);
     setInWishlist(!!foundProduct);
   }, [id, wishlist]);
+
+  useSetDocumentTitle("Product Details", product?.title);
 
   const addToCartHandler = (e) => {
     e.preventDefault();

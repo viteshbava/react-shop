@@ -1,45 +1,44 @@
-import React, { Suspense, useEffect } from "react";
-import "./App.css";
+import React, { Suspense, useEffect } from 'react';
+import './App.css';
 
-import Feedback from "./components/Feedback/Feedback";
-import Layout from "./components/Layout/Layout";
-import PageLoader from "./components/Feedback/PageLoader/PageLoader";
-
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUserCart } from "./redux/actions/cart-actions";
-import { fetchWishlist } from "./redux/actions/wishlist-actions";
-import { fetchProducts } from "./redux/slices/allProducts-slice";
-import { startRefreshTokenCycle } from "./redux/actions/auth-actions";
-import { uiActions } from "./redux/slices/ui-slice";
-
+import { useDispatch, useSelector } from 'react-redux';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-} from "react-router-dom";
+} from 'react-router-dom';
+import Feedback from './components/Feedback/Feedback';
+import Layout from './components/Layout/Layout';
+import PageLoader from './components/Feedback/PageLoader/PageLoader';
 
-import ScrollToTop from "./utilities/ScrollToTop";
+import { fetchUserCart } from './redux/actions/cart-actions';
+import { fetchWishlist } from './redux/actions/wishlist-actions';
+import { fetchProducts } from './redux/slices/allProducts-slice';
+import { startRefreshTokenCycle } from './redux/actions/auth-actions';
+import { uiActions } from './redux/slices/ui-slice';
 
-import InfoError, { INFO_ERROR_TYPE } from "./components/Error/InfoError";
+import ScrollToTop from './utilities/ScrollToTop';
 
-import AuthRequired from "./components/AuthRequired";
-import useAbortFetch from "./hooks/use-abortFetch";
+import InfoError, { INFO_ERROR_TYPE } from './components/Error/InfoError';
 
-const ProductListPage = React.lazy(() => import("./pages/ProductListPage"));
-const CartPage = React.lazy(() => import("./pages/CartPage"));
-const SignInPage = React.lazy(() => import("./pages/SignInPage"));
-const RegisterPage = React.lazy(() => import("./pages/RegisterPage"));
-const ProductSinglePage = React.lazy(() => import("./pages/ProductSinglePage"));
-const HelpPage = React.lazy(() => import("./pages/HelpPage"));
-const AboutPage = React.lazy(() => import("./pages/AboutPage"));
-const WishlistPage = React.lazy(() => import("./pages/WishlistPage"));
-const SettingsPage = React.lazy(() => import("./pages/SettingsPage"));
+import AuthRequired from './components/AuthRequired';
+import useAbortFetch from './hooks/use-abortFetch';
+
+const ProductListPage = React.lazy(() => import('./pages/ProductListPage'));
+const CartPage = React.lazy(() => import('./pages/CartPage'));
+const SignInPage = React.lazy(() => import('./pages/SignInPage'));
+const RegisterPage = React.lazy(() => import('./pages/RegisterPage'));
+const ProductSinglePage = React.lazy(() => import('./pages/ProductSinglePage'));
+const HelpPage = React.lazy(() => import('./pages/HelpPage'));
+const AboutPage = React.lazy(() => import('./pages/AboutPage'));
+const WishlistPage = React.lazy(() => import('./pages/WishlistPage'));
+const SettingsPage = React.lazy(() => import('./pages/SettingsPage'));
 const AboutTextOne = React.lazy(() =>
-  import("./components/About/AboutTextOne")
+  import('./components/About/AboutTextOne')
 );
 const AboutTextTwo = React.lazy(() =>
-  import("./components/About/AboutTextTwo")
+  import('./components/About/AboutTextTwo')
 );
 
 function App() {
@@ -94,12 +93,13 @@ function App() {
         })
       );
     }
-    if (startAccessTokenTimer)
+    if (startAccessTokenTimer) {
       dispatch(
         startRefreshTokenCycle({
           immediately: false,
         })
       );
+    }
     if (displayContent) dispatch(uiActions.showLoadingState(false));
   }, [
     appStartAlreadyLoggedIn,
@@ -162,12 +162,12 @@ function App() {
               <Route exact path="/about" element={<AboutPage />}>
                 <Route path="about1" element={<AboutTextOne />} />
                 <Route path="about2" element={<AboutTextTwo />} />
-                <Route index element={<></>} />
+                <Route index element={null} />
                 <Route path="*" element={<div>About text not found!</div>} />
               </Route>
               <Route
                 index
-                element={<Navigate to={isLoggedIn ? "/products" : "signin"} />}
+                element={<Navigate to={isLoggedIn ? '/products' : 'signin'} />}
               />
               <Route
                 path="*"

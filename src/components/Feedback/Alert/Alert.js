@@ -1,15 +1,18 @@
-import styles from "./Alert.module.css";
-import Icon, { ICON_TYPE } from "../../UI/Icon/Icon";
+import PropTypes from 'prop-types';
+import styles from './Alert.module.css';
+import Icon, { ICON_TYPE } from '../../UI/Icon/Icon';
 
 const ALERT_TYPE = {
-  ERROR: "error",
-  SUCCESS: "success",
-  INFO: "info",
-  WARNING: "warning",
+  ERROR: 'error',
+  SUCCESS: 'success',
+  INFO: 'info',
+  WARNING: 'warning',
 };
 
 const Alert = ({ type, title, message, onClose }) => {
-  let containerClasses = `${styles.container} ${styles[`container--${type}`]}`;
+  const containerClasses = `${styles.container} ${
+    styles[`container--${type}`]
+  }`;
 
   let icon;
   switch (type) {
@@ -26,7 +29,7 @@ const Alert = ({ type, title, message, onClose }) => {
       icon = ICON_TYPE.WARNING;
       break;
     default:
-      console.error("Unknown alert type!");
+      console.error('Unknown alert type!');
       break;
   }
 
@@ -34,17 +37,24 @@ const Alert = ({ type, title, message, onClose }) => {
     <div className={containerClasses}>
       <Icon className={styles.icon} icon={icon} />
       <div className={styles.content}>
-        <p className={styles["content__title"]}>
-          <span className={styles["title__label"]}>{`${type}: `}</span>
+        <p className={styles.content__title}>
+          <span className={styles.title__label}>{`${type}: `}</span>
           {title}
         </p>
-        <p className={styles["content__message"]}>{message}</p>
+        <p className={styles.content__message}>{message}</p>
       </div>
-      <button className={styles.close} onClick={onClose}>
+      <button type="button" className={styles.close} onClick={onClose}>
         &times;
       </button>
     </div>
   );
+};
+
+Alert.propTypes = {
+  type: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default Alert;

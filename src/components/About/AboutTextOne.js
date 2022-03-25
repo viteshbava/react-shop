@@ -1,4 +1,4 @@
-const AboutText_1 = () => (
+const AboutTextOne = () => (
   <>
     <h2>About Text 1</h2>
     <div>
@@ -10,4 +10,4 @@ const AboutText_1 = () => (
   </>
 );
 
-export default AboutText_1;
+export default AboutTextOne;

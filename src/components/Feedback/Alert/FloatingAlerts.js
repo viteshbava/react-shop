@@ -1,16 +1,15 @@
-import styles from "./FloatingAlerts.module.css";
-import ReactDOM from "react-dom";
-import FloatingAlert from "./FloatingAlert";
+import ReactDOM from 'react-dom';
+import styles from './FloatingAlerts.module.css';
+import FloatingAlert from './FloatingAlert';
 
-const FloatingAlerts = ({ alerts }) => {
-  return ReactDOM.createPortal(
+const FloatingAlerts = ({ alerts }) =>
+  ReactDOM.createPortal(
     <div className={styles.wrapper}>
-      {alerts.map((a) => (
-        <FloatingAlert key={a.id} {...a} />
+      {alerts.map((alert) => (
+        <FloatingAlert key={alert.id} alert={alert} />
       ))}
     </div>,
-    document.querySelector("#alert-root")
+    document.querySelector('#alert-root')
   );
-};
 
 export default FloatingAlerts;

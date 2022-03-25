@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
-import useInput from "../../hooks/use-input";
-import SectionHeading from "../UI/SectionHeading/SectionHeading";
-import TextField from "../UI/Control/TextField";
-import Button from "../UI/Button/Button";
-import styles from "./SignIn.module.css";
-import Alert, { ALERT_TYPE } from "../Feedback/Alert/Alert";
-import Icon, { ICON_TYPE } from "../UI/Icon/Icon";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../redux/actions/auth-actions";
-import { resetUserState } from "../../redux/slices/auth-slice";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import useInput from '../../hooks/use-input';
+import SectionHeading from '../UI/SectionHeading/SectionHeading';
+import TextField from '../UI/Control/TextField';
+import Button from '../UI/Button/Button';
+import styles from './SignIn.module.css';
+import Alert, { ALERT_TYPE } from '../Feedback/Alert/Alert';
+import Icon, { ICON_TYPE } from '../UI/Icon/Icon';
+import { login } from '../../redux/actions/auth-actions';
+import { resetUserState } from '../../redux/slices/auth-slice';
 
-const SignIn = () => {
+function SignIn() {
   const { user, error } = useSelector((state) => state.auth);
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const SignIn = () => {
     setInputTouched: setUsernameTouched,
     inputChangeHandler: usernameChangeHandler,
     inputBlurHandler: usernameBlurHandler,
-  } = useInput((val) => val.trim() !== "");
+  } = useInput((val) => val.trim() !== '');
 
   const {
     input: password,
@@ -34,7 +34,7 @@ const SignIn = () => {
     setInputTouched: setPasswordTouched,
     inputChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
-  } = useInput((val) => val.trim() !== "");
+  } = useInput((val) => val.trim() !== '');
 
   const formValid = usernameValid && passwordValid;
 
@@ -43,17 +43,18 @@ const SignIn = () => {
     if (user) {
       location?.state?.from
         ? navigate(location.state.from, { replace: true })
-        : navigate("/", { replace: true });
+        : navigate('/', { replace: true });
     }
   }, [user, navigate, location]);
 
   useEffect(() => {
-    if (error)
+    if (error) {
       setShowSignInFailure({
         type: ALERT_TYPE.ERROR,
-        title: "Unable to sign in",
+        title: 'Unable to sign in',
         message: error.message,
       });
+    }
     dispatch(resetUserState());
   }, [error, dispatch]);
 
@@ -71,7 +72,7 @@ const SignIn = () => {
   return (
     <section>
       <SectionHeading>Sign in</SectionHeading>
-      <div className={styles["form-container"]}>
+      <div className={styles['form-container']}>
         {showSignInFailure && (
           <Alert
             onClose={() => setShowSignInFailure(null)}
@@ -81,7 +82,7 @@ const SignIn = () => {
         <form onSubmit={formSubmitHandler}>
           <TextField
             invalid={usernameShowError && true}
-            feedback={usernameShowError && "Username must be entered"}
+            feedback={usernameShowError && 'Username must be entered'}
             label="Username"
             id="username"
             placeholder="Enter username ..."
@@ -91,7 +92,7 @@ const SignIn = () => {
           />
           <TextField
             invalid={passwordShowError && true}
-            feedback={passwordShowError && "Password must be entered"}
+            feedback={passwordShowError && 'Password must be entered'}
             label="Password"
             type="password"
             id="password"
@@ -100,7 +101,7 @@ const SignIn = () => {
             onBlur={passwordBlurHandler}
           />
           <Button
-            className={styles["sign-in-button"]}
+            className={styles['sign-in-button']}
             icon={<Icon icon={ICON_TYPE.SIGNIN} />}
             type="submit"
           >
@@ -110,6 +111,6 @@ const SignIn = () => {
       </div>
     </section>
   );
-};
+}
 
 export default SignIn;

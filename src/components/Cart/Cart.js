@@ -1,10 +1,10 @@
-import SectionHeading from "../UI/SectionHeading/SectionHeading";
-import CartItem from "./CartItem";
-import CartOrderSummary from "./CartOrderSummary";
-import PageLoader from "../Feedback/PageLoader/PageLoader";
-import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
-import { useSelector } from "react-redux";
-import styles from "./Cart.module.css";
+import { useSelector } from 'react-redux';
+import SectionHeading from '../UI/SectionHeading/SectionHeading';
+import CartItem from './CartItem';
+import CartOrderSummary from './CartOrderSummary';
+import PageLoader from '../Feedback/PageLoader/PageLoader';
+import InfoError, { INFO_ERROR_TYPE } from '../Error/InfoError';
+import styles from './Cart.module.css';
 
 const Cart = () => {
   const { isLoading, hasLoaded, error, products, totalQuantity } = useSelector(
@@ -41,8 +41,8 @@ const Cart = () => {
     return (
       <>
         <SectionHeading>Cart ({totalQuantity})</SectionHeading>
-        <div className={styles["grid-wrapper"]}>
-          <ul className={styles["item-list"]}>
+        <div className={styles['grid-wrapper']}>
+          <ul className={styles['item-list']}>
             {products.map((p) => (
               <CartItem key={p.id} product={p} />
             ))}

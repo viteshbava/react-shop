@@ -81,8 +81,8 @@ function SignIn() {
         )}
         <form onSubmit={formSubmitHandler}>
           <TextField
-            invalid={usernameShowError && true}
-            feedback={usernameShowError && 'Username must be entered'}
+            invalid={usernameShowError}
+            feedback={usernameShowError ? 'Username must be entered' : null}
             label="Username"
             id="username"
             placeholder="Enter username ..."
@@ -91,8 +91,8 @@ function SignIn() {
             onBlur={usernameBlurHandler}
           />
           <TextField
-            invalid={passwordShowError && true}
-            feedback={passwordShowError && 'Password must be entered'}
+            invalid={passwordShowError}
+            feedback={passwordShowError ? 'Password must be entered' : null}
             label="Password"
             type="password"
             id="password"

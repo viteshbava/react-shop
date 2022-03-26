@@ -92,8 +92,10 @@ const Settings = () => {
             />
           )}
           <TextField
-            invalid={newPasswordShowError && true}
-            feedback={newPasswordShowError && 'New Password must be entered'}
+            invalid={newPasswordShowError}
+            feedback={
+              newPasswordShowError ? 'New Password must be entered' : null
+            }
             label="New Password"
             type="password"
             id="new-password"
@@ -103,8 +105,10 @@ const Settings = () => {
             onBlur={newPasswordBlurHandler}
           />
           <TextField
-            invalid={confirmPasswordShowError && true}
-            feedback={confirmPasswordShowError && 'Password must be entered'}
+            invalid={confirmPasswordShowError}
+            feedback={
+              confirmPasswordShowError ? 'Password must be entered' : null
+            }
             label="Confirm Password"
             type="password"
             id="confirm-password"

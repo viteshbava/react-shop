@@ -101,8 +101,8 @@ const Register = () => {
             onBlur={usernameBlurHandler}
           />
           <TextField
-            invalid={passwordShowError && true}
-            feedback={passwordShowError && 'Password must be entered'}
+            invalid={passwordShowError}
+            feedback={passwordShowError ? 'Password must be entered' : null}
             label="Password"
             type="password"
             id="password"
@@ -111,8 +111,10 @@ const Register = () => {
             onBlur={passwordBlurHandler}
           />
           <TextField
-            invalid={confirmPasswordShowError && true}
-            feedback={confirmPasswordShowError && 'Password must be entered'}
+            invalid={confirmPasswordShowError}
+            feedback={
+              confirmPasswordShowError ? 'Password must be entered' : null
+            }
             label="Confirm Password"
             type="password"
             id="confirm-password"

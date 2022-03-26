@@ -6,7 +6,6 @@ import { uiActions } from '../../../redux/slices/ui-slice';
 
 const FloatingAlert = ({ alert }) => {
   const dispatch = useDispatch();
-  const { type, title, message } = alert;
 
   const closeAlert = useCallback(
     () => dispatch(uiActions.removeAlert(alert.id)),
@@ -18,17 +17,12 @@ const FloatingAlert = ({ alert }) => {
     return () => clearTimeout(timeoutId);
   }, [closeAlert]);
 
-  return (
-    <Alert type={type} title={title} message={message} onClose={closeAlert} />
-  );
+  return <Alert alert={alert} onClose={closeAlert} />;
 };
 
 FloatingAlert.propTypes = {
   alert: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    message: PropTypes.string.isRequired,
   }).isRequired,
 };
 

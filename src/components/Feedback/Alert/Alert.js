@@ -9,7 +9,8 @@ const ALERT_TYPE = {
   WARNING: 'warning',
 };
 
-const Alert = ({ type, title, message, onClose }) => {
+const Alert = ({ alert, onClose }) => {
+  const { type, title, message } = alert;
   const containerClasses = `${styles.container} ${
     styles[`container--${type}`]
   }`;
@@ -51,9 +52,11 @@ const Alert = ({ type, title, message, onClose }) => {
 };
 
 Alert.propTypes = {
-  type: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired,
+  alert: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    message: PropTypes.string,
+  }).isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

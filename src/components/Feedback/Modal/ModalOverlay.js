@@ -1,26 +1,38 @@
-import React, { useEffect } from "react";
-import ReactDOM from "react-dom";
-import styles from "./ModalOverlay.module.css";
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import styles from './ModalOverlay.module.css';
 
-const ModalOverlay = ({ onOverlayClick, children }) => {
+const ModalOverlay = ({ closeModal, children }) => {
   useEffect(() => {
-    document.body.classList.add(styles["body-disable-scroll"]);
+    document.body.classList.add(styles['body-disable-scroll']);
     return () => {
-      document.body.classList.remove(styles["body-disable-scroll"]);
+      document.body.classList.remove(styles['body-disable-scroll']);
     };
-  }, []);
+  }, [closeModal]);
 
   const overlayClickHandler = (e) => {
-    if (!onOverlayClick) return;
-    if (e.target === e.currentTarget) onOverlayClick();
+    if (!closeModal) return;
+    if (e.target === e.currentTarget) closeModal();
+  };
+
+  const keyDownHandler = (e) => {
+    if (!closeModal) return;
+    if (e.key === 'Escape') closeModal();
   };
 
   return ReactDOM.createPortal(
-    <>
-      <div onClick={overlayClickHandler} className={styles.wrapper}></div>
+    <div
+      tabIndex={-1}
+      onClick={overlayClickHandler}
+      onKeyDown={keyDownHandler}
+      className={styles.wrapper}
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+    >
       <div className={styles.container}>{children}</div>
-    </>,
-    document.querySelector("#modal-root")
+    </div>,
+    document.querySelector('#modal-root')
   );
 };
 

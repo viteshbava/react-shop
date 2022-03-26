@@ -125,18 +125,16 @@ const _getModalContent = (modalProps, closeModal) => {
   );
 };
 
-const Modal = (props) => {
+const Modal = ({ modal }) => {
   const modalCtx = useContext(ModalContext);
   const closeModal = () => modalCtx.hideModal();
-  const modalContent = _getModalContent(props, closeModal);
+  const modalContent = _getModalContent(modal, closeModal);
 
-  return (
-    <ModalOverlay onOverlayClick={closeModal}>{modalContent}</ModalOverlay>
-  );
+  return <ModalOverlay closeModal={closeModal}>{modalContent}</ModalOverlay>;
 };
 
 Modal.propTypes = {
-  props: PropTypes.shape({
+  modal: PropTypes.shape({
     type: PropTypes.string.isRequired,
     variant: PropTypes.string,
     title: PropTypes.string.isRequired,

@@ -128,7 +128,7 @@ const ProductSingle = () => {
                 focusRef={qtyRef}
                 label="Quantity"
                 id="quantity"
-                min="1"
+                min={1}
                 value={1}
               />
               <Button

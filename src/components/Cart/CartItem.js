@@ -63,7 +63,7 @@ const CartItem = ({ product }) => {
             className={styles.footer__quantity}
             label="Quantity"
             id="quantity"
-            min="1"
+            min={1}
             value={quantity}
             onUpdate={qtyUpdateHandler}
           />

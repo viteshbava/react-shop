@@ -23,5 +23,6 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/function-component-definition': 'off',
     'no-console': 'off',
+    'no-underscore-dangle': 'off',
   },
 };

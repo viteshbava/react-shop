@@ -41,9 +41,9 @@ function SignIn() {
   // If user is already logged in, either navigate back to root or back to the previous attempted visit if it exists
   useEffect(() => {
     if (user) {
-      location?.state?.from
-        ? navigate(location.state.from, { replace: true })
-        : navigate('/', { replace: true });
+      if (location?.state?.from)
+        navigate(location.state.from, { replace: true });
+      else navigate('/', { replace: true });
     }
   }, [user, navigate, location]);
 
@@ -76,7 +76,7 @@ function SignIn() {
         {showSignInFailure && (
           <Alert
             onClose={() => setShowSignInFailure(null)}
-            {...showSignInFailure}
+            alert={showSignInFailure}
           />
         )}
         <form onSubmit={formSubmitHandler}>

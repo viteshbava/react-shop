@@ -1,27 +1,27 @@
-import { useState, useEffect, useRef, useContext } from "react";
-import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
-import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
-import NumberButtons from "../../components/UI/Control/NumberButtons";
-import Button from "../../components/UI/Button/Button";
-import { useParams } from "react-router-dom";
-import PageLoader from "../../components/Feedback/PageLoader/PageLoader";
-import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
-import toDollars from "../../utilities/toDollars";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect, useRef, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import SectionHeading from '../UI/SectionHeading/SectionHeading';
+import Icon, { ICON_TYPE } from '../UI/Icon/Icon';
+import NumberButtons from '../UI/Control/NumberButtons';
+import Button from '../UI/Button/Button';
+import PageLoader from '../Feedback/PageLoader/PageLoader';
+import InfoError, { INFO_ERROR_TYPE } from '../Error/InfoError';
+import toDollars from '../../utilities/toDollars';
 import {
   fetchProduct,
   clearProduct,
-} from "../../redux/slices/selectedProduct-slice";
-import { addToCart } from "../../redux/actions/cart-actions";
+} from '../../redux/slices/selectedProduct-slice';
+import { addToCart } from '../../redux/actions/cart-actions';
 import {
   addToWishlist,
   removeFromWishlist,
-} from "../../redux/actions/wishlist-actions";
-import styles from "./ProductSingle.module.css";
+} from '../../redux/actions/wishlist-actions';
+import styles from './ProductSingle.module.css';
 
-import ModalContext from "../../context/modal-context";
-import AddToCartSummary from "./AddToCartSummary";
-import useSetDocumentTitle from "../../hooks/use-setDocumentTitle";
+import ModalContext from '../../context/modal-context';
+import AddToCartSummary from './AddToCartSummary';
+import useSetDocumentTitle from '../../hooks/use-setDocumentTitle';
 
 const ProductSingle = () => {
   const id = +useParams().id;
@@ -49,7 +49,14 @@ const ProductSingle = () => {
     setInWishlist(!!foundProduct);
   }, [id, wishlist]);
 
-  useSetDocumentTitle("Product Details", product?.title);
+  useSetDocumentTitle('Product Details', product?.title);
+
+  const addToCartSuccess = (qty) => {
+    modal.showModal({
+      type: 'custom',
+      customContent: <AddToCartSummary numItemsAdded={qty} />,
+    });
+  };
 
   const addToCartHandler = (e) => {
     e.preventDefault();
@@ -63,17 +70,9 @@ const ProductSingle = () => {
     );
   };
 
-  const addToCartSuccess = (qty) => {
-    modal.showModal({
-      type: "custom",
-      customContent: <AddToCartSummary numItemsAdded={qty} />,
-    });
-  };
-
   const toggleWishlistHandler = () => {
-    inWishlist
-      ? dispatch(removeFromWishlist(id))
-      : dispatch(addToWishlist(product));
+    if (inWishlist) dispatch(removeFromWishlist(id));
+    else dispatch(addToWishlist(product));
   };
 
   const getProductContent = () => {
@@ -105,23 +104,23 @@ const ProductSingle = () => {
       <Icon icon={ICON_TYPE.HEART_EMPTY} />
     );
     const wishlistBtnText = inWishlist
-      ? "Added to Wishlist (click to remove)"
-      : "Add to Wishlist";
+      ? 'Added to Wishlist (click to remove)'
+      : 'Add to Wishlist';
 
     return (
       <>
         <SectionHeading>{title}</SectionHeading>
-        <div className={styles["grid-wrapper"]}>
-          <div className={styles["image-wrapper"]}>
+        <div className={styles['grid-wrapper']}>
+          <div className={styles['image-wrapper']}>
             <img className={styles.image} src={image} alt="product" />
           </div>
-          <div className={styles["details-wrapper"]}>
+          <div className={styles['details-wrapper']}>
             <p className={styles.category}>{category}</p>
-            <p className={styles["product-id"]}>{`Product ID: ${id}`}</p>
+            <p className={styles['product-id']}>{`Product ID: ${id}`}</p>
             <p className={styles.price}>{toDollars(price)}</p>
             <p className={styles.descr}>{description}</p>
             <form
-              className={styles["add-to-cart-form"]}
+              className={styles['add-to-cart-form']}
               onSubmit={addToCartHandler}
             >
               <NumberButtons
@@ -134,14 +133,14 @@ const ProductSingle = () => {
               />
               <Button
                 loading={cartLoading}
-                className={styles["add-to-cart-button"]}
-                type={"submit"}
+                className={styles['add-to-cart-button']}
+                type="submit"
                 icon={<Icon icon={ICON_TYPE.CART} />}
               >
                 Add to Cart
               </Button>
             </form>
-            <div className={styles["action-wrapper"]}>
+            <div className={styles['action-wrapper']}>
               <Button
                 loading={wishlistLoading}
                 onClick={toggleWishlistHandler}
@@ -157,11 +156,7 @@ const ProductSingle = () => {
     );
   };
 
-  return (
-    <>
-      <section>{getProductContent()}</section>
-    </>
-  );
+  return <section>{getProductContent()}</section>;
 };
 
 export default ProductSingle;

@@ -1,14 +1,14 @@
-import React from "react";
-import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
-import Button from "../../components/UI/Button/Button";
-import Card from "../../components/UI/Card/Card";
-import styles from "./AddToCartSummary.module.css";
-import toDollars from "../../utilities/toDollars";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import Icon, { ICON_TYPE } from '../UI/Icon/Icon';
+import Button from '../UI/Button/Button';
+import Card from '../UI/Card/Card';
+import styles from './AddToCartSummary.module.css';
+import toDollars from '../../utilities/toDollars';
 
-import { useContext } from "react";
-import ModalContext from "../../context/modal-context";
+import ModalContext from '../../context/modal-context';
 
 const AddToCartSummary = ({ numItemsAdded }) => {
   const { totalQuantity, totalItemPrice: cartSubtotal } = useSelector(
@@ -21,28 +21,32 @@ const AddToCartSummary = ({ numItemsAdded }) => {
 
   const viewCartHandler = () => {
     closeModal();
-    navigate("/cart");
+    navigate('/cart');
   };
 
   let cardClasses = styles.wrapper;
-  cardClasses += ` ${styles["wrapper--success"]}`;
+  cardClasses += ` ${styles['wrapper--success']}`;
 
   return (
     <Card className={cardClasses}>
-      <button onClick={closeModal} className={styles["close-button"]}>
+      <button
+        type="button"
+        onClick={closeModal}
+        className={styles['close-button']}
+      >
         &times;
       </button>
       <div className={styles.header}>
-        <h2 className={styles["header__title"]}>
+        <h2 className={styles.header__title}>
           {numItemsAdded} item(s) added to your cart
         </h2>
       </div>
       <div className={styles.body}>
         <p>
-          <span className={styles["cart-subtotal-label"]}>Cart Subtotal</span> |{" "}
+          <span className={styles['cart-subtotal-label']}>Cart Subtotal</span> |{' '}
           {totalQuantity} items
         </p>
-        <p className={styles["cart-subtotal-value"]}>
+        <p className={styles['cart-subtotal-value']}>
           {toDollars(cartSubtotal)}
         </p>
       </div>
@@ -56,6 +60,10 @@ const AddToCartSummary = ({ numItemsAdded }) => {
       </div>
     </Card>
   );
+};
+
+AddToCartSummary.propTypes = {
+  numItemsAdded: PropTypes.number.isRequired,
 };
 
 export default AddToCartSummary;

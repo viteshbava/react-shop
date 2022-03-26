@@ -112,8 +112,8 @@ function App() {
     <Router>
       <ScrollToTop />
       <Feedback />
-      <Layout>
-        {displayContent && (
+      {displayContent && (
+        <Layout>
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/signin" element={<SignInPage />} />
@@ -181,8 +181,8 @@ function App() {
               />
             </Routes>
           </Suspense>
-        )}
-      </Layout>
+        </Layout>
+      )}
     </Router>
   );
 }

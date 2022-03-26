@@ -51,7 +51,7 @@ const NavTopRightDesktop = ({ className }) => {
       </li>
       <li>
         <Button
-          variant={!cartTotalQty && 'outlined'}
+          variant={cartTotalQty ? 'filled' : 'outlined'}
           icon={<Icon icon={ICON_TYPE.CART} />}
           link="/cart"
         >

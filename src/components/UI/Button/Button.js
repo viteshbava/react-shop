@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styles from "./Button.module.css";
-import Spinner from "../Spinner/Spinner";
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import styles from './Button.module.css';
+import Spinner from '../Spinner/Spinner';
 
 const Button = ({
   className,
@@ -16,15 +16,11 @@ const Button = ({
   loading,
 }) => {
   let btnStyles = styles.btn;
-  btnStyles += variant
-    ? ` ${styles[`btn--${variant}`]}`
-    : ` ${styles["btn--fill"]}`;
+  btnStyles += ` ${styles[`btn--${variant}`]}`;
   btnStyles +=
     disabled || loading
-      ? ` ${styles["btn--disabled"]}`
-      : color
-      ? ` ${styles[`btn--${color}`]}`
-      : ` ${styles["btn--primary"]}`;
+      ? ` ${styles['btn--disabled']}`
+      : ` ${styles[`btn--${color}`]}`;
   if (className) btnStyles += ` ${className}`;
 
   const content = (
@@ -42,10 +38,38 @@ const Button = ({
       </Link>
     );
   return (
-    <button type={type} className={btnStyles} onClick={onClick}>
+    <button
+      type={type === 'submit' ? 'submit' : 'button'}
+      className={btnStyles}
+      onClick={onClick}
+    >
       {content}
     </button>
   );
+};
+
+Button.propTypes = {
+  className: PropTypes.string,
+  variant: PropTypes.string,
+  color: PropTypes.string,
+  onClick: PropTypes.func,
+  children: PropTypes.node.isRequired,
+  type: PropTypes.string,
+  link: PropTypes.string,
+  icon: PropTypes.element,
+  disabled: PropTypes.bool,
+  loading: PropTypes.bool,
+};
+Button.defaultProps = {
+  className: null,
+  variant: 'fill',
+  color: 'primary',
+  link: null,
+  icon: null,
+  disabled: false,
+  loading: false,
+  type: 'button',
+  onClick: () => {},
 };
 
 export default Button;

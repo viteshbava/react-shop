@@ -15,8 +15,8 @@ const _getModalContent = (modalProps, closeModal) => {
   const {
     type,
     variant = 'default',
-    title,
-    body,
+    title = '',
+    body = '',
     cancelText = 'Cancel',
     okText = 'Okay',
     onCancel,
@@ -137,8 +137,8 @@ Modal.propTypes = {
   modal: PropTypes.shape({
     type: PropTypes.string.isRequired,
     variant: PropTypes.string,
-    title: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    body: PropTypes.string,
     cancelText: PropTypes.string,
     okText: PropTypes.string,
     onCancel: PropTypes.func,

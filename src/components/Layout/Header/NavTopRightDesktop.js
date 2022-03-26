@@ -1,27 +1,28 @@
-import localStyles from "./NavTopRightDesktop.module.css";
-import globalStyles from "./_NavGlobal.module.css";
-import SignedInInfo from "./SignedInInfo";
-import Button from "../../UI/Button/Button";
-import Icon, { ICON_TYPE } from "../../UI/Icon/Icon";
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import localStyles from './NavTopRightDesktop.module.css';
+import globalStyles from './_NavGlobal.module.css';
+import SignedInInfo from './SignedInInfo';
+import Button from '../../UI/Button/Button';
+import Icon, { ICON_TYPE } from '../../UI/Icon/Icon';
 
 const NavTopRightDesktop = ({ className }) => {
   const { user: loggedInUser } = useSelector((state) => state.auth);
   const cartTotalQty = useSelector((state) => state.cart.totalQuantity);
   const wishlistTotalQty = useSelector((state) => state.wishlist.totalQuantity);
 
-  const navClasses = localStyles.wrapper + (className ? ` ${className}` : "");
+  const navClasses = localStyles.wrapper + (className ? ` ${className}` : '');
 
   const navLinkActive = ({ isActive }) =>
     globalStyles.navlink +
-    (isActive ? ` ${globalStyles["navlink--active"]}` : "");
+    (isActive ? ` ${globalStyles['navlink--active']}` : '');
 
-  const nav_signed_out = (
+  const navSignedOut = (
     <>
-      <li className={localStyles["ml-extra"]}>
+      <li className={localStyles['ml-extra']}>
         <Button
-          variant={"outlined"}
+          variant="outlined"
           icon={<Icon icon={ICON_TYPE.REGISTER} />}
           link="/register"
         >
@@ -36,10 +37,10 @@ const NavTopRightDesktop = ({ className }) => {
     </>
   );
 
-  const nav_signed_in = (
+  const navSignedIn = (
     <>
       <li>
-        <NavLink to={"/wishlist"} className={navLinkActive}>
+        <NavLink to="/wishlist" className={navLinkActive}>
           <Icon
             icon={
               wishlistTotalQty ? ICON_TYPE.HEART_FULL : ICON_TYPE.HEART_EMPTY
@@ -50,7 +51,7 @@ const NavTopRightDesktop = ({ className }) => {
       </li>
       <li>
         <Button
-          variant={!cartTotalQty && "outlined"}
+          variant={!cartTotalQty && 'outlined'}
           icon={<Icon icon={ICON_TYPE.CART} />}
           link="/cart"
         >
@@ -63,9 +64,17 @@ const NavTopRightDesktop = ({ className }) => {
   return (
     <nav className={navClasses}>
       {loggedInUser && <SignedInInfo />}
-      <ul>{loggedInUser ? nav_signed_in : nav_signed_out}</ul>
+      <ul>{loggedInUser ? navSignedIn : navSignedOut}</ul>
     </nav>
   );
+};
+
+NavTopRightDesktop.propTypes = {
+  className: PropTypes.string,
+};
+
+NavTopRightDesktop.defaultProps = {
+  className: null,
 };
 
 export default NavTopRightDesktop;

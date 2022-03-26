@@ -91,12 +91,11 @@ const Register = () => {
         )}
         <form onSubmit={formSubmitHandler}>
           <TextField
-            invalid={usernameShowError && true}
-            feedback={usernameShowError && 'Username must be entered'}
+            invalid={usernameShowError}
+            feedback={usernameShowError ? 'Username must be entered' : null}
             label="Username"
             id="username"
             placeholder="Enter username ..."
-            value={username}
             onChange={usernameChangeHandler}
             onBlur={usernameBlurHandler}
           />

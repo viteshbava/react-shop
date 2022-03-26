@@ -86,7 +86,6 @@ function SignIn() {
             label="Username"
             id="username"
             placeholder="Enter username ..."
-            value={username}
             onChange={usernameChangeHandler}
             onBlur={usernameBlurHandler}
           />

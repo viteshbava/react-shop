@@ -75,6 +75,7 @@ const NumberButtons = ({
           -
         </button>
         <input
+          id={id}
           type="number"
           value={value}
           onChange={inputChangeHandler}

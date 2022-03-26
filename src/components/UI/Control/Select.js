@@ -25,7 +25,12 @@ const Select = ({
       feedback={feedback}
       className={className}
     >
-      <select className={styles.select} style={selectStyle} ref={focusRef}>
+      <select
+        id={id}
+        className={styles.select}
+        style={selectStyle}
+        ref={focusRef}
+      >
         {options.map((opt) => (
           <option key={opt} value={opt}>
             {opt}

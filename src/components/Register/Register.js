@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import useInput from "../../hooks/use-input";
-import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
-import TextField from "../../components/UI/Control/TextField";
-import Button from "../../components/UI/Button/Button";
-import Alert, { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
-import Icon, { ICON_TYPE } from "../../components/UI/Icon/Icon";
-import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../redux/actions/auth-actions";
-import { resetUserState } from "../../redux/slices/auth-slice";
-import styles from "./Register.module.css";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import useInput from '../../hooks/use-input';
+import SectionHeading from '../UI/SectionHeading/SectionHeading';
+import TextField from '../UI/Control/TextField';
+import Button from '../UI/Button/Button';
+import Alert, { ALERT_TYPE } from '../Feedback/Alert/Alert';
+import Icon, { ICON_TYPE } from '../UI/Icon/Icon';
+import { register } from '../../redux/actions/auth-actions';
+import { resetUserState } from '../../redux/slices/auth-slice';
+import styles from './Register.module.css';
 
 const Register = () => {
   const [showFormError, setFormError] = useState(null);
@@ -24,7 +24,7 @@ const Register = () => {
     setInputTouched: setUsernameTouched,
     inputChangeHandler: usernameChangeHandler,
     inputBlurHandler: usernameBlurHandler,
-  } = useInput((val) => val.trim() !== "");
+  } = useInput((val) => val.trim() !== '');
 
   const {
     input: password,
@@ -33,7 +33,7 @@ const Register = () => {
     setInputTouched: setPasswordTouched,
     inputChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
-  } = useInput((val) => val.trim() !== "");
+  } = useInput((val) => val.trim() !== '');
 
   const {
     input: confirmPassword,
@@ -42,20 +42,20 @@ const Register = () => {
     setInputTouched: setConfirmPasswordTouched,
     inputChangeHandler: confirmPasswordChangeHandler,
     inputBlurHandler: confirmPasswordBlurHandler,
-  } = useInput((val) => val.trim() !== "");
+  } = useInput((val) => val.trim() !== '');
 
   const formValid = usernameValid && passwordValid && confirmPasswordValid;
 
   // If user is already logged in, reirect to root page
   useEffect(() => {
-    if (user) navigate("/", { replace: true });
+    if (user) navigate('/', { replace: true });
   }, [user, navigate]);
 
   useEffect(() => {
     if (error)
       setFormError({
         type: ALERT_TYPE.ERROR,
-        title: "Unable to register",
+        title: 'Unable to register',
         message: error.message,
       });
     dispatch(resetUserState());
@@ -73,8 +73,8 @@ const Register = () => {
     if (password !== confirmPassword) {
       setFormError({
         type: ALERT_TYPE.ERROR,
-        title: "Unable to register",
-        message: "Passwords do not match!",
+        title: 'Unable to register',
+        message: 'Passwords do not match!',
       });
       return;
     }
@@ -85,14 +85,14 @@ const Register = () => {
   return (
     <section>
       <SectionHeading>Register</SectionHeading>
-      <div className={styles["form-container"]}>
+      <div className={styles['form-container']}>
         {showFormError && (
-          <Alert onClose={() => setFormError(null)} {...showFormError} />
+          <Alert onClose={() => setFormError(null)} alert={showFormError} />
         )}
         <form onSubmit={formSubmitHandler}>
           <TextField
             invalid={usernameShowError && true}
-            feedback={usernameShowError && "Username must be entered"}
+            feedback={usernameShowError && 'Username must be entered'}
             label="Username"
             id="username"
             placeholder="Enter username ..."
@@ -102,7 +102,7 @@ const Register = () => {
           />
           <TextField
             invalid={passwordShowError && true}
-            feedback={passwordShowError && "Password must be entered"}
+            feedback={passwordShowError && 'Password must be entered'}
             label="Password"
             type="password"
             id="password"
@@ -112,7 +112,7 @@ const Register = () => {
           />
           <TextField
             invalid={confirmPasswordShowError && true}
-            feedback={confirmPasswordShowError && "Password must be entered"}
+            feedback={confirmPasswordShowError && 'Password must be entered'}
             label="Confirm Password"
             type="password"
             id="confirm-password"
@@ -121,7 +121,7 @@ const Register = () => {
             onBlur={confirmPasswordBlurHandler}
           />
           <Button
-            className={styles["register-button"]}
+            className={styles['register-button']}
             icon={<Icon icon={ICON_TYPE.REGISTER} />}
             type="submit"
           >

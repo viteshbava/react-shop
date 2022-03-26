@@ -1,9 +1,9 @@
-import ProductListItem from "./ProductListItem";
-import SectionHeading from "../UI/SectionHeading/SectionHeading";
-import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
-import PageLoader from "../Feedback/PageLoader/PageLoader";
-import styles from "./ProductList.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
+import ProductListItem from './ProductListItem';
+import SectionHeading from '../UI/SectionHeading/SectionHeading';
+import InfoError, { INFO_ERROR_TYPE } from '../Error/InfoError';
+import PageLoader from '../Feedback/PageLoader/PageLoader';
+import styles from './ProductList.module.css';
 
 const ProductList = () => {
   const { isLoading, hasLoaded, error, products } = useSelector(
@@ -41,7 +41,7 @@ const ProductList = () => {
     return (
       <>
         <SectionHeading>Products</SectionHeading>
-        <ul className={styles["grid-wrapper"]}>
+        <ul className={styles['grid-wrapper']}>
           {products.map((p) => (
             <ProductListItem key={p.id} product={p} />
           ))}

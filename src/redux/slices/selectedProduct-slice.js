@@ -1,6 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import fakeStoreApi from "../../apis/fakeStoreApi_test";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import fakeStoreApi from '../../apis/fakeStoreApi_test';
 
 const STATE_INIT = {
   isLoading: false,
@@ -9,12 +8,12 @@ const STATE_INIT = {
   error: null,
 };
 
-/******************************************
+/** ****************************************
 createAsyncThunk Actions
-*******************************************/
+****************************************** */
 
 const fetchProduct = createAsyncThunk(
-  "allProducts/fetchProduct",
+  'allProducts/fetchProduct',
   async (productId, thunkAPI) => {
     try {
       return await fakeStoreApi.getProduct(productId);
@@ -24,12 +23,12 @@ const fetchProduct = createAsyncThunk(
   }
 );
 
-/******************************************
+/** ****************************************
 Slice
-*******************************************/
+****************************************** */
 
 const selectedProductSlice = createSlice({
-  name: "selectedProduct",
+  name: 'selectedProduct',
   initialState: STATE_INIT,
   reducers: {
     clearProduct() {

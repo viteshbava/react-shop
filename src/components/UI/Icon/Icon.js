@@ -1,5 +1,5 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSignInAlt,
   faSignOutAlt,
@@ -12,24 +12,24 @@ import {
   faExclamationTriangle,
   faCheckCircle,
   faUserPlus,
-} from "@fortawesome/free-solid-svg-icons";
-import { faHeart as faHeartEmpty } from "@fortawesome/free-regular-svg-icons";
-import styles from "./Icon.module.css";
-import Badge from "../Badge/Badge";
+} from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
+import styles from './Icon.module.css';
+import Badge from '../Badge/Badge';
 
 const ICON_TYPE = {
-  SIGNIN: "signin",
-  SIGNOUT: "signout",
-  REGISTER: "register",
-  HEART_FULL: "heart_full",
-  HEART_EMPTY: "heart_empty",
-  CART: "cart",
-  HAMBURGER: "hamburger",
-  TIMES: "times",
-  ERROR: "error",
-  INFO: "info",
-  SUCCESS: "tick",
-  WARNING: "warning",
+  SIGNIN: 'signin',
+  SIGNOUT: 'signout',
+  REGISTER: 'register',
+  HEART_FULL: 'heart_full',
+  HEART_EMPTY: 'heart_empty',
+  CART: 'cart',
+  HAMBURGER: 'hamburger',
+  TIMES: 'times',
+  ERROR: 'error',
+  INFO: 'info',
+  SUCCESS: 'tick',
+  WARNING: 'warning',
 };
 
 const Icon = ({ className, icon, badge, badgeClasses }) => {
@@ -74,8 +74,8 @@ const Icon = ({ className, icon, badge, badgeClasses }) => {
     default:
       console.error(`Invalid icon type: ${icon}`);
   }
-  const spanClasses = styles.wrapper + (className ? ` ${className}` : "");
-  const badgeStyles = styles.badge + (badgeClasses ? ` ${badgeClasses}` : "");
+  const spanClasses = styles.wrapper + (className ? ` ${className}` : '');
+  const badgeStyles = styles.badge + (badgeClasses ? ` ${badgeClasses}` : '');
   return (
     <span className={spanClasses}>
       {iconReturn}
@@ -83,6 +83,20 @@ const Icon = ({ className, icon, badge, badgeClasses }) => {
     </span>
   );
 };
+
+Icon.propTypes = {
+  className: PropTypes.string,
+  icon: PropTypes.string.isRequired,
+  badge: PropTypes.node,
+  badgeClasses: PropTypes.string,
+};
+Icon.defaultProps = {
+  className: null,
+  badge: null,
+  badgeClasses: null,
+};
+
+// className, icon, badge, badgeClasses
 
 export default Icon;
 export { ICON_TYPE };

@@ -6,6 +6,7 @@ const TextField = ({
   invalid,
   label,
   feedback,
+  type,
   className,
   focusRef,
   placeholder,
@@ -22,7 +23,7 @@ const TextField = ({
     <input
       id={id}
       ref={focusRef}
-      type="text"
+      type={type}
       placeholder={placeholder}
       onChange={onChange}
       onBlur={onBlur}
@@ -36,6 +37,7 @@ TextField.propTypes = {
   label: PropTypes.string.isRequired,
   feedback: PropTypes.string,
   className: PropTypes.string,
+  type: PropTypes.string,
   focusRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(HTMLInputElement) }),
@@ -48,6 +50,7 @@ TextField.defaultProps = {
   invalid: false,
   feedback: null,
   className: null,
+  type: 'text',
   focusRef: null,
   placeholder: null,
   onChange: () => {},

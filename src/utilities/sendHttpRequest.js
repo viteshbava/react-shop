@@ -1,17 +1,14 @@
 const sendHttpRequest = async ({ method, body, headers, url, signal }) => {
   const init = {
-    method: method ? method : "GET",
+    method: method || 'GET',
     body: body ? JSON.stringify(body) : null,
-    headers: headers ? headers : {},
-    signal: signal ? signal : null,
+    headers: headers || {},
+    signal: signal || null,
   };
-  try {
-    const response = await fetch(url, init);
-    if (!response.ok) throw await response.json();
-    return await response.json();
-  } catch (error) {
-    throw error;
-  }
+  const response = await fetch(url, init);
+  if (!response.ok) throw await response.json();
+  const data = await response.json();
+  return data;
 };
 
 export default sendHttpRequest;

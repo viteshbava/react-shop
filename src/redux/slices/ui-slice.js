@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const STATE_INIT = {
   alerts: {
@@ -9,15 +9,17 @@ const STATE_INIT = {
 };
 
 const uiSlice = createSlice({
-  name: "ui",
+  name: 'ui',
   initialState: STATE_INIT,
   reducers: {
     addAlert(state, action) {
       const newAlert = action.payload;
+      const currAlertId = state.alerts._id;
       state.alerts.alerts.unshift({
         ...newAlert,
-        id: ++state.alerts._id,
+        id: currAlertId,
       });
+      state.alerts._id += 1;
     },
     removeAlert(state, action) {
       const alertId = action.payload;

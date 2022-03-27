@@ -1,9 +1,9 @@
-import SectionHeading from "../../components/UI/SectionHeading/SectionHeading";
-import WishlistItem from "./WishlistItem";
-import { useSelector } from "react-redux";
-import InfoError, { INFO_ERROR_TYPE } from "../Error/InfoError";
-import PageLoader from "../../components/Feedback/PageLoader/PageLoader";
-import styles from "./Wishlist.module.css";
+import { useSelector } from 'react-redux';
+import SectionHeading from '../UI/SectionHeading/SectionHeading';
+import WishlistItem from './WishlistItem';
+import InfoError, { INFO_ERROR_TYPE } from '../Error/InfoError';
+import PageLoader from '../Feedback/PageLoader/PageLoader';
+import styles from './Wishlist.module.css';
 
 const Wishlist = () => {
   const { isLoading, hasLoaded, error, products, totalQuantity } = useSelector(
@@ -41,7 +41,7 @@ const Wishlist = () => {
     return (
       <>
         <SectionHeading>Wishlist ({totalQuantity})</SectionHeading>
-        <ul className={styles["item-list"]}>
+        <ul className={styles['item-list']}>
           {products.map((p) => (
             <WishlistItem key={p.id} product={p} />
           ))}

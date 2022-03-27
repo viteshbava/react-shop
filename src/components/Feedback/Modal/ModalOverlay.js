@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './ModalOverlay.module.css';
 
 const ModalOverlay = ({ closeModal, children }) => {
+  const modalRef = useRef();
   useEffect(() => {
     document.body.classList.add(styles['body-disable-scroll']);
+    modalRef.current.focus();
     return () => {
       document.body.classList.remove(styles['body-disable-scroll']);
     };
@@ -29,6 +31,7 @@ const ModalOverlay = ({ closeModal, children }) => {
       aria-hidden="true"
       role="dialog"
       aria-modal="true"
+      ref={modalRef}
     >
       <div className={styles.container}>{children}</div>
     </div>,

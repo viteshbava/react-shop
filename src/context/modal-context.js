@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 
 const ModalContext = React.createContext({
   show: false,
@@ -11,9 +12,9 @@ const ModalContextProvider = ({ children }) => {
   const [show, setShow] = useState(false);
   const [props, setProps] = useState(null);
 
-  const showModal = (props) => {
+  const showModal = (modalProps) => {
     setShow(true);
-    setProps(props);
+    setProps(modalProps);
   };
 
   const hideModal = () => {
@@ -21,11 +22,20 @@ const ModalContextProvider = ({ children }) => {
     setProps(null);
   };
 
+  const providerValues = useMemo(
+    () => ({ show, props, showModal, hideModal }),
+    [show, props]
+  );
+
   return (
-    <ModalContext.Provider value={{ show, props, showModal, hideModal }}>
+    <ModalContext.Provider value={providerValues}>
       {children}
     </ModalContext.Provider>
   );
+};
+
+ModalContextProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default ModalContext;

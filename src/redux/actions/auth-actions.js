@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import authServerApi from '../../apis/authServerApi';
 import { uiActions } from '../slices/ui-slice';
 import { ALERT_TYPE } from '../../components/Feedback/Alert/Alert';
+// eslint-disable-next-line import/no-cycle
 import {
   setAccessTokenTimer,
   setAccessToken,

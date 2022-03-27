@@ -24,5 +24,9 @@ module.exports = {
     'react/function-component-definition': 'off',
     'no-console': 'off',
     'no-underscore-dangle': 'off',
+    'no-param-reassign': [
+      'error',
+      { props: true, ignorePropertyModificationsFor: ['state'] },
+    ],
   },
 };

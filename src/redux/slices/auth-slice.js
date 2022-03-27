@@ -1,16 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+// eslint-disable-next-line import/no-cycle
 import {
   register,
   login,
   logout,
   changePassword,
-} from "../actions/auth-actions";
+} from '../actions/auth-actions';
 
 // Get user from localStorage
-const localStorageUser = JSON.parse(localStorage.getItem("user"));
+const localStorageUser = JSON.parse(localStorage.getItem('user'));
 
 const STATE_INIT = {
-  user: localStorageUser ? localStorageUser : null,
+  user: localStorageUser || null,
   isLoading: false,
   error: null,
   accessTokenTimer: null,
@@ -18,7 +19,7 @@ const STATE_INIT = {
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState: STATE_INIT,
 
   reducers: {
@@ -55,13 +56,11 @@ const authSlice = createSlice({
         state.accessTokenReady = true;
       })
       // REGISTER - REJECTED
-      .addCase(register.rejected, (state, action) => {
-        return {
-          ...STATE_INIT,
-          user: null,
-          error: { message: action.payload },
-        };
-      })
+      .addCase(register.rejected, (state, action) => ({
+        ...STATE_INIT,
+        user: null,
+        error: { message: action.payload },
+      }))
       // LOGIN - PENDING
       .addCase(login.pending, (state) => {
         state.isLoading = true;
@@ -74,24 +73,23 @@ const authSlice = createSlice({
         state.accessTokenReady = true;
       })
       // LOGIN - REJECTED
-      .addCase(login.rejected, (_, action) => {
-        return {
+      .addCase(
+        login.rejected,
+        (_, action) => ({
           ...STATE_INIT,
           user: null,
           error: { message: action.payload },
-        };
+        })
         // state.user = null;
         // state.isLoading = false;
         // state.error = { message: action.payload };
-      })
+      )
       // LOGOUT - PENDING
       .addCase(logout.pending, (state) => {
         state.isLoading = true;
       })
       // LOGOUT - FULFILLED
-      .addCase(logout.fulfilled, (state) => {
-        return { ...STATE_INIT, user: null };
-      })
+      .addCase(logout.fulfilled, () => ({ ...STATE_INIT, user: null }))
       // LOGOUT - REJECTED
       .addCase(logout.rejected, (state, action) => {
         state.isLoading = false;

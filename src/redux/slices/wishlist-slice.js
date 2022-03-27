@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { logout } from "../actions/auth-actions";
+import { createSlice } from '@reduxjs/toolkit';
+import { logout } from '../actions/auth-actions';
 
 const STATE_INIT = {
   isLoading: false,
@@ -10,7 +10,7 @@ const STATE_INIT = {
 };
 
 const wishlistSlice = createSlice({
-  name: "wishlist",
+  name: 'wishlist',
   initialState: STATE_INIT,
 
   reducers: {
@@ -25,7 +25,7 @@ const wishlistSlice = createSlice({
       const foundProduct = state.products.find((p) => p.id === product.id);
       if (!foundProduct) {
         state.products.push(product);
-        state.totalQuantity++;
+        state.totalQuantity += 1;
       }
     },
 
@@ -34,7 +34,7 @@ const wishlistSlice = createSlice({
       const foundProduct = state.products.find((p) => p.id === productId);
       if (foundProduct) {
         state.products = state.products.filter((p) => p.id !== productId);
-        state.totalQuantity--;
+        state.totalQuantity -= 1;
       }
     },
 
@@ -52,9 +52,7 @@ const wishlistSlice = createSlice({
   },
   extraReducers: (builder) => {
     // CLEAR WISHLIST UPON LOGOUT
-    builder.addCase(logout.fulfilled, () => {
-      return { ...STATE_INIT };
-    });
+    builder.addCase(logout.fulfilled, () => ({ ...STATE_INIT }));
   },
 });
 

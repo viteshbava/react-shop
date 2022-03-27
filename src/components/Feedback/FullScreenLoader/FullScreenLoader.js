@@ -4,7 +4,7 @@ import Spinner from '../../UI/Spinner/Spinner';
 
 const FullScreenLoader = () => (
   <ModalOverlay>
-    <Spinner className={styles.main} width="7rem" thinkness="1rem" />
+    <Spinner className={styles.main} width="7rem" thickness="1rem" />
   </ModalOverlay>
 );
 

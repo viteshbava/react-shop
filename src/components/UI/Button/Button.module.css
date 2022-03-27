@@ -44,7 +44,7 @@
   color: var(--primary-main-dark);
   border-color: var(--primary-main);
 }
-.btn--primary.btn--fill {
+.btn--primary.btn--filled {
   background-color: var(--primary-main);
 }
 .btn--primary.btn--outlined {
@@ -57,7 +57,7 @@
   color: var(--danger-dark);
   border-color: var(--danger-light);
 }
-.btn--error.btn--fill {
+.btn--error.btn--filled {
   background-color: var(--danger-light);
 }
 .btn--error.btn--outlined {
@@ -70,7 +70,7 @@
   color: var(--success-dark);
   border-color: var(--success-light);
 }
-.btn--success.btn--fill {
+.btn--success.btn--filled {
   background-color: var(--success-light);
 }
 .btn--success.btn--outlined {
@@ -83,7 +83,7 @@
   color: var(--warning-dark);
   border-color: var(--warning-light);
 }
-.btn--warning.btn--fill {
+.btn--warning.btn--filled {
   background-color: var(--warning-light);
 }
 .btn--warning.btn--outlined {
@@ -96,7 +96,7 @@
   color: var(--info-dark);
   border-color: var(--info-light);
 }
-.btn--info.btn--fill {
+.btn--info.btn--filled {
   background-color: var(--info-light);
 }
 .btn--info.btn--outlined {
@@ -110,7 +110,7 @@
   cursor: default;
 }
 
-.btn--disabled.btn--fill {
+.btn--disabled.btn--filled {
   border-color: transparent;
   background-color: rgba(0, 0, 0, 0.12);
 }

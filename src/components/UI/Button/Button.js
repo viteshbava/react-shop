@@ -62,7 +62,7 @@ Button.propTypes = {
 };
 Button.defaultProps = {
   className: null,
-  variant: 'fill',
+  variant: 'filled',
   color: 'primary',
   link: null,
   icon: null,

@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { logout } from "../actions/auth-actions";
+import { createSlice } from '@reduxjs/toolkit';
+import { logout } from '../actions/auth-actions';
 
 const STATE_INIT = {
   isLoading: false,
@@ -12,7 +12,7 @@ const STATE_INIT = {
 };
 
 const cartSlice = createSlice({
-  name: "cart",
+  name: 'cart',
   initialState: STATE_INIT,
 
   reducers: {
@@ -33,12 +33,12 @@ const cartSlice = createSlice({
     add(state, action) {
       const { product, quantity } = action.payload;
       const foundProduct = state.products.find((p) => p.id === product.id);
-      foundProduct
-        ? (foundProduct.quantity += quantity)
-        : state.products.push({
-            ...product,
-            quantity: quantity,
-          });
+      if (foundProduct) foundProduct.quantity += quantity;
+      else
+        state.products.push({
+          ...product,
+          quantity,
+        });
       state.totalQuantity += quantity;
       state.totalItemPrice += product.price * quantity;
     },
@@ -80,9 +80,11 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     // CLEAR CART ON LOGOUT
-    builder.addCase(logout.fulfilled, () => {
-      return { ...STATE_INIT, totalQuantity: 0, totalItemPrice: 0 };
-    });
+    builder.addCase(logout.fulfilled, () => ({
+      ...STATE_INIT,
+      totalQuantity: 0,
+      totalItemPrice: 0,
+    }));
   },
 });
 

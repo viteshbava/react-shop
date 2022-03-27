@@ -1,7 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { logout } from "../actions/auth-actions";
-import fakeStoreApi from "../../apis/fakeStoreApi_test";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { logout } from '../actions/auth-actions';
+import fakeStoreApi from '../../apis/fakeStoreApi_test';
 
 const STATE_INIT = {
   products: null,
@@ -11,12 +10,12 @@ const STATE_INIT = {
   fetchController: null,
 };
 
-/******************************************
+/** ****************************************
 createAsyncThunk Actions
-*******************************************/
+****************************************** */
 
 const fetchProducts = createAsyncThunk(
-  "allProducts/fetchProducts",
+  'allProducts/fetchProducts',
   async (signal, thunkAPI) => {
     try {
       return await fakeStoreApi.getProducts(signal);
@@ -26,12 +25,12 @@ const fetchProducts = createAsyncThunk(
   }
 );
 
-/******************************************
+/** ****************************************
 Slice
-*******************************************/
+****************************************** */
 
 const productsSlice = createSlice({
-  name: "products",
+  name: 'products',
   initialState: STATE_INIT,
   reducers: {
     clearAllProducts() {
@@ -60,9 +59,7 @@ const productsSlice = createSlice({
         state.error = { message: action.payload };
       })
       // CLEAR PRODUCTS ON LOGOUT
-      .addCase(logout.fulfilled, () => {
-        return { ...STATE_INIT };
-      });
+      .addCase(logout.fulfilled, () => ({ ...STATE_INIT }));
   },
 });
 

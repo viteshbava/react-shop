@@ -1,8 +1,14 @@
-import { wishlistActions } from "../slices/wishlist-slice";
-import { uiActions } from "../slices/ui-slice";
-import { ALERT_TYPE } from "../../components/Feedback/Alert/Alert";
-import fakeStoreApi from "../../apis/fakeStoreApi_test";
-// import store from "../store";
+import { wishlistActions } from '../slices/wishlist-slice';
+import { uiActions } from '../slices/ui-slice';
+import { ALERT_TYPE } from '../../components/Feedback/Alert/Alert';
+import fakeStoreApi from '../../apis/fakeStoreApi_test';
+
+/* HELPER FUNCTIONS FOR THIS FILE */
+const wait = (delay) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, delay);
+  });
+/** */
 
 const fetchWishlist = (userId, abortSignal) => async (dispatch) => {
   dispatch(wishlistActions.isLoading(true));
@@ -13,29 +19,30 @@ const fetchWishlist = (userId, abortSignal) => async (dispatch) => {
     await wait(5000);
     /* No wishlist API in fakeStoreApi therefore using dummy wishlists */
     // const response_wishlist = []; /* empty dummy wishlist */
-    const response_wishlist = [
+    const responseWishlist = [
       2, 4, 6, 9, 13, 15,
     ]; /* dummy wishlist with products */
     // Update total quantity
     // The abortSignal.aborted check is temporarily placed here to simulate the cencellation of the fake lengthy API call above
     if (!abortSignal.aborted) {
-      const totalQuantity = response_wishlist.length;
+      const totalQuantity = responseWishlist.length;
       dispatch(wishlistActions.setTotalQuantity(totalQuantity));
     }
     // Fetch product data for each item in wishlist
-    const promises = response_wishlist.map(
-      async (p) => await fakeStoreApi.getProduct(p, abortSignal)
-    );
+    const promises = responseWishlist.map(async (p) => {
+      const productPromise = await fakeStoreApi.getProduct(p, abortSignal);
+      return productPromise;
+    });
     const wishlist = await Promise.all(promises);
     // Update Redux state with wishlist
     dispatch(wishlistActions.replaceWishlist(wishlist));
   } catch (err) {
-    if (err.name !== "AbortError") {
+    if (err.name !== 'AbortError') {
       dispatch(wishlistActions.setError({ message: err.message }));
       dispatch(
         uiActions.addAlert({
           type: ALERT_TYPE.ERROR,
-          title: "Unable to fetch wishlist data!",
+          title: 'Unable to fetch wishlist data!',
         })
       );
       console.error(err);
@@ -58,7 +65,7 @@ const addToWishlist = (product) => async (dispatch) => {
     dispatch(
       uiActions.addAlert({
         type: ALERT_TYPE.SUCCESS,
-        title: "Product added to wishlist!",
+        title: 'Product added to wishlist!',
       })
     );
   } catch (err) {
@@ -67,7 +74,7 @@ const addToWishlist = (product) => async (dispatch) => {
     dispatch(
       uiActions.addAlert({
         type: ALERT_TYPE.ERROR,
-        title: "Unable to add item to wishlist!",
+        title: 'Unable to add item to wishlist!',
       })
     );
     console.error(err);
@@ -96,7 +103,7 @@ const removeFromWishlist = (productId) => async (dispatch) => {
     dispatch(
       uiActions.addAlert({
         type: ALERT_TYPE.ERROR,
-        title: "Unable to remove item from wishlist!",
+        title: 'Unable to remove item from wishlist!',
       })
     );
     console.error(err);
@@ -104,7 +111,3 @@ const removeFromWishlist = (productId) => async (dispatch) => {
 };
 
 export { fetchWishlist, addToWishlist, removeFromWishlist };
-
-/* HELPER FUNCTIONS FOR THIS FILE */
-
-const wait = (delay) => new Promise((resolve) => setTimeout(resolve, delay));

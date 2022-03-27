@@ -1,7 +1,5 @@
-import ProductSingle from "../components/ProductSingle/ProductSingle";
+import ProductSingle from '../components/ProductSingle/ProductSingle';
 
-const ProductSinglePage = () => {
-  return <ProductSingle />;
-};
+const ProductSinglePage = () => <ProductSingle />;
 
 export default ProductSinglePage;

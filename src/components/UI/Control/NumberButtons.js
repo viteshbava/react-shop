@@ -37,8 +37,13 @@ const NumberButtons = ({
       setValue(currVal);
     } else {
       const val = +e.target.value;
-      if (min !== null && val < min) return;
-      if (max !== null && val > max) return;
+      if (val === currVal) return;
+      const valLessThanMin = min !== null && val < min;
+      const valGreaterThanMax = max !== null && val > max;
+      if (valLessThanMin || valGreaterThanMax) {
+        setValue(currVal);
+        return;
+      }
       changeHandler(val);
     }
   };

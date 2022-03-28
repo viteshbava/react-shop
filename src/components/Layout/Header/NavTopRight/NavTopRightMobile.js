@@ -2,8 +2,8 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './NavTopRightMobile.module.css';
-import Icon, { ICON_TYPE } from '../../UI/Icon/Icon';
-import SignedInInfo from './SignedInInfo';
+import Icon, { ICON_TYPE } from '../../../UI/Icon/Icon';
+import SignedInInfo from '../SignedInInfo/SignedInInfo';
 
 const NavTopRightMobile = ({ className }) => {
   const { user: loggedInUser } = useSelector((state) => state.auth);

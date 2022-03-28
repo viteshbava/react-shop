@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import styles from './NavTopLeft.module.css';
-import Hamburger from '../../UI/Hamburger/Hamburger';
-import Logo from './Logo';
+import Hamburger from '../../../UI/Hamburger/Hamburger';
+import Logo from '../Logo/Logo';
 
 const NavTopLeft = ({ className, hamburgerClickHandler }) => {
   const navClasses = styles.wrapper + (className ? ` ${className}` : '');

@@ -2,10 +2,10 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import localStyles from './NavTopRightDesktop.module.css';
-import globalStyles from './_NavGlobal.module.css';
-import SignedInInfo from './SignedInInfo';
-import Button from '../../UI/Button/Button';
-import Icon, { ICON_TYPE } from '../../UI/Icon/Icon';
+import globalStyles from '../_NavGlobal.module.css';
+import SignedInInfo from '../SignedInInfo/SignedInInfo';
+import Button from '../../../UI/Button/Button';
+import Icon, { ICON_TYPE } from '../../../UI/Icon/Icon';
 
 const NavTopRightDesktop = ({ className }) => {
   const { user: loggedInUser } = useSelector((state) => state.auth);

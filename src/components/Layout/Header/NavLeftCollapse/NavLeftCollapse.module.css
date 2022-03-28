@@ -13,10 +13,29 @@
   position: absolute;
   left: 0;
   top: 0;
+  /* top: 50px; */
   background-color: var(--primary-main-light);
   width: 60%;
+  /* height: 500px; */
   color: var(--primary-main-dark);
 }
+
+/* .open-menu {
+  animation: openMenu 0.4s ease-in-out forwards;
+} */
+
+.openMenu {
+  background-color: pink;
+}
+
+/* @keyframes openMenu {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+} */
 
 .container {
   display: flex;
@@ -46,29 +65,6 @@
 .signed-in-info {
   display: flex;
   margin-bottom: 1rem;
-}
-
-.nav {
-  margin-top: 1rem;
-}
-
-.nav ul li {
-  margin-bottom: 1.5rem;
-}
-
-.actions {
-  display: flex;
-  flex-direction: column;
-  margin-top: auto;
-  margin-bottom: 1rem;
-}
-
-.actions li {
-  margin-top: 1rem;
-}
-
-.actions li > * {
-  width: 100%;
 }
 
 @media (max-width: 900px) {

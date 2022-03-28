@@ -16,7 +16,7 @@ const Header = () => {
         <NavTopLeft hamburgerClickHandler={toggleLeftNav} />
         <NavTopRightDesktop />
         <NavTopRightMobile />
-        {showNavLeftCollapse && <NavLeftCollapse close={toggleLeftNav} />}
+        <NavLeftCollapse showMenu={showNavLeftCollapse} close={toggleLeftNav} />
       </div>
     </header>
   );

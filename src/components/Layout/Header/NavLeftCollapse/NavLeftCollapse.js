@@ -3,23 +3,25 @@ import { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { CSSTransition } from 'react-transition-group';
 import localStyles from './NavLeftCollapse.module.css';
 import globalStyles from '../_NavGlobal.module.css';
 
 import SignedInInfo from '../SignedInInfo/SignedInInfo';
 import Logo from '../Logo/Logo';
 
-import SignedInActions from './SignedInActions';
+import NavLeftActions from './NavLeftActions';
 import SignedOutActions from './SignedOutActions';
-import SignedInMenu from './SignedInMenu';
+import NavLeftMenu from './NavLeftMenu';
 
-const NavLeftCollapse = ({ close }) => {
+const NavLeftCollapse = ({ showMenu, close }) => {
   const { user: loggedInUser } = useSelector((state) => state.auth);
   const focusRef = useRef();
+  const nodeRef = useRef();
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
-    focusRef.current.focus();
+    if (focusRef?.current) focusRef.current.focus();
     return () => {
       document.body.style.overflow = 'auto';
     };
@@ -36,6 +38,8 @@ const NavLeftCollapse = ({ close }) => {
   const keyDownHandler = (e) => {
     if (e.key === 'Escape') close();
   };
+
+  if (!showMenu) return null;
 
   return (
     <div
@@ -58,40 +62,59 @@ const NavLeftCollapse = ({ close }) => {
             </button>
           </div>
 
-          {loggedInUser && (
-            <SignedInInfo className={localStyles['signed-in-info']} />
-          )}
+          <SignedInInfo className={localStyles['signed-in-info']} />
 
-          <nav className={localStyles.nav}>
-            <ul>
-              {loggedInUser && <SignedInMenu close={close} />}
-              <li>
-                <NavLink onClick={close} to="/about" className={navLinkActive}>
-                  About
-                </NavLink>
-              </li>
-              <li>
-                <NavLink onClick={close} to="/help" className={navLinkActive}>
-                  Help
-                </NavLink>
-              </li>
-            </ul>
-          </nav>
-          <ul className={localStyles.actions}>
-            {loggedInUser ? (
-              <SignedInActions close={close} />
-            ) : (
-              <SignedOutActions close={close} />
-            )}
-          </ul>
+          <NavLeftMenu close={close} />
+          <NavLeftActions close={close} />
         </div>
       </div>
+      {/* <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={showMenu}
+        timeout={1000}
+        classNames={{
+          enter: localStyles.openMenu,
+          enterActive: localStyles.openMenu,
+          exit: localStyles.openMenu,
+          exitActive: localStyles.openMenu,
+        }}
+      >
+        
+      </CSSTransition> */}
     </div>
   );
 };
 
 NavLeftCollapse.propTypes = {
   close: PropTypes.func.isRequired,
+  showMenu: PropTypes.bool.isRequired,
 };
 
 export default NavLeftCollapse;
+
+{
+  /* <button type="button" onClick={() => setShowThing((prev) => !prev)}>
+Toggle
+</button> */
+}
+
+{
+  /* <CSSTransition
+nodeRef={nodeRef}
+mountOnEnter
+unmountOnExit
+in={showThing}
+timeout={500}
+classNames={{
+  enter: '',
+  enterActive: localStyles.openMenu,
+  exit: '',
+  exitActive: 'ModalClosed',
+}}
+>
+<div ref={nodeRef} className={localStyles.wrapper}>
+  <h1>A Modal</h1>
+</div>
+</CSSTransition> */
+}

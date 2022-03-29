@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -11,7 +11,6 @@ import SignedInInfo from '../SignedInInfo/SignedInInfo';
 import Logo from '../Logo/Logo';
 
 import NavLeftActions from './NavLeftActions';
-import SignedOutActions from './SignedOutActions';
 import NavLeftMenu from './NavLeftMenu';
 
 const NavLeftCollapse = ({ showMenu, close }) => {
@@ -19,13 +18,19 @@ const NavLeftCollapse = ({ showMenu, close }) => {
   const focusRef = useRef();
   const nodeRef = useRef();
 
+  const [showThing, setShowThing] = useState(false);
+
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    if (focusRef?.current) focusRef.current.focus();
+    if (showMenu) {
+      document.body.style.overflow = 'hidden';
+      if (focusRef?.current) focusRef.current.focus();
+    }
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, []);
+  }, [showMenu]);
+
+  if (!showMenu) return null;
 
   const overlayClickHandler = (e) => {
     if (e.target === e.currentTarget) close();
@@ -39,7 +44,7 @@ const NavLeftCollapse = ({ showMenu, close }) => {
     if (e.key === 'Escape') close();
   };
 
-  if (!showMenu) return null;
+  const toggle = () => setShowThing((prev) => !prev);
 
   return (
     <div
@@ -48,26 +53,72 @@ const NavLeftCollapse = ({ showMenu, close }) => {
       className={localStyles.overlay}
       aria-hidden="true"
     >
-      <div tabIndex={-1} className={localStyles.wrapper}>
-        <div className={localStyles.container}>
-          <div className={localStyles.header}>
-            <Logo onClick={close} />
-            <button
-              ref={focusRef}
-              type="button"
-              onClick={close}
-              className={localStyles.close}
-            >
-              &times;
-            </button>
+      <button type="button" onClick={toggle}>
+        Toggle
+      </button>
+      <CSSTransition
+        nodeRef={focusRef}
+        mountOnEnter
+        unmountOnExit
+        in={showThing}
+        timeout={1000}
+        classNames={{
+          enter: localStyles.enter,
+          enterActive: localStyles.enterActive,
+          exit: '',
+          exitActive: 'ModalClosed',
+        }}
+      >
+        <div tabIndex={-1} ref={focusRef} className={localStyles.wrapper}>
+          <div className={localStyles.container}>
+            <div className={localStyles.header}>
+              <Logo onClick={close} />
+              <button
+                type="button"
+                onClick={close}
+                className={localStyles.close}
+              >
+                &times;
+              </button>
+            </div>
+            <SignedInInfo className={localStyles['signed-in-info']} />
+            <NavLeftMenu close={close} />
+            <NavLeftActions close={close} />
           </div>
-
-          <SignedInInfo className={localStyles['signed-in-info']} />
-
-          <NavLeftMenu close={close} />
-          <NavLeftActions close={close} />
         </div>
-      </div>
+      </CSSTransition>
+      {/* <CSSTransition
+        nodeRef={nodeRef}
+        mountOnEnter
+        unmountOnExit
+        in={showMenu}
+        timeout={5000}
+        classNames={{
+          enter: localStyles.openMenu,
+          enterActive: localStyles.openMenu,
+          exit: localStyles.openMenu,
+          exitActive: localStyles.openMenu,
+        }}
+      >
+        <div tabIndex={-1} ref={nodeRef} className={localStyles.wrapper}>
+          <div className={localStyles.container}>
+            <div className={localStyles.header}>
+              <Logo onClick={close} />
+              <button
+                type="button"
+                onClick={close}
+                className={localStyles.close}
+              >
+                &times;
+              </button>
+            </div>
+            <SignedInInfo className={localStyles['signed-in-info']} />
+            <NavLeftMenu close={close} />
+            <NavLeftActions close={close} />
+          </div>
+        </div>
+      </CSSTransition> */}
+
       {/* <CSSTransition
         mountOnEnter
         unmountOnExit

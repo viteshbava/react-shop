@@ -58,6 +58,13 @@ Alert.propTypes = {
     message: PropTypes.string,
   }).isRequired,
   onClose: PropTypes.func.isRequired,
+  nodeRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
+};
+Alert.defaultProps = {
+  nodeRef: null,
 };
 
 export default Alert;

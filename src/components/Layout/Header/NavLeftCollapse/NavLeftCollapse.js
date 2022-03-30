@@ -16,12 +16,12 @@ const NavLeftCollapse = ({ showMenu, close }) => {
 
   useEffect(() => {
     if (showMenu) {
+      // remove scroll bar from body
       document.body.style.overflow = 'hidden';
+      // focus on the menu so we can close it and tab through its contents
       if (focusRef?.current) focusRef.current.focus();
     }
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
+    // NOTE: instead of a return statement here to add scroll bar back to body, we have it on the onExited prop in the CSSTransition below
   }, [showMenu]);
 
   const overlayClickHandler = (e) => {
@@ -44,6 +44,9 @@ const NavLeftCollapse = ({ showMenu, close }) => {
         enterActive: localStyles.enterActive,
         exit: '',
         exitActive: localStyles.exitActive,
+      }}
+      onExited={() => {
+        document.body.style.overflow = 'auto';
       }}
     >
       <div

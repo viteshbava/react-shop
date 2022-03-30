@@ -64,7 +64,6 @@ const CartItem = ({ product }) => {
             label="Quantity"
             id="quantity"
             min={1}
-            max={10}
             value={quantity}
             onUpdate={qtyUpdateHandler}
           />

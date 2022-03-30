@@ -8,3 +8,21 @@
   padding: 0 1rem;
   transform: translateX(-50%);
 }
+
+.enter {
+  opacity: 0;
+}
+
+.enterActive {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.exit {
+  opacity: 1;
+}
+
+.exitActive {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}

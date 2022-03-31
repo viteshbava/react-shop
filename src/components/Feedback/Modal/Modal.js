@@ -6,12 +6,13 @@ import ModalOverlay from './ModalOverlay';
 import Card from '../../UI/Card/Card';
 import styles from './Modal.module.css';
 import Button from '../../UI/Button/Button';
+import useAnimate from '../../../hooks/use-animate';
 
 /** ************************************************* 
 Utility functions below used in this Modal component
 *************************************************** */
 
-const _getModalContent = (modalProps, closeModal) => {
+const _getModalContent = (modalProps, closeModal, animateRef, animateStyle) => {
   const {
     type,
     variant = 'default',
@@ -105,9 +106,9 @@ const _getModalContent = (modalProps, closeModal) => {
   }
 
   let cardClasses = styles.wrapper;
-  cardClasses += ` ${styles[`wrapper--${color}`]}`;
+  cardClasses += ` ${styles[`wrapper--${color}`]} ${animateStyle}`;
   return (
-    <Card className={cardClasses}>
+    <Card nodeRef={animateRef} className={cardClasses}>
       <button
         type="button"
         onClick={closeModal}
@@ -127,10 +128,23 @@ const _getModalContent = (modalProps, closeModal) => {
 
 const Modal = ({ modal }) => {
   const modalCtx = useContext(ModalContext);
-  const closeModal = () => modalCtx.hideModal();
-  const modalContent = _getModalContent(modal, closeModal);
 
-  return <ModalOverlay closeModal={closeModal}>{modalContent}</ModalOverlay>;
+  const { animateRef, animateThenClose, animateStyle } = useAnimate({
+    onClose: () => modalCtx.hideModal(),
+    enterInProgress: styles.enterInProgress,
+    exitInProgress: styles.exitInProgress,
+  });
+
+  const modalContent = _getModalContent(
+    modal,
+    animateThenClose,
+    animateRef,
+    animateStyle
+  );
+
+  return (
+    <ModalOverlay closeModal={animateThenClose}>{modalContent}</ModalOverlay>
+  );
 };
 
 Modal.propTypes = {

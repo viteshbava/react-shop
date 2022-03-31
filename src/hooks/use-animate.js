@@ -17,7 +17,7 @@ const useAnimate = ({
   useEffect(() => {
     setAnimateStyle(enterInProgress);
     const finishOpening = () => {
-      setAnimateStyle(null);
+      setAnimateStyle('');
       animateRef.current.removeEventListener('animationend', finishOpening);
     };
     animateRef.current.addEventListener('animationend', finishOpening);

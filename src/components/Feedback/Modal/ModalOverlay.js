@@ -4,33 +4,29 @@ import styles from './ModalOverlay.module.css';
 import useAnimate from '../../../hooks/use-animate';
 
 const ModalOverlay = ({ closeModal, children }) => {
-  // const modalRef = useRef();
-
-  const {
-    animateRef: modalRef,
-    animateThenClose,
-    animateStyle,
-  } = useAnimate({
+  const { animateRef, animateThenClose, animateStyle } = useAnimate({
     onClose: () => closeModal(),
-    exitInProgress: styles.exitInProgress,
-    enterInProgress: styles.enterInProgress,
     enterStart: styles.enterStart,
+    enterInProgress: styles.enterInProgress,
+    exitInProgress: styles.exitInProgress,
   });
 
   useEffect(() => {
     document.body.classList.add(styles['body-disable-scroll']);
-    modalRef.current.focus();
+    animateRef.current.focus();
     return () => {
       document.body.classList.remove(styles['body-disable-scroll']);
     };
-  }, [modalRef]);
+  }, [animateRef]);
 
   const overlayClickHandler = (e) => {
+    console.log('Overlay clicked!');
     if (!animateThenClose) return;
     if (e.target === e.currentTarget) animateThenClose();
   };
 
   const keyDownHandler = (e) => {
+    console.log('Overlay escape pressed!');
     if (!closeModal) return;
     if (e.key === 'Escape') animateThenClose();
   };
@@ -46,7 +42,7 @@ const ModalOverlay = ({ closeModal, children }) => {
       aria-hidden="true"
       role="dialog"
       aria-modal="true"
-      ref={modalRef}
+      ref={animateRef}
     >
       <div className={styles.container}>{children}</div>
     </div>,

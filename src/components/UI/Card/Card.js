@@ -1,9 +1,13 @@
 import PropTypes from 'prop-types';
 import styles from './Card.module.css';
 
-const Card = ({ className, children }) => {
+const Card = ({ nodeRef, className, children }) => {
   const classes = `${styles.card}${className ? ` ${className}` : ''}`;
-  return <div className={classes}>{children}</div>;
+  return (
+    <div ref={nodeRef} className={classes}>
+      {children}
+    </div>
+  );
 };
 
 Card.propTypes = {

@@ -11,10 +11,9 @@
 .container {
   position: fixed;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   margin: 4rem auto;
   z-index: 3000;
-  /* animation: slide-down 300ms ease-out forwards; */
 }
 
 .body-disable-scroll {
@@ -26,14 +25,14 @@
 }
 
 .enterInProgress {
-  animation: fade-in 0.2s ease-in forwards;
+  animation: overlay-fade-in 0.2s ease-in forwards;
 }
 
 .exitInProgress {
-  animation: fade-in reverse 0.2s ease-in forwards;
+  animation: overlay-fade-in reverse 0.2s ease-in forwards;
 }
 
-@keyframes fade-in {
+@keyframes overlay-fade-in {
   from {
     opacity: 0;
   }
@@ -41,13 +40,3 @@
     opacity: 1;
   }
 }
-
-/* @keyframes slide-down {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -2rem);
-  }
-  to {
-    opacity: 1;
-  }
-} */

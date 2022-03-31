@@ -1,17 +1,20 @@
-.enter {
+.enterStart {
   opacity: 0;
 }
 
-.enterActive {
-  opacity: 1;
-  transition: opacity 0.3s ease-in-out;
+.enterInProgress {
+  animation: fade-in 0.2s ease-in forwards;
 }
 
-.exit {
-  opacity: 1;
+.exitInProgress {
+  animation: fade-in reverse 0.2s ease-in forwards;
 }
 
-.exitActive {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

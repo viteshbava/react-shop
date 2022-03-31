@@ -34,18 +34,15 @@ import { uiActions } from '../../../redux/slices/ui-slice';
 //   );
 // };
 
-const FloatingAlerts = ({ alerts }) => {
-  console.log('Alerts received FloatingAlerts: ', alerts);
-  return ReactDOM.createPortal(
+const FloatingAlerts = ({ alerts }) =>
+  ReactDOM.createPortal(
     <div className={styles.wrapper}>
-      {alerts.map((alert) => {
-        console.log('Alert being passed to FloatingAlert: ', alert);
-        return <FloatingAlert key={alert.id} alert={alert} />;
-      })}
+      {alerts.map((alert) => (
+        <FloatingAlert key={alert.id} alert={alert} />
+      ))}
     </div>,
     document.querySelector('#alert-root')
   );
-};
 
 // const FloatingAlerts = ({ alerts }) => {
 //   console.log('Alerts received FloatingAlerts: ', alerts);

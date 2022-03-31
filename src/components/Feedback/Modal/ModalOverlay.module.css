@@ -14,14 +14,35 @@
   transform: translate(-50%, 0);
   margin: 4rem auto;
   z-index: 3000;
-  animation: slide-down 300ms ease-out forwards;
+  /* animation: slide-down 300ms ease-out forwards; */
 }
 
 .body-disable-scroll {
   overflow: hidden;
 }
 
-@keyframes slide-down {
+.enterStart {
+  opacity: 0;
+}
+
+.enterInProgress {
+  animation: fade-in 0.2s ease-in forwards;
+}
+
+.exitInProgress {
+  animation: fade-in reverse 0.2s ease-in forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* @keyframes slide-down {
   from {
     opacity: 0;
     transform: translate(-50%, -2rem);
@@ -29,4 +50,4 @@
   to {
     opacity: 1;
   }
-}
+} */

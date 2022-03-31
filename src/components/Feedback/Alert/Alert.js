@@ -9,11 +9,10 @@ const ALERT_TYPE = {
   WARNING: 'warning',
 };
 
-const Alert = ({ alert, onClose }) => {
+const Alert = ({ nodeRef, alert, onClose, className }) => {
   const { type, title, message } = alert;
-  const containerClasses = `${styles.container} ${
-    styles[`container--${type}`]
-  }`;
+  let containerClasses = `${styles.container} ${styles[`container--${type}`]}`;
+  containerClasses += className ? ` ${className}` : '';
 
   let icon;
   switch (type) {
@@ -35,7 +34,11 @@ const Alert = ({ alert, onClose }) => {
   }
 
   return (
-    <div className={containerClasses}>
+    <div
+      ref={nodeRef}
+      id={`${className}${alert.id}`}
+      className={containerClasses}
+    >
       <Icon className={styles.icon} icon={icon} />
       <div className={styles.content}>
         <p className={styles.content__title}>

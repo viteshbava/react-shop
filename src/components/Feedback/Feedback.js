@@ -16,7 +16,7 @@ const Feedback = () => {
     <>
       {modal.show && modal.props && <Modal modal={modal.props} />}
       {isLoading && <FullScreenLoader />}
-      <FloatingAlerts alerts={alerts} />
+      {alerts.length > 0 && <FloatingAlerts alerts={alerts} />}
     </>
   );
 };

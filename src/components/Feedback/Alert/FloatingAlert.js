@@ -5,19 +5,18 @@ import { CSSTransition } from 'react-transition-group';
 import Alert from './Alert';
 import { uiActions } from '../../../redux/slices/ui-slice';
 import styles from './FloatingAlert.module.css';
-import useAnimate from '../../../hooks/use-animate';
 
 const FloatingAlert = ({ alert }) => {
   const dispatch = useDispatch();
   // const nodeRef = useRef();
   // const [animating, setAnimating] = useState(null);
 
-  const { animateRef, animateThenClose, animateStyle } = useAnimate({
-    onClose: () => dispatch(uiActions.removeAlert(alert.id)),
-    exitInProgress: styles.exitInProgress,
-    enterInProgress: styles.enterInProgress,
-    enterStart: styles.enterStart,
-  });
+  // const { animateRef, animateThenClose, animateStyle } = useAnimate({
+  //   onClose: () => dispatch(uiActions.removeAlert(alert.id)),
+  //   exitInProgress: styles.exitInProgress,
+  //   enterInProgress: styles.enterInProgress,
+  //   enterStart: styles.enterStart,
+  // });
 
   // const closeAlert = useCallback(() => {
   //   setAnimating(styles.closeAlert);

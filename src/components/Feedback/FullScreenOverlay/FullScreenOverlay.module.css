@@ -20,19 +20,16 @@
   overflow: hidden;
 }
 
-.enterStart {
-  opacity: 0;
+.enter-animate {
+  animation: fade-in 0.2s ease-in forwards;
 }
 
-.enterInProgress {
-  animation: overlay-fade-in 0.2s ease-in forwards;
+.exit-animate {
+  animation: fade-in reverse 0.2s ease-in forwards;
+  top: 300px;
 }
 
-.exitInProgress {
-  animation: overlay-fade-in reverse 0.9s ease-in forwards;
-}
-
-@keyframes overlay-fade-in {
+@keyframes fade-in {
   from {
     opacity: 0;
   }

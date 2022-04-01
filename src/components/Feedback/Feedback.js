@@ -8,15 +8,16 @@ import FullScreenLoader from './FullScreenLoader/FullScreenLoader';
 import Modal from './Modal/Modal';
 
 const Feedback = () => {
-  const isLoading = useSelector((state) => state.ui.loading);
   const { alerts } = useSelector((state) => state.ui.alerts);
-
   const modal = useContext(ModalContext);
+
+  console.log('Rendering Feedback...');
+
   return (
     <>
+      <FullScreenLoader />
       {modal.show && modal.props && <Modal modal={modal.props} />}
-      {isLoading && <FullScreenLoader />}
-      {alerts.length > 0 && <FloatingAlerts alerts={alerts} />}
+      {/* {alerts.length > 0 && <FloatingAlerts alerts={alerts} />} */}
     </>
   );
 };

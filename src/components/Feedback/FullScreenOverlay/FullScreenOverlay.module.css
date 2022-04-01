@@ -26,7 +26,6 @@
 
 .exit-animate {
   animation: fade-in reverse 0.2s ease-in forwards;
-  top: 300px;
 }
 
 @keyframes fade-in {

@@ -2,21 +2,20 @@ import { useSelector } from 'react-redux';
 import styles from './FullScreenLoader.module.css';
 import FullScreenOverlay from '../FullScreenOverlay/FullScreenOverlay';
 import Spinner from '../../UI/Spinner/Spinner';
-import useAnimate from '../../../hooks/use-animate';
+import useAnimateEnter from '../../../hooks/use-animateEnter';
+import useAnimateExit from '../../../hooks/use-animateExit';
 
 const FullScreenLoader = () => {
   console.log('Start of Parent');
   const isLoading = useSelector((state) => state.ui.loading);
-  console.log('isLoading: ', isLoading);
-  const { shouldRender, isEntering, isExiting } = useAnimate({
+  const { isEntering } = useAnimateEnter({
     isMounted: isLoading,
     enterTime: 200,
+  });
+  const { isExiting, shouldRender } = useAnimateExit({
+    isMounted: isLoading,
     exitTime: 200,
   });
-
-  console.log('shouldRender: ', shouldRender);
-  console.log('isEntering: ', isEntering);
-  console.log('isExiting: ', isExiting);
 
   if (!shouldRender) {
     console.log('End of Parent: rending rull...');

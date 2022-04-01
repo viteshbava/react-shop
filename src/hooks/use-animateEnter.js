@@ -1,23 +1,26 @@
 import { useState, useEffect } from 'react';
 
 const useAnimateEnter = ({ isMounted, enterTime = 0 }) => {
-  const [enterStarted, setEnterStarted] = useState(false);
   const [enterDone, setEnterDone] = useState(false);
+  const [isEntering, setIsEntering] = useState(false);
 
   useEffect(() => {
     let enterTimeoutId;
 
-    if (isMounted && !enterStarted && !enterDone) {
-      setEnterStarted(true);
+    if (isMounted && !enterDone) {
+      setIsEntering(true);
       enterTimeoutId = setTimeout(() => {
+        setIsEntering(false);
         setEnterDone(true);
       }, enterTime);
     }
 
-    return () => clearTimeout(enterTimeoutId);
-  }, [enterTime, isMounted, enterStarted, enterDone]);
+    if (!isMounted) setEnterDone(false);
 
-  return { isEntering: enterStarted && !enterDone };
+    return () => clearTimeout(enterTimeoutId);
+  }, [enterTime, isMounted, enterDone]);
+
+  return { isEntering };
 };
 
 export default useAnimateEnter;

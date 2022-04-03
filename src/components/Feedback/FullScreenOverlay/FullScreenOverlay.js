@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import styles from './FullScreenOverlay.module.css';
 
 const FullScreenOverlay = ({ entering, exiting, onClose, children }) => {
-  console.log('Start of Child');
   const nodeRef = useRef();
 
   useEffect(() => {
@@ -24,15 +23,10 @@ const FullScreenOverlay = ({ entering, exiting, onClose, children }) => {
     if (e.key === 'Escape') onClose();
   };
 
-  console.log('Is the component undergoing entering?? ', entering);
-  console.log('Is the component undergoing exiting?? ', exiting);
-
   let overlayClasses = styles.wrapper;
   if (entering) overlayClasses += ` ${styles['enter-animate']}`;
   if (exiting) overlayClasses += ` ${styles['exit-animate']}`;
 
-  console.log(overlayClasses);
-  console.log('End of Child: Rendering it now...');
   return ReactDOM.createPortal(
     <div
       tabIndex={-1}

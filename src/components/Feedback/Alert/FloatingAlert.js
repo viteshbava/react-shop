@@ -6,80 +6,44 @@ import Alert from './Alert';
 import { uiActions } from '../../../redux/slices/ui-slice';
 import styles from './FloatingAlert.module.css';
 
+import useAnimateEnter from '../../../hooks/use-animateEnter';
+import useAnimateExit from '../../../hooks/use-animateExit';
+
 const FloatingAlert = ({ alert }) => {
   const dispatch = useDispatch();
-  // const nodeRef = useRef();
-  // const [animating, setAnimating] = useState(null);
-
-  // const { animateRef, animateThenClose, animateStyle } = useAnimate({
-  //   onClose: () => dispatch(uiActions.removeAlert(alert.id)),
-  //   exitInProgress: styles.exitInProgress,
-  //   enterInProgress: styles.enterInProgress,
-  //   enterStart: styles.enterStart,
-  // });
-
-  // const closeAlert = useCallback(() => {
-  //   setAnimating(styles.closeAlert);
-  //   nodeRef.current.onanimationend = () =>
-  //     dispatch(uiActions.removeAlert(alert.id));
-  // }, [alert.id, dispatch]);
-
-  // useEffect(() => {
-  //   setAnimating(styles.openAlert);
-  //   const finishOpening = () => {
-  //     setAnimating(null);
-  //     nodeRef.current.removeEventListener('animationend', finishOpening);
-  //   };
-  //   nodeRef.current.addEventListener('animationend', finishOpening);
-  // }, []);
+  const [isExiting, setIsExiting] = useState(false);
+  const [isEntering, setIsEntering] = useState(true);
 
   useEffect(() => {
-    const timeoutId = setTimeout(animateThenClose, 4000);
+    let timeoutId;
+    if (isEntering) {
+      timeoutId = setTimeout(() => setIsEntering(false), 500);
+    }
     return () => clearTimeout(timeoutId);
-  }, [animateThenClose]);
+  }, [isEntering]);
+
+  useEffect(() => {
+    let timeoutId;
+    if (isExiting) {
+      timeoutId = setTimeout(
+        () => dispatch(uiActions.removeAlert(alert.id)),
+        500
+      );
+    }
+    return () => clearTimeout(timeoutId);
+  }, [isExiting, alert.id, dispatch]);
+
+  let animateStyle = '';
+  if (isEntering) animateStyle = styles['enter-animate'];
+  if (isExiting) animateStyle = styles['exit-animate'];
+
+  const onClickHandler = () => {
+    setIsExiting(true);
+  };
 
   return (
-    <Alert
-      nodeRef={animateRef}
-      alert={alert}
-      onClose={animateThenClose}
-      className={animateStyle}
-    />
-    // <CSSTransition
-    //   nodeRef={nodeRef}
-    //   mountOnEnter
-    //   unmountOnExit
-    //   in={!!alert}
-    //   timeout={300}
-    //   classNames={{
-    //     enter: styles.enter,
-    //     enterActive: styles.enterActive,
-    //     exit: styles.exit,
-    //     exitActive: styles.exitActive,
-    //   }}
-    // >
-    //   <button ref={nodeRef} type="button">
-    //     {alert.title}
-    //   </button>
-    //   {/* <Alert nodeRef={nodeRef} alert={alert} onClose={closeAlert} /> */}
-    // </CSSTransition>
+    <Alert alert={alert} onClose={onClickHandler} className={animateStyle} />
   );
-
-  // return (
-  //   <CSSTransition
-  //     nodeRef={nodeRef}
-  //     timeout={300}
-  //     classNames={{
-  //       enter: styles.enter,
-  //       enterActive: styles.enterActive,
-  //       exit: styles.exit,
-  //       exitActive: styles.exitActive,
-  //     }}
-  //   >
-  //     <Alert nodeRef={nodeRef} alert={alert} onClose={closeAlert} />
-  //   </CSSTransition>
-  //   // <Alert nodeRef={nodeRef} alert={alert} onClose={closeAlert} />
-  // );
 };
 
 FloatingAlert.propTypes = {

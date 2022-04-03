@@ -1,13 +1,9 @@
-.enterStart {
-  opacity: 0;
+.enter-animate {
+  animation: fade-in 0.5s ease-in forwards;
 }
 
-.enterInProgress {
-  animation: fade-in 0.2s ease-in forwards;
-}
-
-.exitInProgress {
-  animation: fade-in reverse 0.2s ease-in forwards;
+.exit-animate {
+  animation: fade-in reverse 0.5s ease-in forwards;
 }
 
 @keyframes fade-in {

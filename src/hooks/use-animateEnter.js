@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useAnimateEnter = ({ isMounted, enterTime = 0 }) => {
+const useAnimateEnter = ({ isMounted = true, enterTime = 0 }) => {
   const [enterDone, setEnterDone] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
 

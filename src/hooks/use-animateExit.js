@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useAnimateExit = ({ isMounted, exitTime = 0 }) => {
+const useAnimateExit = ({ isMounted = true, exitTime = 0 }) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
 

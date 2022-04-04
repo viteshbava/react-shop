@@ -6,10 +6,10 @@ import Animate from '../../UI/Animate/Animate';
 const FullScreenOverlay = ({ show, onClose, children }) => {
   useEffect(() => {
     if (show) {
-      document.body.classList.add(styles['body-disable-scroll']);
+      document.body.style.overflow = 'hidden';
     }
     return () => {
-      document.body.classList.remove(styles['body-disable-scroll']);
+      document.body.style.overflow = 'auto';
     };
   }, [show]);
 
@@ -26,9 +26,10 @@ const FullScreenOverlay = ({ show, onClose, children }) => {
   return ReactDOM.createPortal(
     <Animate
       isMounted={show}
-      enterTime={150}
-      exitTime={150}
+      enterTime={200}
+      exitTime={200}
       className={styles.wrapper}
+      type="fade"
     >
       <div
         tabIndex={-1}
@@ -38,7 +39,7 @@ const FullScreenOverlay = ({ show, onClose, children }) => {
         role="dialog"
         aria-modal="true"
       >
-        <div className={styles.container}>{children}</div>
+        {children && <div className={styles.container}>{children}</div>}
       </div>
     </Animate>,
     document.querySelector('#modal-root')

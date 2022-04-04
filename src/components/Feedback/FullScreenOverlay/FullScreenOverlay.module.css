@@ -16,10 +16,6 @@
   z-index: 3000;
 }
 
-.body-disable-scroll {
-  overflow: hidden;
-}
-
 .enter-animate {
   animation: fade-in 0.15s ease-in forwards;
 }

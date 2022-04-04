@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 import PropTypes from 'prop-types';
-import { CSSTransition } from 'react-transition-group';
 import localStyles from './NavLeftCollapse.module.css';
 
 import SignedInInfo from '../SignedInInfo/SignedInInfo';
@@ -37,8 +36,9 @@ const NavLeftCollapse = ({ showMenu, close }) => {
       <Animate
         isMounted={showMenu}
         enterTime={200}
-        exitTime={300}
+        exitTime={200}
         className={localStyles.overlay}
+        type="fade"
       >
         <div onClick={overlayClickHandler} aria-hidden="true" />
       </Animate>

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './FullScreenLoader.module.css';
 import FullScreenOverlay from '../FullScreenOverlay/FullScreenOverlay';
@@ -15,6 +16,13 @@ const FullScreenLoader = () => {
     isMounted: isLoading,
     exitTime: 150,
   });
+
+  useEffect(() => {
+    if (!shouldRender && !isLoading) {
+      return null;
+    }
+    return () => {};
+  }, [shouldRender, isLoading]);
 
   if (!shouldRender) return null;
 

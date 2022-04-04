@@ -1,10 +1,4 @@
-import {
-  Children,
-  isValidElement,
-  cloneElement,
-  useCallback,
-  useState,
-} from 'react';
+import { Children, isValidElement, cloneElement, useCallback } from 'react';
 import useAnimateEnter from '../../../hooks/use-animateEnter';
 import useAnimateExit from '../../../hooks/use-animateExit';
 import styles from './Animate.module.css';
@@ -17,6 +11,7 @@ const Animate = ({
   className = '',
   children,
   type = 'fade',
+  focusRef = null,
 }) => {
   const child = Children.only(children);
 
@@ -31,6 +26,7 @@ const Animate = ({
   const { isEntering } = useAnimateEnter({
     isMounted,
     enterTime,
+    focusRef,
   });
 
   const onExit = useCallback(onClose, [onClose]);
@@ -53,6 +49,7 @@ const Animate = ({
   }
 
   if (!shouldRender) return null;
+
   return cloneElement(child, { className: classes, style });
 };
 

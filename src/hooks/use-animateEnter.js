@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 
-const useAnimateEnter = ({ isMounted = true, enterTime = 0 }) => {
+const useAnimateEnter = ({
+  isMounted = true,
+  enterTime = 0,
+  focusRef = null,
+}) => {
   const [enterDone, setEnterDone] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
 
@@ -12,13 +16,14 @@ const useAnimateEnter = ({ isMounted = true, enterTime = 0 }) => {
       enterTimeoutId = setTimeout(() => {
         setIsEntering(false);
         setEnterDone(true);
+        if (focusRef?.current) focusRef.current.focus();
       }, enterTime);
     }
 
     if (!isMounted) setEnterDone(false);
 
     return () => clearTimeout(enterTimeoutId);
-  }, [enterTime, isMounted, enterDone]);
+  }, [enterTime, isMounted, enterDone, focus]);
 
   return { isEntering };
 };

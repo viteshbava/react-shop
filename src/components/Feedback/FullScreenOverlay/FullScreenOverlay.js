@@ -4,17 +4,14 @@ import styles from './FullScreenOverlay.module.css';
 import Animate from '../../UI/Animate/Animate';
 
 const FullScreenOverlay = ({ show, onClose, children }) => {
-  const nodeRef = useRef();
-
   useEffect(() => {
     if (show) {
       document.body.classList.add(styles['body-disable-scroll']);
-      if (nodeRef.current) nodeRef.current.focus();
     }
     return () => {
       document.body.classList.remove(styles['body-disable-scroll']);
     };
-  }, [nodeRef, show]);
+  }, [show]);
 
   const overlayClickHandler = (e) => {
     if (!onClose) return;
@@ -26,16 +23,11 @@ const FullScreenOverlay = ({ show, onClose, children }) => {
     if (e.key === 'Escape') onClose();
   };
 
-  let overlayClasses = styles.wrapper;
-
-  // if (entering) overlayClasses += ` ${styles['enter-animate']}`;
-  // if (exiting) overlayClasses += ` ${styles['exit-animate']}`;
-
   return ReactDOM.createPortal(
     <Animate
       isMounted={show}
-      // enterTime={150}
-      // exitTime={150}
+      enterTime={150}
+      exitTime={150}
       className={styles.wrapper}
     >
       <div
@@ -45,7 +37,6 @@ const FullScreenOverlay = ({ show, onClose, children }) => {
         aria-hidden="true"
         role="dialog"
         aria-modal="true"
-        ref={nodeRef}
       >
         <div className={styles.container}>{children}</div>
       </div>

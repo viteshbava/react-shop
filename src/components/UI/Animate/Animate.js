@@ -13,8 +13,10 @@ const Animate = ({
   isMounted,
   enterTime = 0,
   exitTime = 0,
-  onClose,
+  onClose = () => {},
+  className = '',
   children,
+  type = 'fade',
 }) => {
   const child = Children.only(children);
 
@@ -39,19 +41,19 @@ const Animate = ({
     onExit,
   });
 
-  let className = '';
+  let classes = className;
   let style;
   if (isEntering) {
-    className = styles['enter-fade'];
+    classes += ` ${styles[`enter-${type}`]}`;
     style = { animationDuration: `${enterTime / 1000}s` };
   }
   if (isExiting) {
-    className = styles['exit-fade'];
+    classes += ` ${styles[`exit-${type}`]}`;
     style = { animationDuration: `${exitTime / 1000}s` };
   }
 
   if (!shouldRender) return null;
-  return cloneElement(child, { className, style });
+  return cloneElement(child, { className: classes, style });
 };
 
 export default Animate;

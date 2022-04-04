@@ -1,14 +1,14 @@
 /* Note: animation time defined in Animate.js */
 .enter-fade {
-  animation: fade-in ease-in forwards;
+  animation: fade ease-in forwards;
 }
 
 /* Note: animation time defined in Animate.js */
 .exit-fade {
-  animation: fade-in reverse ease-in forwards;
+  animation: fade reverse ease-in forwards;
 }
 
-@keyframes fade-in {
+@keyframes fade {
   from {
     opacity: 0;
   }

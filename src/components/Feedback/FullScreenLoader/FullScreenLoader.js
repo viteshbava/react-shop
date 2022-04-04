@@ -8,26 +8,26 @@ import useAnimateExit from '../../../hooks/use-animateExit';
 
 const FullScreenLoader = () => {
   const isLoading = useSelector((state) => state.ui.loading);
-  const { isEntering } = useAnimateEnter({
-    isMounted: isLoading,
-    enterTime: 150,
-  });
-  const { isExiting, shouldRender } = useAnimateExit({
-    isMounted: isLoading,
-    exitTime: 150,
-  });
+  // const { isEntering } = useAnimateEnter({
+  //   isMounted: isLoading,
+  //   enterTime: 150,
+  // });
+  // const { isExiting, shouldRender } = useAnimateExit({
+  //   isMounted: isLoading,
+  //   exitTime: 150,
+  // });
 
-  useEffect(() => {
-    if (!shouldRender && !isLoading) {
-      return null;
-    }
-    return () => {};
-  }, [shouldRender, isLoading]);
+  // useEffect(() => {
+  //   if (!shouldRender && !isLoading) {
+  //     return null;
+  //   }
+  //   return () => {};
+  // }, [shouldRender, isLoading]);
 
-  if (!shouldRender) return null;
+  // if (!shouldRender) return null;
 
   return (
-    <FullScreenOverlay entering={isEntering} exiting={isExiting}>
+    <FullScreenOverlay show={isLoading}>
       <Spinner className={styles.main} width="7rem" thickness="1rem" />
     </FullScreenOverlay>
   );

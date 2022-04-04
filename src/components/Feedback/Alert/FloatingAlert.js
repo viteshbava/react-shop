@@ -9,45 +9,30 @@ import styles from './FloatingAlert.module.css';
 import useAnimateEnter from '../../../hooks/use-animateEnter';
 import useAnimateExit from '../../../hooks/use-animateExit';
 
-const useDelayExit = () => {
-  const [isExiting, setIsExiting] = useState(false);
-  const [exitingDone, setExitingDone] = useState(false);
-
-  useEffect(() => {
-    let timeoutId;
-    if (isExiting) {
-      timeoutId = setTimeout(() => setExitingDone(true), 500);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [isExiting]);
-
-  return { setIsExiting: () => setIsExiting(true), isExiting, exitingDone };
-};
-
 const FloatingAlert = ({ alert }) => {
   const dispatch = useDispatch();
-  const [isEntering, setIsEntering] = useState(true);
-  const { setIsExiting, isExiting, exitingDone } = useDelayExit();
+  const [show, setShow] = useState(true);
 
-  useEffect(() => {
-    let timeoutId;
-    if (isEntering) {
-      timeoutId = setTimeout(() => setIsEntering(false), 500);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [isEntering]);
+  const { isEntering } = useAnimateEnter({
+    isMounted: show,
+    enterTime: 500,
+  });
+  const { isExiting, shouldRender } = useAnimateExit({
+    isMounted: show,
+    exitTime: 500,
+  });
 
   let animateStyle = '';
   if (isEntering) animateStyle = styles['enter-animate'];
   if (isExiting) animateStyle = styles['exit-animate'];
 
-  useEffect(() => {
-    if (exitingDone) dispatch(uiActions.removeAlert(alert.id));
-  }, [exitingDone, alert.id, dispatch]);
+  const onClickHandler = () => setShow(false);
 
-  const onClickHandler = () => {
-    setIsExiting();
-  };
+  useEffect(() => {
+    if (!shouldRender && !show) {
+      dispatch(uiActions.removeAlert(alert.id));
+    }
+  }, [alert.id, dispatch, shouldRender, show]);
 
   return (
     <Alert alert={alert} onClose={onClickHandler} className={animateStyle} />

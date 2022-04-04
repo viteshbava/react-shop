@@ -9,16 +9,14 @@ const FullScreenLoader = () => {
   const isLoading = useSelector((state) => state.ui.loading);
   const { isEntering } = useAnimateEnter({
     isMounted: isLoading,
-    enterTime: 200,
+    enterTime: 150,
   });
   const { isExiting, shouldRender } = useAnimateExit({
     isMounted: isLoading,
-    exitTime: 200,
+    exitTime: 150,
   });
 
-  if (!shouldRender) {
-    return null;
-  }
+  if (!shouldRender) return null;
 
   return (
     <FullScreenOverlay entering={isEntering} exiting={isExiting}>

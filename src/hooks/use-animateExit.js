@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
 const useAnimateExit = ({ isMounted = true, exitTime = 0 }) => {
-  const [shouldRender, setShouldRender] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
 
   useEffect(() => {
     let exitTimeoutId;
@@ -20,7 +20,7 @@ const useAnimateExit = ({ isMounted = true, exitTime = 0 }) => {
     return () => clearTimeout(exitTimeoutId);
   }, [exitTime, isMounted, shouldRender]);
 
-  return { shouldRender, isExiting };
+  return { isExiting, shouldRender };
 };
 
 export default useAnimateExit;

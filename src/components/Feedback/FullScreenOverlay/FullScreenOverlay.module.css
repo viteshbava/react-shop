@@ -21,11 +21,11 @@
 }
 
 .enter-animate {
-  animation: fade-in 0.2s ease-in forwards;
+  animation: fade-in 0.15s ease-in forwards;
 }
 
 .exit-animate {
-  animation: fade-in reverse 0.2s ease-in forwards;
+  animation: fade-in reverse 0.15s ease-in forwards;
 }
 
 @keyframes fade-in {

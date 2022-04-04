@@ -24,6 +24,7 @@ const FullScreenOverlay = ({ entering, exiting, onClose, children }) => {
   };
 
   let overlayClasses = styles.wrapper;
+
   if (entering) overlayClasses += ` ${styles['enter-animate']}`;
   if (exiting) overlayClasses += ` ${styles['exit-animate']}`;
 

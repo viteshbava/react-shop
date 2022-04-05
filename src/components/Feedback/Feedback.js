@@ -5,16 +5,16 @@ import ModalContext from '../../context/modal-context';
 
 import FloatingAlerts from './Alert/FloatingAlerts';
 import FullScreenLoader from './FullScreenLoader/FullScreenLoader';
-import Modal from './Modal/Modal';
+import ModalDisplayHandler from './Modal/ModalDisplayHandler';
 
 const Feedback = () => {
   const { alerts } = useSelector((state) => state.ui.alerts);
-  const modal = useContext(ModalContext);
+  const { show: showModal } = useContext(ModalContext);
 
   return (
     <>
       <FullScreenLoader />
-      {modal.show && modal.props && <Modal modal={modal.props} />}
+      <ModalDisplayHandler />
       {alerts.length > 0 && <FloatingAlerts alerts={alerts} />}
     </>
   );

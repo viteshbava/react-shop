@@ -1,18 +1,12 @@
 import { useContext } from 'react';
-import PropTypes from 'prop-types';
-import ModalContext from '../../../context/modal-context';
-import Icon, { ICON_TYPE } from '../../UI/Icon/Icon';
-import ModalOverlay from './ModalOverlay';
-import Card from '../../UI/Card/Card';
 import styles from './Modal.module.css';
-import Button from '../../UI/Button/Button';
-import useAnimate from '../../../hooks/use-animate';
+import setModalIconAndColor from './setModalIconAndColor';
+import setModalFooter from './setModalFooter';
+import Card from '../../UI/Card/Card';
+import Icon from '../../UI/Icon/Icon';
+import ModalContext from '../../../context/modal-context';
 
-/** ************************************************* 
-Utility functions below used in this Modal component
-*************************************************** */
-
-const _getModalContent = (modalProps, closeModal, animateRef, animateStyle) => {
+const Modal = ({ modalProps, closeModal }) => {
   const {
     type,
     variant = 'default',
@@ -25,45 +19,18 @@ const _getModalContent = (modalProps, closeModal, animateRef, animateStyle) => {
     customContent,
   } = modalProps;
 
+  // If we are dealing with a custom modal, return the custom modal content supplied
   if (type === 'custom') {
     if (!customContent) {
-      console.error('customContent must be supplied for a custom modal type!');
-      return null;
+      const errorMsg =
+        'customContent must be supplied for a custom modal type!';
+      console.error(errorMsg);
+      throw new Error(errorMsg);
     }
     return customContent;
   }
 
-  const _setIconAndColor = (modalVariant) => {
-    let color;
-    let icon;
-    switch (modalVariant) {
-      case 'default':
-        color = 'primary';
-        break;
-      case 'info':
-        icon = ICON_TYPE.INFO;
-        color = 'info';
-        break;
-      case 'error':
-        icon = ICON_TYPE.ERROR;
-        color = 'error';
-        break;
-      case 'success':
-        icon = ICON_TYPE.SUCCESS;
-        color = 'success';
-        break;
-      case 'warning':
-        icon = ICON_TYPE.WARNING;
-        color = 'warning';
-        break;
-      default:
-        console.error(`Unknown modal modal supplied: ${modalVariant}`);
-        break;
-    }
-    return { color, icon };
-  };
-
-  const { icon, color } = _setIconAndColor(variant);
+  const { color, icon } = setModalIconAndColor(variant);
 
   const onCancelHandler = () => {
     closeModal();
@@ -75,40 +42,20 @@ const _getModalContent = (modalProps, closeModal, animateRef, animateStyle) => {
     if (onConfirm) onConfirm();
   };
 
-  let footer;
-  switch (type) {
-    case 'alert':
-      footer = (
-        <Button color={color} onClick={onOkayHandler}>
-          {okText}
-        </Button>
-      );
-      break;
-    case 'confirm':
-      if (!onConfirm) {
-        console.error('Confirm modal has not received a onConfirm action!');
-        return null;
-      }
-      footer = (
-        <>
-          <Button onClick={onCancelHandler} variant="outlined" color={color}>
-            {cancelText}
-          </Button>
-          <Button color={color} onClick={onOkayHandler}>
-            {okText}
-          </Button>
-        </>
-      );
-      break;
-    default:
-      console.error(`Unknown modal type: ${type}`);
-      return null;
-  }
+  const footer = setModalFooter({
+    type,
+    color,
+    onOkayHandler,
+    onConfirm,
+    onCancelHandler,
+    cancelText,
+    okText,
+  });
 
   let cardClasses = styles.wrapper;
-  cardClasses += ` ${styles[`wrapper--${color}`]} ${animateStyle}`;
+  cardClasses += ` ${styles[`wrapper--${color}`]}`;
   return (
-    <Card nodeRef={animateRef} className={cardClasses}>
+    <Card className={cardClasses}>
       <button
         type="button"
         onClick={closeModal}
@@ -124,41 +71,6 @@ const _getModalContent = (modalProps, closeModal, animateRef, animateStyle) => {
       <div className={styles.actions}>{footer}</div>
     </Card>
   );
-};
-
-const Modal = ({ modal }) => {
-  const modalCtx = useContext(ModalContext);
-
-  const { animateRef, animateThenClose, animateStyle } = useAnimate({
-    onClose: () => modalCtx.hideModal(),
-    enterInProgress: styles.enterInProgress,
-    exitInProgress: styles.exitInProgress,
-  });
-
-  const modalContent = _getModalContent(
-    modal,
-    animateThenClose,
-    animateRef,
-    animateStyle
-  );
-
-  return (
-    <ModalOverlay closeModal={animateThenClose}>{modalContent}</ModalOverlay>
-  );
-};
-
-Modal.propTypes = {
-  modal: PropTypes.shape({
-    type: PropTypes.string.isRequired,
-    variant: PropTypes.string,
-    title: PropTypes.string,
-    body: PropTypes.string,
-    cancelText: PropTypes.string,
-    okText: PropTypes.string,
-    onCancel: PropTypes.func,
-    onConfirm: PropTypes.func,
-    customContent: PropTypes.element,
-  }).isRequired,
 };
 
 export default Modal;

@@ -4,6 +4,8 @@ import styles from './FullScreenOverlay.module.css';
 import Animate from '../../UI/Animate/Animate';
 
 const FullScreenOverlay = ({ show, onClose, children }) => {
+  const focusRef = useRef();
+
   useEffect(() => {
     if (show) {
       document.body.style.overflow = 'hidden';
@@ -30,8 +32,10 @@ const FullScreenOverlay = ({ show, onClose, children }) => {
       exitTime={200}
       className={styles.wrapper}
       type="fade"
+      focusRef={focusRef}
     >
       <div
+        ref={focusRef}
         tabIndex={-1}
         onClick={overlayClickHandler}
         onKeyDown={keyDownHandler}

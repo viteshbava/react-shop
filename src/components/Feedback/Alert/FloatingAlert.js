@@ -44,6 +44,7 @@ const FloatingAlert = ({ alert }) => {
       onClose={() => dispatch(uiActions.removeAlert(alert.id))}
       enterTime={500}
       exitTime={500}
+      type="fade"
     >
       <Alert alert={alert} onClose={onClickHandler} />
     </Animate>

@@ -9,7 +9,7 @@ const ALERT_TYPE = {
   WARNING: 'warning',
 };
 
-const Alert = ({ nodeRef, alert, onClose, className }) => {
+const Alert = ({ alert, onClose, className }) => {
   const { type, title, message } = alert;
   let containerClasses = `${styles.container} ${styles[`container--${type}`]}`;
   containerClasses += className ? ` ${className}` : '';
@@ -34,11 +34,7 @@ const Alert = ({ nodeRef, alert, onClose, className }) => {
   }
 
   return (
-    <div
-      ref={nodeRef}
-      id={`${className}${alert.id}`}
-      className={containerClasses}
-    >
+    <div className={containerClasses}>
       <Icon className={styles.icon} icon={icon} />
       <div className={styles.content}>
         <p className={styles.content__title}>
@@ -61,13 +57,11 @@ Alert.propTypes = {
     message: PropTypes.string,
   }).isRequired,
   onClose: PropTypes.func.isRequired,
-  nodeRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-  ]),
+  className: PropTypes.string,
 };
+
 Alert.defaultProps = {
-  nodeRef: null,
+  className: null,
 };
 
 export default Alert;

@@ -1,5 +1,4 @@
 import { useContext, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import ModalContext from '../../../context/modal-context';
 import FullScreenOverlay from '../FullScreenOverlay/FullScreenOverlay';
 import Modal from './Modal';
@@ -22,6 +21,12 @@ const ModalDisplayHandler = () => {
     if (show && props) setModalProps(props);
   }, [show, props]);
 
+  let content;
+  if (modalProps) {
+    if (modalProps.type === 'custom') content = modalProps.customContent;
+    else content = <Modal modalProps={modalProps} closeModal={hideModal} />;
+  }
+
   return (
     <FullScreenOverlay show={show} onClose={hideModal}>
       <Animate
@@ -34,28 +39,10 @@ const ModalDisplayHandler = () => {
         }}
         type="slide-from-top"
       >
-        {modalProps?.type === 'custom' ? (
-          modalProps.customContent
-        ) : (
-          <Modal modalProps={modalProps} closeModal={hideModal} />
-        )}
+        {content}
       </Animate>
     </FullScreenOverlay>
   );
 };
-
-// ModalDisplayHandler.propTypes = {
-//   modal: PropTypes.shape({
-//     type: PropTypes.string.isRequired,
-//     variant: PropTypes.string,
-//     title: PropTypes.string,
-//     body: PropTypes.string,
-//     cancelText: PropTypes.string,
-//     okText: PropTypes.string,
-//     onCancel: PropTypes.func,
-//     onConfirm: PropTypes.func,
-//     customContent: PropTypes.element,
-//   }).isRequired,
-// };
 
 export default ModalDisplayHandler;

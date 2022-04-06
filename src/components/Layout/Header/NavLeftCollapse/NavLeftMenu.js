@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import NavAuthItem from '../NavAuthItem';
 import { useSelector } from 'react-redux';
+import NavAuthItem from '../NavAuthItem';
 import Icon, { ICON_TYPE } from '../../../UI/Icon/Icon';
 import globalStyles from '../_NavGlobal.module.css';
 import localStyles from './NavLeftMenu.module.css';
@@ -9,7 +9,6 @@ import localStyles from './NavLeftMenu.module.css';
 const NavLeftMenu = ({ close }) => {
   const cartTotalQty = useSelector((state) => state.cart.totalQuantity);
   const wishlistTotalQty = useSelector((state) => state.wishlist.totalQuantity);
-  const { user: loggedInUser } = useSelector((state) => state.auth);
 
   const navLinkActive = ({ isActive }) =>
     globalStyles.navlink +

@@ -65,6 +65,10 @@ const AddToCartSummary = ({ numItemsAdded, className }) => {
 
 AddToCartSummary.propTypes = {
   numItemsAdded: PropTypes.number.isRequired,
+  className: PropTypes.string,
+};
+AddToCartSummary.defaultProps = {
+  className: null,
 };
 
 export default AddToCartSummary;

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './Modal.module.css';
 import setModalIconAndColor from './setModalIconAndColor';
 import setModalFooter from './setModalFooter';
@@ -14,7 +15,6 @@ const Modal = ({ modalProps, closeModal, className }) => {
     okText = 'Okay',
     onCancel,
     onConfirm,
-    customContent,
   } = modalProps;
 
   const { color, icon } = setModalIconAndColor(variant);
@@ -60,6 +60,26 @@ const Modal = ({ modalProps, closeModal, className }) => {
       <div className={styles.actions}>{footer}</div>
     </Card>
   );
+};
+
+Modal.propTypes = {
+  modalProps: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    variant: PropTypes.string,
+    title: PropTypes.string,
+    body: PropTypes.string,
+    cancelText: PropTypes.string,
+    okText: PropTypes.string,
+    onCancel: PropTypes.func,
+    onConfirm: PropTypes.func,
+    customContent: PropTypes.element,
+  }).isRequired,
+  closeModal: PropTypes.func.isRequired,
+  className: PropTypes.string,
+};
+
+Modal.defaultProps = {
+  className: null,
 };
 
 export default Modal;

@@ -9,7 +9,7 @@ const ALERT_TYPE = {
   WARNING: 'warning',
 };
 
-const Alert = ({ nodeRef, alert, onClose, className, style }) => {
+const Alert = ({ nodeRef, alert, onClose, className }) => {
   const { type, title, message } = alert;
   let containerClasses = `${styles.container} ${styles[`container--${type}`]}`;
   containerClasses += className ? ` ${className}` : '';
@@ -38,7 +38,6 @@ const Alert = ({ nodeRef, alert, onClose, className, style }) => {
       ref={nodeRef}
       id={`${className}${alert.id}`}
       className={containerClasses}
-      style={style}
     >
       <Icon className={styles.icon} icon={icon} />
       <div className={styles.content}>

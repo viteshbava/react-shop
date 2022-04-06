@@ -68,7 +68,6 @@ const addToWishlist = (product) => async (dispatch) => {
         title: 'Product added to wishlist!',
       })
     );
-    console.log('Added to wishlist!');
   } catch (err) {
     dispatch(uiActions.showLoadingState(false));
 
@@ -98,7 +97,6 @@ const removeFromWishlist = (productId) => async (dispatch) => {
         title: `Product removed from wishlist!`,
       })
     );
-    console.log('Removed from wishlist!');
   } catch (err) {
     dispatch(uiActions.showLoadingState(false));
 

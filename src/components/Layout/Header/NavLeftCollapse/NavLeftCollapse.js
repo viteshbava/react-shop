@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 import PropTypes from 'prop-types';
-import localStyles from './NavLeftCollapse.module.css';
+import styles from './NavLeftCollapse.module.css';
 
 import SignedInInfo from '../SignedInInfo/SignedInInfo';
 import Logo from '../Logo/Logo';
@@ -37,17 +37,22 @@ const NavLeftCollapse = ({ showMenu, close }) => {
         isMounted={showMenu}
         enterTime={200}
         exitTime={200}
-        className={localStyles.overlay}
-        type="fade"
+        animation="fade"
       >
-        <div onClick={overlayClickHandler} aria-hidden="true" />
+        <div
+          onClick={overlayClickHandler}
+          aria-hidden="true"
+          className={styles.overlay}
+        />
       </Animate>
       <Animate
         isMounted={showMenu}
         enterTime={200}
         exitTime={200}
-        className={localStyles.wrapper}
-        type="slide-from-left"
+        animation={{
+          enter: styles['enter-animate'],
+          exit: styles['exit-animate'],
+        }}
         focusRef={focusRef}
       >
         <div
@@ -55,19 +60,16 @@ const NavLeftCollapse = ({ showMenu, close }) => {
           tabIndex={-1}
           onKeyDown={keyDownHandler}
           role="menu"
+          className={styles.wrapper}
         >
-          <div className={localStyles.container}>
-            <div className={localStyles.header}>
+          <div className={styles.container}>
+            <div className={styles.header}>
               <Logo onClick={close} />
-              <button
-                type="button"
-                onClick={close}
-                className={localStyles.close}
-              >
+              <button type="button" onClick={close} className={styles.close}>
                 &times;
               </button>
             </div>
-            <SignedInInfo className={localStyles['signed-in-info']} />
+            <SignedInInfo className={styles['signed-in-info']} />
             <NavLeftMenu close={close} />
             <NavLeftActions close={close} />
           </div>

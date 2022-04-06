@@ -1,13 +1,11 @@
-/* Fade */
+/* Default 'fade' animation */
 
-/* Note: animation time defined in Animate.js */
 .enter-fade {
-  animation: fade ease-in forwards;
+  animation: fade 0.2s ease-in forwards;
 }
 
-/* Note: animation time defined in Animate.js */
 .exit-fade {
-  animation: fade reverse ease-in forwards;
+  animation: fade 0.2s reverse ease-in forwards;
 }
 
 @keyframes fade {
@@ -19,21 +17,3 @@
   }
 }
 
-/* Slide from left */
-
-.enter-slide-from-left {
-  animation: slide-from-left ease-in forwards;
-}
-
-.exit-slide-from-left{
-  animation: slide-from-left reverse ease-in forwards ;
-}
-
-@keyframes slide-from-left {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}

@@ -30,8 +30,7 @@ const FullScreenOverlay = ({ show, onClose, children }) => {
       isMounted={show}
       enterTime={200}
       exitTime={200}
-      className={styles.wrapper}
-      type="fade"
+      animation="fade"
       focusRef={focusRef}
     >
       <div
@@ -42,6 +41,7 @@ const FullScreenOverlay = ({ show, onClose, children }) => {
         aria-hidden="true"
         role="dialog"
         aria-modal="true"
+        className={styles.wrapper}
       >
         {children && <div className={styles.container}>{children}</div>}
       </div>

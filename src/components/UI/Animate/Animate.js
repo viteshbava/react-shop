@@ -8,9 +8,8 @@ const Animate = ({
   enterTime = 0,
   exitTime = 0,
   onClose = () => {},
-  className = '',
   children,
-  type = 'fade',
+  animation = null,
   focusRef = null,
 }) => {
   const child = Children.only(children);
@@ -23,34 +22,52 @@ const Animate = ({
     throw new Error(errorMsg);
   }
 
+  let enterStyle;
+  let exitStyle;
+
+  // Verify the supplied animation if either 'fade' or an object of classes to apply when animating
+  // 'fade' is the built in 'default' animatin (styles defined in Animate.module.css)
+  if (!animation || (animation !== 'fade' && typeof animation !== 'object')) {
+    const errorMsg = `Invalid animation value supplied to Animation component: ${animation}.  Must be either "fade" or an object of css classes!`;
+    console.error(errorMsg);
+    throw new Error(errorMsg);
+  }
+
+  // set animation styles accordingly
+  if (animation === 'fade') {
+    enterStyle = styles['enter-fade'];
+    exitStyle = styles['exit-fade'];
+  }
+  if (typeof animation === 'object') {
+    enterStyle = animation.enter;
+    exitStyle = animation.exit;
+  }
+
+  // Set whether the element is 'entering'
   const { isEntering } = useAnimateEnter({
     isMounted,
     enterTime,
     focusRef,
   });
 
+  // onExit is the logic to perform (if any) upon ending of exit animation
   const onExit = useCallback(onClose, [onClose]);
 
+  // Set whether the element is 'exiting'
   const { isExiting, shouldRender } = useAnimateExit({
     isMounted,
     exitTime,
     onExit,
   });
 
-  let classes = className;
-  let style;
-  if (isEntering) {
-    classes += ` ${styles[`enter-${type}`]}`;
-    style = { animationDuration: `${enterTime / 1000}s` };
-  }
-  if (isExiting) {
-    classes += ` ${styles[`exit-${type}`]}`;
-    style = { animationDuration: `${exitTime / 1000}s` };
-  }
-
   if (!shouldRender) return null;
 
-  return cloneElement(child, { className: classes, style });
+  // Define object of classes based on animation; to be passed to child element
+  let { className } = child.props;
+  if (isEntering) className += `${className === '' ? '' : ' '}${enterStyle}`;
+  if (isExiting) className += `${className === '' ? '' : ' '}${exitStyle}`;
+
+  return cloneElement(child, { className });
 };
 
 export default Animate;

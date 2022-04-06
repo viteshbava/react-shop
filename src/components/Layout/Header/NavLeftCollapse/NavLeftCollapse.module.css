@@ -48,6 +48,27 @@
   margin-bottom: 1rem;
 }
 
+/* Animations */
+
+.enter-animate {
+  animation: slide-from-left 0.2s ease-in forwards;
+}
+
+.exit-animate {
+  animation: slide-from-left 0.2s reverse ease-in forwards ;
+}
+
+@keyframes slide-from-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Media Queries */
+
 @media (max-width: 900px) {
   .header {
     margin-top: 0.5rem;

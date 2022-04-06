@@ -1,12 +1,10 @@
-import { useContext } from 'react';
 import styles from './Modal.module.css';
 import setModalIconAndColor from './setModalIconAndColor';
 import setModalFooter from './setModalFooter';
 import Card from '../../UI/Card/Card';
 import Icon from '../../UI/Icon/Icon';
-import ModalContext from '../../../context/modal-context';
 
-const Modal = ({ modalProps, closeModal }) => {
+const Modal = ({ modalProps, closeModal, className }) => {
   const {
     type,
     variant = 'default',
@@ -18,17 +16,6 @@ const Modal = ({ modalProps, closeModal }) => {
     onConfirm,
     customContent,
   } = modalProps;
-
-  // If we are dealing with a custom modal, return the custom modal content supplied
-  if (type === 'custom') {
-    if (!customContent) {
-      const errorMsg =
-        'customContent must be supplied for a custom modal type!';
-      console.error(errorMsg);
-      throw new Error(errorMsg);
-    }
-    return customContent;
-  }
 
   const { color, icon } = setModalIconAndColor(variant);
 
@@ -54,6 +41,8 @@ const Modal = ({ modalProps, closeModal }) => {
 
   let cardClasses = styles.wrapper;
   cardClasses += ` ${styles[`wrapper--${color}`]}`;
+  if (className) cardClasses += ` ${className}`;
+
   return (
     <Card className={cardClasses}>
       <button

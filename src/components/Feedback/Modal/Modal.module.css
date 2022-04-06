@@ -72,26 +72,6 @@
   color: var(--warning-dark);
 }
 
-/* Animations */
-
-.enterInProgress {
-  animation: slide-down 0.2s ease-in forwards;
-}
-
-.exitInProgress {
-  animation: slide-down reverse 0.2s ease-in forwards;
-}
-
-@keyframes slide-down {
-  from {
-    opacity: 0;
-    transform: translateY(-2rem);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
 /* Media Queries */
 
 @media (max-width: 768px) {
@@ -108,5 +88,14 @@
     display: grid;
     grid-template-columns: 1fr;
     row-gap: 1rem;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-2rem);
+  }
+  to {
+    transform: translateY(0);
   }
 }

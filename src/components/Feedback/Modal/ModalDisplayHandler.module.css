@@ -1,0 +1,16 @@
+.enter-animate {
+  animation: slide-from-top ease-in forwards 0.2s;
+}
+
+.exit-animate {
+  animation: slide-from-top reverse ease-in forwards 0.2s;
+}
+
+@keyframes slide-from-top {
+  from {
+    transform: translateY(-3rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

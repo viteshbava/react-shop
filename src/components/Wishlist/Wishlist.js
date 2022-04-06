@@ -1,4 +1,4 @@
-import { useState, useEffect, cloneElement, useMemo } from 'react';
+import { useState, useEffect, cloneElement } from 'react';
 import { useSelector } from 'react-redux';
 import SectionHeading from '../UI/SectionHeading/SectionHeading';
 import WishlistItem from './WishlistItem';
@@ -11,7 +11,15 @@ import Animate from '../UI/Animate/Animate';
 // Purge currentChildren so it doesn't keep getting bigger... ?
 
 const AnimateList = ({ children }) => {
-  const [currentChildren, setCurrentChildren] = useState(children);
+  const [currentChildren, setCurrentChildren] = useState([]);
+
+  const currKeySet = new Set(currentChildren.map((child) => child.key));
+  const newChildren = children.filter((child) => !currKeySet.has(child.key));
+
+  useEffect(() => {
+    if (newChildren.length > 0)
+      setCurrentChildren((prev) => [...prev, ...newChildren]);
+  }, [newChildren]);
 
   console.log('AnimateList - curentChildren: ', currentChildren);
 

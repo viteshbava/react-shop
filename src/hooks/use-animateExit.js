@@ -25,12 +25,18 @@ const useAnimateExit = ({
       exitTimeoutId = setTimeout(() => {
         setShouldRender(false);
         setIsExiting(false);
-        onExit();
       }, exitTime);
     }
 
     return () => clearTimeout(exitTimeoutId);
-  }, [onExit, exitTime, isMounted, shouldRender]);
+  }, [exitTime, isMounted, shouldRender]);
+
+  // If an onExit function has been supplied, run it when exiting has finished
+  // This logic may have been moved into separate useEffect to avoid a "cannot update a component while renderin a diferent component" warning
+  useEffect(() => {
+    if (!shouldRender && !isMounted) onExit();
+    return () => {};
+  }, [onExit, shouldRender, isMounted]);
 
   return { isExiting, shouldRender };
 };

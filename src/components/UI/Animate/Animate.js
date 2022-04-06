@@ -64,6 +64,7 @@ const Animate = ({
 
   // Define object of classes based on animation; to be passed to child element
   let { className } = child.props;
+  className = !className ? '' : className;
   if (isEntering) className += `${className === '' ? '' : ' '}${enterStyle}`;
   if (isExiting) className += `${className === '' ? '' : ' '}${exitStyle}`;
 

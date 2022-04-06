@@ -5,14 +5,17 @@ import toDollars from '../../utilities/toDollars';
 import { removeFromWishlist } from '../../redux/actions/wishlist-actions';
 import styles from './WishlistItem.module.css';
 
-const WishlistItem = ({ product }) => {
+const WishlistItem = ({ product, className }) => {
   const dispatch = useDispatch();
   const { id, title, price, image } = product;
 
   const removeProductHandler = () => dispatch(removeFromWishlist(id));
 
+  let wrapperClasses = styles['item-wrapper'];
+  if (className) wrapperClasses += ` ${className}`;
+
   return (
-    <li className={styles['item-wrapper']}>
+    <li className={wrapperClasses}>
       <button
         type="button"
         onClick={removeProductHandler}

@@ -25,19 +25,12 @@ const useAnimateExit = ({
       exitTimeoutId = setTimeout(() => {
         setShouldRender(false);
         setIsExiting(false);
+        onExit();
       }, exitTime);
     }
 
     return () => clearTimeout(exitTimeoutId);
-  }, [exitTime, isMounted, shouldRender]);
-
-  // If an onExit function has been supplied, run it when exiting has finished
-  useEffect(() => {
-    if (!shouldRender && !isMounted) {
-      onExit();
-    }
-    return () => {};
-  }, [onExit, shouldRender, isMounted]);
+  }, [onExit, exitTime, isMounted, shouldRender]);
 
   return { isExiting, shouldRender };
 };

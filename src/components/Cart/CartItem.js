@@ -11,7 +11,7 @@ import {
 } from '../../redux/actions/cart-actions';
 import ModalContext from '../../context/modal-context';
 
-const CartItem = ({ product }) => {
+const CartItem = ({ product, className }) => {
   const dispatch = useDispatch();
   const { id, title, price, image, quantity } = product;
   const subTotal = price * quantity;
@@ -38,8 +38,11 @@ const CartItem = ({ product }) => {
       })
     );
 
+  let wrapperClasses = styles['item-wrapper'];
+  if (className) wrapperClasses += ` ${className}`;
+
   return (
-    <li className={styles['item-wrapper']}>
+    <li className={wrapperClasses}>
       <button
         type="button"
         onClick={removeProductHandler}

@@ -68,6 +68,8 @@ const Animate = ({
   if (isEntering) className += `${className === '' ? '' : ' '}${enterStyle}`;
   if (isExiting) className += `${className === '' ? '' : ' '}${exitStyle}`;
 
+  // NOTE: if an animation is not working, check the child can in fact receive and consume the className prop!
+
   return cloneElement(child, { className });
 };
 

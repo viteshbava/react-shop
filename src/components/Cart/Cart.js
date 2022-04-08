@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import SectionHeading from '../UI/SectionHeading/SectionHeading';
 import CartItem from './CartItem';
@@ -5,11 +6,14 @@ import CartOrderSummary from './CartOrderSummary';
 import PageLoader from '../Feedback/PageLoader/PageLoader';
 import InfoError, { INFO_ERROR_TYPE } from '../Error/InfoError';
 import styles from './Cart.module.css';
+import Animate from '../UI/Animate/Animate';
+import AnimateList from '../UI/Animate/AnimateList';
 
 const Cart = () => {
   const { isLoading, hasLoaded, error, products, totalQuantity } = useSelector(
     (state) => state.cart
   );
+  const [renderList, setRenderList] = useState(true);
 
   const getCartContent = () => {
     if (isLoading || !hasLoaded)
@@ -29,7 +33,7 @@ const Cart = () => {
         />
       );
 
-    if (!products || (products && !products.length))
+    if (!renderList && !products?.length)
       return (
         <InfoError
           type={INFO_ERROR_TYPE.INFO}
@@ -43,9 +47,13 @@ const Cart = () => {
         <SectionHeading>Cart ({totalQuantity})</SectionHeading>
         <div className={styles['grid-wrapper']}>
           <ul className={styles['item-list']}>
-            {products.map((p) => (
-              <CartItem key={p.id} product={p} />
-            ))}
+            <AnimateList unmountList={() => setRenderList(false)}>
+              {products.map((p) => (
+                <Animate key={p.id} exitTime={200} animation="fade">
+                  <CartItem product={p} />
+                </Animate>
+              ))}
+            </AnimateList>
           </ul>
           <CartOrderSummary />
         </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import SectionHeading from '../UI/SectionHeading/SectionHeading';
 import CartItem from './CartItem';
@@ -13,7 +13,12 @@ const Cart = () => {
   const { isLoading, hasLoaded, error, products, totalQuantity } = useSelector(
     (state) => state.cart
   );
-  const [renderList, setRenderList] = useState(true);
+  const [renderList, setRenderList] = useState(false);
+
+  // Upon initial render / when products change, if there are products, render them.  If no more products, keep rendering products to finish last animation.  AnimateList component will set renderList back to False accordingly.
+  useEffect(() => {
+    if (products?.length) setRenderList(true);
+  }, [products?.length]);
 
   const getCartContent = () => {
     if (isLoading || !hasLoaded)
@@ -33,7 +38,7 @@ const Cart = () => {
         />
       );
 
-    if (!renderList && !products?.length)
+    if (!renderList)
       return (
         <InfoError
           type={INFO_ERROR_TYPE.INFO}

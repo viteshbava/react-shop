@@ -10,6 +10,7 @@ const FloatingAlerts = () => {
   const { alerts } = useSelector((state) => state.ui.alerts);
   const [renderAlerts, setRenderAlerts] = useState(false);
 
+  // Upon initial render / when alerts change, if there are alerts, render them.  If no more alerts, keep rendering alerts to finish last animation.  AnimateList component will set renderList back to False accordingly.
   useEffect(() => {
     if (alerts?.length) setRenderAlerts(true);
   }, [alerts?.length]);

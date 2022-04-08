@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import SectionHeading from '../UI/SectionHeading/SectionHeading';
 import WishlistItem from './WishlistItem';
@@ -12,9 +12,12 @@ const Wishlist = () => {
   const { isLoading, hasLoaded, error, products, totalQuantity } = useSelector(
     (state) => state.wishlist
   );
-  const [renderList, setRenderList] = useState(true);
+  const [renderList, setRenderList] = useState(false);
 
-  console.log(renderList);
+  // Upon initial render / when products change, if there are products, render them.  If no more products, keep rendering products to finish last animation.  AnimateList component will set renderList back to False accordingly.
+  useEffect(() => {
+    if (products?.length) setRenderList(true);
+  }, [products?.length]);
 
   const getWishlistContent = () => {
     if (isLoading || !hasLoaded)
@@ -34,7 +37,7 @@ const Wishlist = () => {
         />
       );
 
-    if (!renderList && !products?.length) {
+    if (!renderList) {
       return (
         <InfoError
           type={INFO_ERROR_TYPE.INFO}

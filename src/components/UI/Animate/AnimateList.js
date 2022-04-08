@@ -6,7 +6,6 @@ const AnimateList = ({ children, unmountList }) => {
 
   // When all animations have finished and there are no more children left to render, call unmountList function.  This should set state in the parent component to unmount the list.
   useEffect(() => {
-    console.log(currentChildren);
     if (!currentChildren.length) unmountList();
   }, [currentChildren, currentChildren.length, unmountList]);
 

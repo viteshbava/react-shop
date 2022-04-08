@@ -6,26 +6,28 @@ import Animate from '../../UI/Animate/Animate';
 import styles from './ModalDisplayHandler.module.css';
 
 const ModalDisplayHandler = () => {
-  const { show, props, hideModal } = useContext(ModalContext);
-  const [modalProps, setModalProps] = useState(props);
+  const { show, props: modalPropsCtx, hideModal } = useContext(ModalContext);
+  const [modalProps, setModalProps] = useState(null);
 
-  // If we are dealing with a custom modal, return the custom modal content supplied
-  if (modalProps?.type === 'custom' && !modalProps?.customContent) {
+  // If we are dealing with a custom modal, check we have custom content
+  if (modalPropsCtx?.type === 'custom' && !modalPropsCtx?.customContent) {
     const errorMsg = 'customContent must be supplied for a custom modal type!';
     console.error(errorMsg);
     throw new Error(errorMsg);
   }
 
-  // If the modal is exiting, we wish to retain the props that were cleared in context state during hideModal.  Therefore we store/retain these in modalProps
+  // If the modal is exiting, we wish to retain the props that were cleared in context state during hideModal, so we can keep showing the modal while it is fading out, eventhough context state has cleared it.  Therefore we store/retain these in modalProps
   useEffect(() => {
-    if (show && props) setModalProps(props);
-  }, [show, props]);
+    if (show && modalPropsCtx) setModalProps(modalPropsCtx);
+  }, [show, modalPropsCtx]);
 
+  // If we have no modalProps to display, return nothing
+  if (!modalProps) return null;
+
+  // set content of modal using modalProps
   let content;
-  if (modalProps) {
-    if (modalProps.type === 'custom') content = modalProps.customContent;
-    else content = <Modal modalProps={modalProps} closeModal={hideModal} />;
-  }
+  if (modalProps.type === 'custom') content = modalProps.customContent;
+  else content = <Modal modalProps={modalProps} closeModal={hideModal} />;
 
   return (
     <FullScreenOverlay show={show} onClose={hideModal}>

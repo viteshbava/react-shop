@@ -6,6 +6,7 @@ import Card from '../../UI/Card/Card';
 import Icon from '../../UI/Icon/Icon';
 
 const Modal = ({ modalProps, closeModal, className }) => {
+  console.log('Rendering a modal...');
   const {
     type,
     variant = 'default',

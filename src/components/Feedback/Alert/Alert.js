@@ -9,11 +9,10 @@ const ALERT_TYPE = {
   WARNING: 'warning',
 };
 
-const Alert = ({ alert, onClose }) => {
+const Alert = ({ alert, onClose, className }) => {
   const { type, title, message } = alert;
-  const containerClasses = `${styles.container} ${
-    styles[`container--${type}`]
-  }`;
+  let containerClasses = `${styles.container} ${styles[`container--${type}`]}`;
+  containerClasses += className ? ` ${className}` : '';
 
   let icon;
   switch (type) {
@@ -58,6 +57,11 @@ Alert.propTypes = {
     message: PropTypes.string,
   }).isRequired,
   onClose: PropTypes.func.isRequired,
+  className: PropTypes.string,
+};
+
+Alert.defaultProps = {
+  className: null,
 };
 
 export default Alert;

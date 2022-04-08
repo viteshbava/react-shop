@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styles from './Header.module.css';
-import NavTopLeft from './NavTopLeft';
-import NavTopRightDesktop from './NavTopRightDesktop';
-import NavTopRightMobile from './NavTopRightMobile';
-import NavLeftCollapse from './NavLeftCollapse';
+import NavTopLeft from './NavTopLeft/NavTopLeft';
+import NavTopRightDesktop from './NavTopRight/NavTopRightDesktop';
+import NavTopRightMobile from './NavTopRight/NavTopRightMobile';
+import NavLeftCollapse from './NavLeftCollapse/NavLeftCollapse';
 
 const Header = () => {
   const [showNavLeftCollapse, setShowNavLeftCollapse] = useState(false);
@@ -16,7 +16,7 @@ const Header = () => {
         <NavTopLeft hamburgerClickHandler={toggleLeftNav} />
         <NavTopRightDesktop />
         <NavTopRightMobile />
-        {showNavLeftCollapse && <NavLeftCollapse close={toggleLeftNav} />}
+        <NavLeftCollapse showMenu={showNavLeftCollapse} close={toggleLeftNav} />
       </div>
     </header>
   );

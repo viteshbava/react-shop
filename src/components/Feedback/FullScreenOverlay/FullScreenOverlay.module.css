@@ -11,20 +11,22 @@
 .container {
   position: fixed;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%);
   margin: 4rem auto;
   z-index: 3000;
-  animation: slide-down 300ms ease-out forwards;
 }
 
-.body-disable-scroll {
-  overflow: hidden;
+.enter-animate {
+  animation: fade-in 0.15s ease-in forwards;
 }
 
-@keyframes slide-down {
+.exit-animate {
+  animation: fade-in reverse 0.15s ease-in forwards;
+}
+
+@keyframes fade-in {
   from {
     opacity: 0;
-    transform: translate(-50%, -2rem);
   }
   to {
     opacity: 1;

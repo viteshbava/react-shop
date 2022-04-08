@@ -11,7 +11,7 @@ import {
 } from '../../redux/actions/cart-actions';
 import ModalContext from '../../context/modal-context';
 
-const CartItem = ({ product }) => {
+const CartItem = ({ product, className }) => {
   const dispatch = useDispatch();
   const { id, title, price, image, quantity } = product;
   const subTotal = price * quantity;
@@ -38,8 +38,11 @@ const CartItem = ({ product }) => {
       })
     );
 
+  let wrapperClasses = styles['item-wrapper'];
+  if (className) wrapperClasses += ` ${className}`;
+
   return (
-    <li className={styles['item-wrapper']}>
+    <li className={wrapperClasses}>
       <button
         type="button"
         onClick={removeProductHandler}
@@ -64,7 +67,6 @@ const CartItem = ({ product }) => {
             label="Quantity"
             id="quantity"
             min={1}
-            max={10}
             value={quantity}
             onUpdate={qtyUpdateHandler}
           />
@@ -88,6 +90,10 @@ CartItem.propTypes = {
     image: PropTypes.string,
     quantity: PropTypes.number,
   }).isRequired,
+  className: PropTypes.string,
+};
+CartItem.defaultProps = {
+  className: null,
 };
 
 // const { id, title, price, image, quantity } = product;

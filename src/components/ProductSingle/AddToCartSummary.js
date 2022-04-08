@@ -10,7 +10,7 @@ import toDollars from '../../utilities/toDollars';
 
 import ModalContext from '../../context/modal-context';
 
-const AddToCartSummary = ({ numItemsAdded }) => {
+const AddToCartSummary = ({ numItemsAdded, className }) => {
   const { totalQuantity, totalItemPrice: cartSubtotal } = useSelector(
     (state) => state.cart
   );
@@ -26,6 +26,7 @@ const AddToCartSummary = ({ numItemsAdded }) => {
 
   let cardClasses = styles.wrapper;
   cardClasses += ` ${styles['wrapper--success']}`;
+  if (className) cardClasses += ` ${className}`;
 
   return (
     <Card className={cardClasses}>
@@ -64,6 +65,10 @@ const AddToCartSummary = ({ numItemsAdded }) => {
 
 AddToCartSummary.propTypes = {
   numItemsAdded: PropTypes.number.isRequired,
+  className: PropTypes.string,
+};
+AddToCartSummary.defaultProps = {
+  className: null,
 };
 
 export default AddToCartSummary;

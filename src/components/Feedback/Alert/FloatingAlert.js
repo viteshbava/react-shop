@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
-import { useEffect, useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Alert from './Alert';
 import { uiActions } from '../../../redux/slices/ui-slice';
 
-const FloatingAlert = ({ alert }) => {
+const FloatingAlert = ({ alert, className }) => {
   const dispatch = useDispatch();
 
   const closeAlert = useCallback(
@@ -13,17 +13,21 @@ const FloatingAlert = ({ alert }) => {
   );
 
   useEffect(() => {
-    const timeoutId = setTimeout(closeAlert, 4000);
-    return () => clearTimeout(timeoutId);
+    const autoCloseTimer = setTimeout(closeAlert, 5000);
+    return () => clearTimeout(autoCloseTimer);
   }, [closeAlert]);
 
-  return <Alert alert={alert} onClose={closeAlert} />;
+  return <Alert alert={alert} onClose={closeAlert} className={className} />;
 };
 
 FloatingAlert.propTypes = {
   alert: PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired,
+  className: PropTypes.string,
+};
+FloatingAlert.defaultProps = {
+  className: null,
 };
 
 export default FloatingAlert;

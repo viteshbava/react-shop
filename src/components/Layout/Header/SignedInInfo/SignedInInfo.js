@@ -6,12 +6,13 @@ const trimText = (text, maxLength = 21) =>
   text.length > maxLength ? `${text.substring(0, maxLength + 1)} ...` : text;
 
 const SignedInInfo = ({ className }) => {
-  const { email } = useSelector((state) => state.auth.user);
+  const { user } = useSelector((state) => state.auth);
+  if (!user) return null;
   const classes = styles.wrapper + (className ? ` ${className}` : '');
   return (
     <div className={classes}>
       <div className={styles.label}>Signed in as</div>
-      <div className={styles.username}>{trimText(email)}</div>
+      <div className={styles.username}>{trimText(user.email)}</div>
     </div>
   );
 };

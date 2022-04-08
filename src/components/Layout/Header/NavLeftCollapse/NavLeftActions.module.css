@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  margin-bottom: 1rem;
+}
+
+.wrapper li {
+  margin-top: 1rem;
+}
+
+.wrapper li > * {
+  width: 100%;
+}

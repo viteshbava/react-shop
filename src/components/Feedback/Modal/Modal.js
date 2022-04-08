@@ -1,17 +1,11 @@
-import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import ModalContext from '../../../context/modal-context';
-import Icon, { ICON_TYPE } from '../../UI/Icon/Icon';
-import ModalOverlay from './ModalOverlay';
-import Card from '../../UI/Card/Card';
 import styles from './Modal.module.css';
-import Button from '../../UI/Button/Button';
+import setModalIconAndColor from './setModalIconAndColor';
+import setModalFooter from './setModalFooter';
+import Card from '../../UI/Card/Card';
+import Icon from '../../UI/Icon/Icon';
 
-/** ************************************************* 
-Utility functions below used in this Modal component
-*************************************************** */
-
-const _getModalContent = (modalProps, closeModal) => {
+const Modal = ({ modalProps, closeModal, className }) => {
   const {
     type,
     variant = 'default',
@@ -21,48 +15,9 @@ const _getModalContent = (modalProps, closeModal) => {
     okText = 'Okay',
     onCancel,
     onConfirm,
-    customContent,
   } = modalProps;
 
-  if (type === 'custom') {
-    if (!customContent) {
-      console.error('customContent must be supplied for a custom modal type!');
-      return null;
-    }
-    return customContent;
-  }
-
-  const _setIconAndColor = (modalVariant) => {
-    let color;
-    let icon;
-    switch (modalVariant) {
-      case 'default':
-        color = 'primary';
-        break;
-      case 'info':
-        icon = ICON_TYPE.INFO;
-        color = 'info';
-        break;
-      case 'error':
-        icon = ICON_TYPE.ERROR;
-        color = 'error';
-        break;
-      case 'success':
-        icon = ICON_TYPE.SUCCESS;
-        color = 'success';
-        break;
-      case 'warning':
-        icon = ICON_TYPE.WARNING;
-        color = 'warning';
-        break;
-      default:
-        console.error(`Unknown modal modal supplied: ${modalVariant}`);
-        break;
-    }
-    return { color, icon };
-  };
-
-  const { icon, color } = _setIconAndColor(variant);
+  const { color, icon } = setModalIconAndColor(variant);
 
   const onCancelHandler = () => {
     closeModal();
@@ -74,38 +29,20 @@ const _getModalContent = (modalProps, closeModal) => {
     if (onConfirm) onConfirm();
   };
 
-  let footer;
-  switch (type) {
-    case 'alert':
-      footer = (
-        <Button color={color} onClick={onOkayHandler}>
-          {okText}
-        </Button>
-      );
-      break;
-    case 'confirm':
-      if (!onConfirm) {
-        console.error('Confirm modal has not received a onConfirm action!');
-        return null;
-      }
-      footer = (
-        <>
-          <Button onClick={onCancelHandler} variant="outlined" color={color}>
-            {cancelText}
-          </Button>
-          <Button color={color} onClick={onOkayHandler}>
-            {okText}
-          </Button>
-        </>
-      );
-      break;
-    default:
-      console.error(`Unknown modal type: ${type}`);
-      return null;
-  }
+  const footer = setModalFooter({
+    type,
+    color,
+    onOkayHandler,
+    onConfirm,
+    onCancelHandler,
+    cancelText,
+    okText,
+  });
 
   let cardClasses = styles.wrapper;
   cardClasses += ` ${styles[`wrapper--${color}`]}`;
+  if (className) cardClasses += ` ${className}`;
+
   return (
     <Card className={cardClasses}>
       <button
@@ -125,16 +62,8 @@ const _getModalContent = (modalProps, closeModal) => {
   );
 };
 
-const Modal = ({ modal }) => {
-  const modalCtx = useContext(ModalContext);
-  const closeModal = () => modalCtx.hideModal();
-  const modalContent = _getModalContent(modal, closeModal);
-
-  return <ModalOverlay closeModal={closeModal}>{modalContent}</ModalOverlay>;
-};
-
 Modal.propTypes = {
-  modal: PropTypes.shape({
+  modalProps: PropTypes.shape({
     type: PropTypes.string.isRequired,
     variant: PropTypes.string,
     title: PropTypes.string,
@@ -145,6 +74,12 @@ Modal.propTypes = {
     onConfirm: PropTypes.func,
     customContent: PropTypes.element,
   }).isRequired,
+  closeModal: PropTypes.func.isRequired,
+  className: PropTypes.string,
+};
+
+Modal.defaultProps = {
+  className: null,
 };
 
 export default Modal;

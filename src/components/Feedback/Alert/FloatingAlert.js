@@ -3,7 +3,6 @@ import { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Alert from './Alert';
 import { uiActions } from '../../../redux/slices/ui-slice';
-import Animate from '../../UI/Animate/Animate';
 
 const FloatingAlert = ({ alert, className }) => {
   const dispatch = useDispatch();
@@ -25,6 +24,10 @@ FloatingAlert.propTypes = {
   alert: PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired,
+  className: PropTypes.string,
+};
+FloatingAlert.defaultProps = {
+  className: null,
 };
 
 export default FloatingAlert;

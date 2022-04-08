@@ -46,6 +46,11 @@ WishlistItem.propTypes = {
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
   }).isRequired,
+  className: PropTypes.string,
+};
+
+WishlistItem.defaultProps = {
+  className: null,
 };
 
 export default WishlistItem;

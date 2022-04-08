@@ -90,6 +90,10 @@ CartItem.propTypes = {
     image: PropTypes.string,
     quantity: PropTypes.number,
   }).isRequired,
+  className: PropTypes.string,
+};
+CartItem.defaultProps = {
+  className: null,
 };
 
 // const { id, title, price, image, quantity } = product;

@@ -1,37 +1,24 @@
 import { useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Alert from './Alert';
 import { uiActions } from '../../../redux/slices/ui-slice';
 import Animate from '../../UI/Animate/Animate';
 
-const FloatingAlert = ({ alert }) => {
+const FloatingAlert = ({ alert, className }) => {
   const dispatch = useDispatch();
-  const [show, setShow] = useState(true);
+
+  const closeAlert = useCallback(
+    () => dispatch(uiActions.removeAlert(alert.id)),
+    [alert.id, dispatch]
+  );
 
   useEffect(() => {
-    let autoCloseTimer;
-    if (show) {
-      autoCloseTimer = setTimeout(() => setShow(false), 5000);
-    } else clearTimeout(autoCloseTimer);
+    const autoCloseTimer = setTimeout(closeAlert, 5000);
     return () => clearTimeout(autoCloseTimer);
-  }, [show]);
+  }, [closeAlert]);
 
-  const onClickHandler = () => {
-    setShow(false);
-  };
-
-  return (
-    <Animate
-      isMounted={show}
-      onClose={() => dispatch(uiActions.removeAlert(alert.id))}
-      enterTime={200}
-      exitTime={200}
-      animation="fade"
-    >
-      <Alert alert={alert} onClose={onClickHandler} />
-    </Animate>
-  );
+  return <Alert alert={alert} onClose={closeAlert} className={className} />;
 };
 
 FloatingAlert.propTypes = {

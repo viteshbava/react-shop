@@ -14,6 +14,8 @@ const Wishlist = () => {
   );
   const [renderList, setRenderList] = useState(true);
 
+  console.log(renderList);
+
   const getWishlistContent = () => {
     if (isLoading || !hasLoaded)
       return (

@@ -48,12 +48,7 @@ const Wishlist = () => {
         <ul className={styles['item-list']}>
           <AnimateList unmountList={() => setRenderList(false)}>
             {products.map((p) => (
-              <Animate
-                key={p.id}
-                enterTime={500}
-                exitTime={500}
-                animation="fade"
-              >
+              <Animate key={p.id} exitTime={200} animation="fade">
                 <WishlistItem product={p} />
               </Animate>
             ))}

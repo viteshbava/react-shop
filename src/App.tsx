@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react';
 import './App.css';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppSelector, useAppDispatch } from './redux/preTypedHooks';
 import {
   BrowserRouter as Router,
   Routes,
@@ -34,16 +34,16 @@ const HelpPage = React.lazy(() => import('./pages/HelpPage'));
 const AboutPage = React.lazy(() => import('./pages/AboutPage'));
 const WishlistPage = React.lazy(() => import('./pages/WishlistPage'));
 const SettingsPage = React.lazy(() => import('./pages/SettingsPage'));
-const AboutTextOne = React.lazy(() =>
-  import('./components/About/AboutTextOne')
+const AboutTextOne = React.lazy(
+  () => import('./components/About/AboutTextOne')
 );
-const AboutTextTwo = React.lazy(() =>
-  import('./components/About/AboutTextTwo')
+const AboutTextTwo = React.lazy(
+  () => import('./components/About/AboutTextTwo')
 );
 
 function App() {
-  const dispatch = useDispatch();
-  const { user, accessTokenReady, accessTokenTimer } = useSelector(
+  const dispatch = useAppDispatch();
+  const { user, accessTokenReady, accessTokenTimer } = useAppSelector(
     (state) => state.auth
   );
   const isLoggedIn = !!user;
@@ -159,7 +159,7 @@ function App() {
                 }
               />
               <Route path="/help/*" element={<HelpPage />} />
-              <Route exact path="/about" element={<AboutPage />}>
+              <Route path="/about" element={<AboutPage />}>
                 <Route path="about1" element={<AboutTextOne />} />
                 <Route path="about2" element={<AboutTextTwo />} />
                 <Route index element={null} />

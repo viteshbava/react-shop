@@ -6,7 +6,9 @@ import App from './App';
 import store from './redux/store';
 import { ModalContextProvider } from './context/modal-context';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
 root.render(
   <React.StrictMode>
     <Provider store={store}>

@@ -2,12 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { logout } from '../actions/auth-actions';
 import fakeStoreApi from '../../apis/fakeStoreApi_test';
 
+// interface productState
+
 const STATE_INIT = {
   products: null,
   isLoading: false,
   hasLoaded: false,
   error: null,
-  fetchController: null,
 };
 
 /** ****************************************
@@ -16,10 +17,10 @@ createAsyncThunk Actions
 
 const fetchProducts = createAsyncThunk(
   'allProducts/fetchProducts',
-  async (signal, thunkAPI) => {
+  async (signal: AbortSignal, thunkAPI) => {
     try {
       return await fakeStoreApi.getProducts(signal);
-    } catch (error) {
+    } catch (error: any) {
       return thunkAPI.rejectWithValue(error?.message || error.toString());
     }
   }
@@ -41,7 +42,6 @@ const productsSlice = createSlice({
     builder
       // FETCH PRODUCTS - PENDING
       .addCase(fetchProducts.pending, (state, action) => {
-        state.abortFetch = action.payload;
         state.isLoading = true;
       })
       // FETCH PRODUCTS - FULLFILLED

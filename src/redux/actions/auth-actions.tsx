@@ -8,9 +8,35 @@ import {
   setAccessToken,
   resetUserState,
 } from '../slices/auth-slice';
+import type { RootState } from '../store';
+import { __String } from 'typescript';
+
+interface NewUser {
+  username: string;
+  password: string;
+}
+
+interface User {
+  user: {
+    displayName?: string;
+    email: string;
+    expiresIn: string;
+    idToken: string;
+    kind?: string;
+    localId: string;
+    refreshToken: string;
+    registered?: boolean;
+  };
+  isLoading: boolean;
+  error: {
+    message: string;
+  };
+  accessTokenTimer: number;
+  accessTokenReady: boolean;
+}
 
 // Register User
-export const register = createAsyncThunk(
+export const register = createAsyncThunk<User, NewUser>(
   'auth/register',
   async (user, thunkAPI) => {
     thunkAPI.dispatch(uiActions.showLoadingState(true));
@@ -29,7 +55,7 @@ export const register = createAsyncThunk(
         })
       );
       return response;
-    } catch (error) {
+    } catch (error: any) {
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       return thunkAPI.rejectWithValue(error?.message || error.toString());
     }
@@ -39,7 +65,10 @@ export const register = createAsyncThunk(
 // Login user
 export const login = createAsyncThunk(
   'auth/login',
-  async ({ user, onSuccess }, thunkAPI) => {
+  async (
+    { user, onSuccess }: { user: NewUser; onSuccess: () => void },
+    thunkAPI
+  ) => {
     thunkAPI.dispatch(uiActions.showLoadingState(true));
     try {
       const response = await authServerApi.login({
@@ -57,7 +86,7 @@ export const login = createAsyncThunk(
       );
       if (onSuccess) onSuccess();
       return response;
-    } catch (error) {
+    } catch (error: any) {
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       return thunkAPI.rejectWithValue(error?.message || error.toString());
     }
@@ -65,7 +94,11 @@ export const login = createAsyncThunk(
 );
 
 // Logout user
-export const logout = createAsyncThunk(
+export const logout = createAsyncThunk<
+  {},
+  { onSuccess: () => void; onError: () => void },
+  { state: RootState }
+>(
   'auth/logout',
   async ({ onSuccess = () => {}, onError = () => {} }, thunkAPI) => {
     thunkAPI.dispatch(uiActions.showLoadingState(true));
@@ -80,11 +113,11 @@ export const logout = createAsyncThunk(
         })
       );
       const { accessTokenTimer } = thunkAPI.getState().auth;
-      clearTimeout(accessTokenTimer);
+      clearTimeout(accessTokenTimer || undefined);
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       onSuccess();
-      return thunkAPI.fulfillWithValue();
-    } catch (error) {
+      return thunkAPI.fulfillWithValue(null);
+    } catch (error: any) {
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       onError();
       return thunkAPI.rejectWithValue(error?.message || error.toString());
@@ -93,45 +126,51 @@ export const logout = createAsyncThunk(
 );
 
 // Refresh access token
-export const startRefreshTokenCycle = createAsyncThunk(
-  'auth/startRefreshTokenCycle',
-  async ({ immediately }, thunkAPI) => {
-    // Use a refresh interval that is a percentage shorter than the actual interval to ensure the token is obtained in time
-    const _convertExpiresInToInterval = (expiresIn) => expiresIn * 1000 * 0.6;
-    const _refreshAccessToken = async () => {
-      try {
-        const { refreshToken } = thunkAPI.getState().auth.user;
-        const response = await authServerApi.refreshAccessToken(refreshToken);
-        const { expires_in: expiresIn, id_token: idToken } = response;
-        const interval = _convertExpiresInToInterval(expiresIn);
-        const timerId = setTimeout(() => _refreshAccessToken(), interval);
-        thunkAPI.dispatch(setAccessToken({ expiresIn, idToken, timerId }));
-      } catch (error) {
-        localStorage.removeItem('user');
-        thunkAPI.dispatch(resetUserState());
-        // if immediately is true, it means we have come from starting the app (e.g. refreshing the page), therefore no real need to show alert warning.  Alert warning only makes sense if user is already using app and they are logged out becuase of invalid refresh token
-        if (!immediately)
-          thunkAPI.dispatch(
-            uiActions.addAlert({
-              type: ALERT_TYPE.WARNING,
-              title: 'Your session has expired',
-              message: 'Please sign in again to keep shopping.',
-            })
-          );
-      }
-    };
+export const startRefreshTokenCycle = createAsyncThunk<
+  {},
+  { immediately: boolean },
+  { state: RootState }
+>('auth/startRefreshTokenCycle', async ({ immediately }, thunkAPI) => {
+  // Use a refresh interval that is a percentage shorter than the actual interval to ensure the token is obtained in time
+  const _convertExpiresInToInterval = (expiresIn: number) =>
+    expiresIn * 1000 * 0.6;
+  const _refreshAccessToken = async () => {
+    try {
+      const { refreshToken } = thunkAPI.getState().auth.user;
+      const response = await authServerApi.refreshAccessToken(refreshToken);
+      const { expires_in: expiresIn, id_token: idToken } = response;
+      const interval = _convertExpiresInToInterval(expiresIn);
+      const timerId = setTimeout(() => _refreshAccessToken(), interval);
+      thunkAPI.dispatch(setAccessToken({ expiresIn, idToken, timerId }));
+    } catch (error) {
+      localStorage.removeItem('user');
+      thunkAPI.dispatch(resetUserState({ keepUser: true }));
+      // if immediately is true, it means we have come from starting the app (e.g. refreshing the page), therefore no real need to show alert warning.  Alert warning only makes sense if user is already using app and they are logged out becuase of invalid refresh token
+      if (!immediately)
+        thunkAPI.dispatch(
+          uiActions.addAlert({
+            type: ALERT_TYPE.WARNING,
+            title: 'Your session has expired',
+            message: 'Please sign in again to keep shopping.',
+          })
+        );
+    }
+  };
 
-    const currentExpiresIn = thunkAPI.getState().auth.user.expiresIn;
-    const timerId = setTimeout(
-      () => _refreshAccessToken(),
-      immediately ? 0 : _convertExpiresInToInterval(currentExpiresIn)
-    );
-    thunkAPI.dispatch(setAccessTokenTimer(timerId));
-  }
-);
+  const currentExpiresIn = thunkAPI.getState().auth.user.expiresIn;
+  const timerId = setTimeout(
+    () => _refreshAccessToken(),
+    immediately ? 0 : _convertExpiresInToInterval(currentExpiresIn)
+  );
+  thunkAPI.dispatch(setAccessTokenTimer(timerId));
+});
 
 // Change password
-export const changePassword = createAsyncThunk(
+export const changePassword = createAsyncThunk<
+  {},
+  { newPassword: string; onSuccess: () => void },
+  { state: RootState }
+>(
   'auth/changePassword',
   async ({ newPassword, onSuccess = () => {} }, thunkAPI) => {
     thunkAPI.dispatch(uiActions.showLoadingState(true));
@@ -151,7 +190,7 @@ export const changePassword = createAsyncThunk(
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       const { idToken: newIdToken, refreshToken, expiresIn } = response;
       const { accessTokenTimer } = thunkAPI.getState().auth;
-      clearTimeout(accessTokenTimer);
+      clearTimeout(accessTokenTimer || undefined);
       thunkAPI.dispatch(
         startRefreshTokenCycle({
           immediately: false,
@@ -166,7 +205,7 @@ export const changePassword = createAsyncThunk(
       localStorage.setItem('user', JSON.stringify(user));
       onSuccess();
       return user;
-    } catch (error) {
+    } catch (error: any) {
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       return thunkAPI.rejectWithValue(error?.message || error.toString());
     }

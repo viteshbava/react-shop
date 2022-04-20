@@ -9,95 +9,82 @@ import {
   resetUserState,
 } from '../slices/auth-slice';
 import type { RootState } from '../store';
-import { __String } from 'typescript';
+import User from '../../models/user';
 
+interface MyKnownError {
+  message: string;
+}
 interface NewUser {
   username: string;
   password: string;
 }
 
-interface User {
-  user: {
-    displayName?: string;
-    email: string;
-    expiresIn: string;
-    idToken: string;
-    kind?: string;
-    localId: string;
-    refreshToken: string;
-    registered?: boolean;
-  };
-  isLoading: boolean;
-  error: {
-    message: string;
-  };
-  accessTokenTimer: number;
-  accessTokenReady: boolean;
-}
-
 // Register User
-export const register = createAsyncThunk<User, NewUser>(
-  'auth/register',
-  async (user, thunkAPI) => {
-    thunkAPI.dispatch(uiActions.showLoadingState(true));
-    try {
-      const response = await authServerApi.register({
-        email: user.username,
-        password: user.password,
-      });
-      localStorage.setItem('user', JSON.stringify(response));
-      thunkAPI.dispatch(uiActions.showLoadingState(false));
-      thunkAPI.dispatch(
-        uiActions.addAlert({
-          type: ALERT_TYPE.SUCCESS,
-          title: 'Registration complete',
-          message: 'Happy shopping!',
-        })
-      );
-      return response;
-    } catch (error: any) {
-      thunkAPI.dispatch(uiActions.showLoadingState(false));
-      return thunkAPI.rejectWithValue(error?.message || error.toString());
-    }
+export const register = createAsyncThunk<
+  User,
+  NewUser,
+  { rejectValue: MyKnownError }
+>('auth/register', async (user, thunkAPI) => {
+  thunkAPI.dispatch(uiActions.showLoadingState(true));
+  try {
+    const response = await authServerApi.register({
+      email: user.username,
+      password: user.password,
+    });
+    localStorage.setItem('user', JSON.stringify(response));
+    thunkAPI.dispatch(uiActions.showLoadingState(false));
+    thunkAPI.dispatch(
+      uiActions.addAlert({
+        type: ALERT_TYPE.SUCCESS,
+        title: 'Registration complete',
+        message: 'Happy shopping!',
+      })
+    );
+    return response as User;
+  } catch (error: any) {
+    thunkAPI.dispatch(uiActions.showLoadingState(false));
+    return thunkAPI.rejectWithValue(
+      error?.message || (error.toString() as MyKnownError)
+    );
   }
-);
+});
 
 // Login user
-export const login = createAsyncThunk(
-  'auth/login',
-  async (
-    { user, onSuccess }: { user: NewUser; onSuccess: () => void },
-    thunkAPI
-  ) => {
-    thunkAPI.dispatch(uiActions.showLoadingState(true));
-    try {
-      const response = await authServerApi.login({
-        email: user.username,
-        password: user.password,
-      });
-      localStorage.setItem('user', JSON.stringify(response));
-      thunkAPI.dispatch(uiActions.showLoadingState(false));
-      thunkAPI.dispatch(
-        uiActions.addAlert({
-          type: ALERT_TYPE.SUCCESS,
-          title: `Signed in as ${response.email}`,
-          message: 'Happy shopping!',
-        })
-      );
-      if (onSuccess) onSuccess();
-      return response;
-    } catch (error: any) {
-      thunkAPI.dispatch(uiActions.showLoadingState(false));
-      return thunkAPI.rejectWithValue(error?.message || error.toString());
-    }
+export const login = createAsyncThunk<
+  User,
+  { user: NewUser; onSuccess: () => void },
+  { rejectValue: MyKnownError }
+>('auth/login', async ({ user, onSuccess }, thunkAPI) => {
+  thunkAPI.dispatch(uiActions.showLoadingState(true));
+  try {
+    const response = await authServerApi.login({
+      email: user.username,
+      password: user.password,
+    });
+    localStorage.setItem('user', JSON.stringify(response));
+    thunkAPI.dispatch(uiActions.showLoadingState(false));
+    thunkAPI.dispatch(
+      uiActions.addAlert({
+        type: ALERT_TYPE.SUCCESS,
+        title: `Signed in as ${response.email}`,
+        message: 'Happy shopping!',
+      })
+    );
+    if (onSuccess) onSuccess();
+    return response as User;
+  } catch (error: any) {
+    thunkAPI.dispatch(uiActions.showLoadingState(false));
+    return thunkAPI.rejectWithValue(
+      error?.message || (error.toString() as MyKnownError)
+    );
   }
-);
+});
 
 // Logout user
 export const logout = createAsyncThunk<
   {},
   { onSuccess: () => void; onError: () => void },
-  { state: RootState }
+  { state: RootState; rejectValue: MyKnownError }
 >(
   'auth/logout',
   async ({ onSuccess = () => {}, onError = () => {} }, thunkAPI) => {
@@ -132,12 +119,24 @@ export const startRefreshTokenCycle = createAsyncThunk<
   { state: RootState }
 >('auth/startRefreshTokenCycle', async ({ immediately }, thunkAPI) => {
   // Use a refresh interval that is a percentage shorter than the actual interval to ensure the token is obtained in time
-  const _convertExpiresInToInterval = (expiresIn: number) =>
-    expiresIn * 1000 * 0.6;
+  const _convertExpiresInToInterval = (expiresIn: number | string) => {
+    let value: number;
+    if (typeof expiresIn === 'number') {
+      value = expiresIn;
+    } else {
+      if (isNaN(parseFloat(expiresIn)))
+        throw new Error('expiresIn is not a valid number string!');
+      value = parseFloat(expiresIn);
+    }
+    return value * 1000 * 0.6;
+  };
   const _refreshAccessToken = async () => {
     try {
-      const { refreshToken } = thunkAPI.getState().auth.user;
-      const response = await authServerApi.refreshAccessToken(refreshToken);
+      const user = thunkAPI.getState().auth.user;
+      if (!user) throw new Error('No user to refresh!');
+      const response = await authServerApi.refreshAccessToken(
+        user.refreshToken
+      );
       const { expires_in: expiresIn, id_token: idToken } = response;
       const interval = _convertExpiresInToInterval(expiresIn);
       const timerId = setTimeout(() => _refreshAccessToken(), interval);
@@ -157,27 +156,29 @@ export const startRefreshTokenCycle = createAsyncThunk<
     }
   };
 
-  const currentExpiresIn = thunkAPI.getState().auth.user.expiresIn;
+  const user = thunkAPI.getState().auth.user;
+  if (!user) throw new Error('No user to refresh!');
   const timerId = setTimeout(
     () => _refreshAccessToken(),
-    immediately ? 0 : _convertExpiresInToInterval(currentExpiresIn)
+    immediately ? 0 : _convertExpiresInToInterval(user.expiresIn)
   );
   thunkAPI.dispatch(setAccessTokenTimer(timerId));
 });
 
 // Change password
 export const changePassword = createAsyncThunk<
-  {},
+  User,
   { newPassword: string; onSuccess: () => void },
-  { state: RootState }
+  { state: RootState; rejectValue: MyKnownError }
 >(
   'auth/changePassword',
   async ({ newPassword, onSuccess = () => {} }, thunkAPI) => {
     thunkAPI.dispatch(uiActions.showLoadingState(true));
-    const { idToken } = thunkAPI.getState().auth.user;
     try {
+      const user = thunkAPI.getState().auth.user;
+      if (!user) throw new Error('No user for changePassword!');
       const response = await authServerApi.changePassword({
-        idToken,
+        idToken: user.idToken,
         password: newPassword,
       });
       thunkAPI.dispatch(
@@ -196,18 +197,20 @@ export const changePassword = createAsyncThunk<
           immediately: false,
         })
       );
-      const user = {
-        ...thunkAPI.getState().auth.user,
+      const updatedUser = {
+        ...user,
         idToken: newIdToken,
         refreshToken,
         expiresIn,
       };
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(updatedUser));
       onSuccess();
-      return user;
+      return updatedUser as User;
     } catch (error: any) {
       thunkAPI.dispatch(uiActions.showLoadingState(false));
-      return thunkAPI.rejectWithValue(error?.message || error.toString());
+      return thunkAPI.rejectWithValue(
+        error?.message || (error.toString() as MyKnownError)
+      );
     }
   }
 );

@@ -6,11 +6,23 @@ import {
   logout,
   changePassword,
 } from '../actions/auth-actions';
+import User from '../../models/user';
+
+interface MyKnownError {
+  message: string;
+}
+interface UserState {
+  user: User | null;
+  isLoading: boolean;
+  error: MyKnownError | null;
+  accessTokenTimer: number | null;
+  accessTokenReady: boolean;
+}
 
 // Get user from localStorage
-const localStorageUser = JSON.parse(localStorage.getItem('user'));
+const localStorageUser: User = JSON.parse(localStorage.getItem('user') || '{}');
 
-const STATE_INIT = {
+const STATE_INIT: UserState = {
   user: localStorageUser || null,
   isLoading: false,
   error: null,
@@ -24,10 +36,12 @@ const authSlice = createSlice({
 
   reducers: {
     setAccessToken: (state, action) => {
-      state.user.idToken = action.payload.idToken;
-      state.user.expiresIn = action.payload.expiresIn;
-      state.accessTokenTimer = action.payload.timerId;
-      state.accessTokenReady = true;
+      if (state.user) {
+        state.user.idToken = action.payload.idToken;
+        state.user.expiresIn = action.payload.expiresIn;
+        state.accessTokenTimer = action.payload.timerId;
+        state.accessTokenReady = true;
+      }
     },
     setAccessTokenTimer: (state, action) => {
       state.accessTokenTimer = action.payload;
@@ -59,7 +73,9 @@ const authSlice = createSlice({
       .addCase(register.rejected, (state, action) => ({
         ...STATE_INIT,
         user: null,
-        error: { message: action.payload },
+        error: action.payload
+          ? action.payload
+          : { message: 'Unable to register user!' },
       }))
       // LOGIN - PENDING
       .addCase(login.pending, (state) => {
@@ -73,17 +89,13 @@ const authSlice = createSlice({
         state.accessTokenReady = true;
       })
       // LOGIN - REJECTED
-      .addCase(
-        login.rejected,
-        (_, action) => ({
-          ...STATE_INIT,
-          user: null,
-          error: { message: action.payload },
-        })
-        // state.user = null;
-        // state.isLoading = false;
-        // state.error = { message: action.payload };
-      )
+      .addCase(login.rejected, (_, action) => ({
+        ...STATE_INIT,
+        user: null,
+        error: action.payload
+          ? action.payload
+          : { message: 'Unable to login!' },
+      }))
       // LOGOUT - PENDING
       .addCase(logout.pending, (state) => {
         state.isLoading = true;
@@ -93,7 +105,9 @@ const authSlice = createSlice({
       // LOGOUT - REJECTED
       .addCase(logout.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = { message: action.payload };
+        state.error = action.payload
+          ? action.payload
+          : { message: 'Unable to logout!' };
       })
       // CHANGE PASSWORD - PENDING
       .addCase(changePassword.pending, (state) => {
@@ -108,7 +122,9 @@ const authSlice = createSlice({
       // CHANGE PASSWORD - REJECTED
       .addCase(changePassword.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = { message: action.payload };
+        state.error = action.payload
+          ? action.payload
+          : { message: 'Unable to change password!' };
       });
   },
 });
@@ -116,3 +132,4 @@ const authSlice = createSlice({
 export const { resetUserState, setAccessTokenTimer, setAccessToken } =
   authSlice.actions;
 export default authSlice.reducer;
+export type { UserState };

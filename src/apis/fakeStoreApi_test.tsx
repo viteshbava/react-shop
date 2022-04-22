@@ -1,6 +1,6 @@
 import sendHttpRequest from '../utilities/sendHttpRequest';
 import ReactError from '../utilities/reactError';
-import CartProducts from '../models/cartProducts';
+import CartProduct from '../models/cartProduct';
 
 const BASE_URL = 'https://fakestoreapi.com';
 const URL = {
@@ -9,7 +9,7 @@ const URL = {
 };
 
 const fakeStoreApi = {
-  getProduct: (productId: number, signal = null) => {
+  getProduct: (productId: number, signal: AbortSignal | null = null) => {
     if (!productId)
       throw new ReactError({
         message: 'Empty product ID was supplied to fakeStoreApi!',
@@ -22,7 +22,7 @@ const fakeStoreApi = {
     return product;
   },
 
-  getProducts: (signal: AbortSignal) => {
+  getProducts: (signal: AbortSignal | null = null) => {
     const products = sendHttpRequest({
       url: URL.PRODUCTS,
       headers: {
@@ -33,7 +33,7 @@ const fakeStoreApi = {
     return products;
   },
 
-  getCart: (cartId: number, signal = null) => {
+  getCart: (cartId: number, signal: AbortSignal | null = null) => {
     if (!cartId)
       throw new ReactError({
         message: 'Empty cart ID was supplied to fakeStoreApi!',
@@ -49,7 +49,7 @@ const fakeStoreApi = {
     return cart;
   },
 
-  updateCart: (cartId: number, products: CartProducts) => {
+  updateCart: (cartId: number, products: CartProduct[]) => {
     if (!cartId)
       throw new ReactError({
         message: 'Empty cart ID was supplied to fakeStoreApi!',
@@ -69,7 +69,7 @@ const fakeStoreApi = {
   createUserCart: (cart: {
     userId: number;
     date: Date;
-    products: CartProducts;
+    products: CartProduct[];
   }) => {
     if (!cart)
       throw new ReactError({
@@ -87,7 +87,7 @@ const fakeStoreApi = {
     return result;
   },
 
-  getUserCarts: (userId: number, signal = null) => {
+  getUserCarts: (userId: number, signal: AbortSignal | null = null) => {
     if (!userId)
       throw new ReactError({
         message: 'Empty user ID was supplied to fakeStoreApi!',

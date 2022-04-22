@@ -3,6 +3,10 @@ import { uiActions } from '../slices/ui-slice';
 import { ALERT_TYPE } from '../../components/Feedback/Alert/Alert';
 import fakeStoreApi from '../../apis/fakeStoreApi_test';
 import store from '../store';
+import { AppDispatch } from '../store';
+import Product from '../../models/product';
+import CartProduct from '../../models/cartProduct';
+import Cart from '../../models/cart';
 
 /** ********************************************************
 /**********************************************************
@@ -10,36 +14,51 @@ import store from '../store';
 ********************************************************* */
 /** ******************************************************* */
 
-const _fetchCartForUser = async (userId, abortSignal) => {
+const _fetchCartForUser = async (userId: number, abortSignal: AbortSignal) => {
   // Fetch array of carts for supplied userId
-  const userCarts = await fakeStoreApi.getUserCarts(userId, abortSignal);
+  const userCarts = (await fakeStoreApi.getUserCarts(
+    userId,
+    abortSignal
+  )) as Cart[];
   // Assume that first element in array is the current cart for practice purposes.
   // In reality the API should somehow define the 'current' cart separately from 'cart history'
   return userCarts.length ? userCarts[0].id : null;
 };
 
-const _fetchCartData = async (cartId, abortSignal, dispatch) => {
+const _fetchCartData = async (
+  cartId: number,
+  abortSignal: AbortSignal,
+  dispatch: AppDispatch
+) => {
   // Fetch cart data
   const cartData = await fakeStoreApi.getCart(cartId, abortSignal);
   // Update total quantity
   const totalQuantity = cartData.products.reduce(
-    (total, p) => total + p.quantity,
+    (total: number, p: CartProduct) => total + p.quantity,
     0
   );
   // Display total quantity as we load products
   dispatch(cartActions.setTotalQuantity(totalQuantity));
-  return cartData;
+  return cartData as {
+    id: number;
+    userId: number;
+    products: CartProduct[];
+    date: Date;
+  };
 };
 
-const _fetchCartProducts = async (cartProducts, abortSignal) => {
+const _fetchCartProducts = async (
+  cartProducts: CartProduct[],
+  abortSignal: AbortSignal
+) => {
   // Fetch product data for each item in cart
   const promises = cartProducts.map(async (p) => {
-    const responseProduct = await fakeStoreApi.getProduct(
+    const responseProduct = (await fakeStoreApi.getProduct(
       p.productId,
       abortSignal
-    );
+    )) as Product;
     return {
-      ...responseProduct,
+      data: responseProduct,
       quantity: p.quantity,
     };
   });
@@ -48,7 +67,12 @@ const _fetchCartProducts = async (cartProducts, abortSignal) => {
   return productArray;
 };
 
-const _createNewCart = async (userId, product, quantity, dispatch) => {
+const _createNewCart = async (
+  userId: number,
+  product: Product,
+  quantity: number,
+  dispatch: AppDispatch
+) => {
   const newCart = await fakeStoreApi.createUserCart({
     userId,
     date: new Date(),
@@ -58,7 +82,12 @@ const _createNewCart = async (userId, product, quantity, dispatch) => {
   dispatch(cartActions.replaceCart(newCart));
 };
 
-const _updateCart = async (cartId, product, quantity, dispatch) => {
+const _updateCart = async (
+  cartId: number,
+  product: Product,
+  quantity: number,
+  dispatch: AppDispatch
+) => {
   await fakeStoreApi.updateCart(cartId, [{ productId: product.id, quantity }]);
   dispatch(cartActions.add({ product, quantity }));
 };
@@ -69,48 +98,60 @@ const _updateCart = async (cartId, product, quantity, dispatch) => {
 ********************************************************* */
 /** ******************************************************* */
 
-const fetchUserCart = (userId, abortSignal) => async (dispatch) => {
-  dispatch(cartActions.isLoading(true));
-  try {
-    const cartId = await _fetchCartForUser(userId, abortSignal);
-    if (cartId) {
-      const cartData = await _fetchCartData(cartId, abortSignal, dispatch);
-      const cartProducts = await _fetchCartProducts(
-        cartData.products,
-        abortSignal
-      );
-      // Swap product array in cart with new product data array
-      cartData.products = cartProducts;
-      // Update cart in Redux
-      dispatch(cartActions.replaceCart(cartData));
-    } else dispatch(cartActions.clearCart());
-  } catch (err) {
-    if (err.name !== 'AbortError') {
-      dispatch(cartActions.setError({ message: err.message }));
-      dispatch(
-        uiActions.addAlert({
-          type: ALERT_TYPE.ERROR,
-          title: 'Unable to fetch cart data!',
-        })
-      );
-      console.error(err);
+const fetchUserCart =
+  (userId: number, abortSignal: AbortSignal) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(cartActions.isLoading(true));
+    try {
+      const cartId = await _fetchCartForUser(userId, abortSignal);
+      if (cartId) {
+        const cart = await _fetchCartData(cartId, abortSignal, dispatch);
+        const cartProducts = await _fetchCartProducts(
+          cart.products,
+          abortSignal
+        );
+        // Swap product array in cart with new product data array
+        const fullCart: Cart = { ...cart, products: cartProducts };
+        // Update cart in Redux
+        dispatch(cartActions.replaceCart(fullCart));
+      } else dispatch(cartActions.clearCart());
+    } catch (err: any) {
+      if (err.name !== 'AbortError') {
+        dispatch(cartActions.setError({ message: err.message }));
+        dispatch(
+          uiActions.addAlert({
+            type: ALERT_TYPE.ERROR,
+            title: 'Unable to fetch cart data!',
+          })
+        );
+        console.error(err);
+      }
     }
-  }
-  dispatch(cartActions.isLoading(false));
-};
+    dispatch(cartActions.isLoading(false));
+  };
 
 const addToCart =
-  ({ product, quantity, onAddSuccess, onAddError }) =>
-  async (dispatch) => {
+  ({
+    product,
+    quantity,
+    onAddSuccess,
+    onAddError,
+  }: {
+    product: Product;
+    quantity: number;
+    onAddSuccess: () => void;
+    onAddError: (err: any) => void;
+  }) =>
+  async (dispatch: AppDispatch) => {
     dispatch(uiActions.showLoadingState(true));
-    const { id: cartId } = store.getState().cart;
+    const cart = store.getState().cart.data;
     const userId = 5; /* This is a dummy userID until authentication is built; we should be getting it from state */
     try {
-      if (cartId) await _updateCart(cartId, product, quantity, dispatch);
+      if (cart) await _updateCart(cart.id, product, quantity, dispatch);
       else await _createNewCart(userId, product, quantity, dispatch);
       dispatch(uiActions.showLoadingState(false));
       if (onAddSuccess) onAddSuccess();
-    } catch (err) {
+    } catch (err: any) {
       dispatch(uiActions.showLoadingState(false));
       if (onAddError) onAddError(err);
       dispatch(
@@ -124,12 +165,22 @@ const addToCart =
   };
 
 const changeQuantity =
-  ({ productId, quantity, onError }) =>
-  async (dispatch) => {
+  ({
+    productId,
+    quantity,
+    onError,
+  }: {
+    productId: number;
+    quantity: number;
+    onError: () => void;
+  }) =>
+  async (dispatch: AppDispatch) => {
     dispatch(uiActions.showLoadingState(true));
-    const { id: cartId } = store.getState().cart;
+    const cart = store.getState().cart.data;
+    if (!cart)
+      throw new Error('Cannot change product quantity in non-existent cart!');
     try {
-      await fakeStoreApi.updateCart(cartId, [{ productId, quantity }]);
+      await fakeStoreApi.updateCart(cart.id, [{ productId, quantity }]);
       dispatch(cartActions.changeQuantity({ productId, quantity }));
       dispatch(
         uiActions.addAlert({
@@ -150,12 +201,14 @@ const changeQuantity =
     dispatch(uiActions.showLoadingState(false));
   };
 
-const removeFromCart = (productId) => async (dispatch) => {
+const removeFromCart = (productId: number) => async (dispatch: AppDispatch) => {
   dispatch(uiActions.showLoadingState(true));
-  const { id: cartId } = store.getState().cart;
+  const cart = store.getState().cart.data;
+  if (!cart)
+    throw new Error('Cannot change remove product from non-existent cart!');
 
   try {
-    await fakeStoreApi.updateCart(cartId, [{ productId, quantity: 0 }]);
+    await fakeStoreApi.updateCart(cart.id, [{ productId, quantity: 0 }]);
     dispatch(cartActions.remove(productId));
     dispatch(
       uiActions.addAlert({

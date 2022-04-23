@@ -139,8 +139,8 @@ const addToCart =
   }: {
     product: Product;
     quantity: number;
-    onAddSuccess: () => void;
-    onAddError: (err: any) => void;
+    onAddSuccess?: () => void;
+    onAddError?: (err: any) => void;
   }) =>
   async (dispatch: AppDispatch) => {
     dispatch(uiActions.showLoadingState(true));

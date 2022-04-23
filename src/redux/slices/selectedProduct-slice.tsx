@@ -1,7 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import fakeStoreApi from '../../apis/fakeStoreApi_test';
+import Product from '../../models/product';
 
-const STATE_INIT = {
+interface MyKnownError {
+  message: string;
+}
+
+interface SelectedProductState {
+  isLoading: boolean;
+  hasLoaded: boolean;
+  product: Product | null;
+  error: MyKnownError | null;
+}
+
+const STATE_INIT: SelectedProductState = {
   isLoading: false,
   hasLoaded: false,
   product: null,
@@ -12,16 +24,22 @@ const STATE_INIT = {
 createAsyncThunk Actions
 ****************************************** */
 
-const fetchProduct = createAsyncThunk(
-  'allProducts/fetchProduct',
-  async (productId, thunkAPI) => {
-    try {
-      return await fakeStoreApi.getProduct(productId);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error?.message || error.toString());
-    }
+const fetchProduct = createAsyncThunk<
+  Product,
+  number,
+  { rejectValue: MyKnownError }
+>('allProducts/fetchProduct', async (productId, thunkAPI) => {
+  try {
+    console.log('Getting product...');
+    const result = (await fakeStoreApi.getProduct(productId)) as Product;
+    console.log('result: ', result);
+    return result;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      error?.message || (error.toString() as MyKnownError)
+    );
   }
-);
+});
 
 /** ****************************************
 Slice
@@ -50,10 +68,13 @@ const selectedProductSlice = createSlice({
       })
       // FETCH PRODUCT - REJECTED
       .addCase(fetchProduct.rejected, (state, action) => {
+        console.log('Setting reject error now...');
         state.product = null;
         state.isLoading = false;
         state.hasLoaded = true;
-        state.error = { message: action.payload };
+        state.error = action.payload
+          ? action.payload
+          : { message: 'Unable to Fetch Product!' };
       });
   },
 });

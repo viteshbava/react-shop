@@ -10,15 +10,15 @@ import Animate from '../UI/Animate/Animate';
 import AnimateList from '../UI/Animate/AnimateList';
 
 const Cart = () => {
-  const { isLoading, hasLoaded, error, products, totalQuantity } = useSelector(
+  const { isLoading, hasLoaded, error, data, totalQuantity } = useSelector(
     (state) => state.cart
   );
   const [renderList, setRenderList] = useState(false);
 
   // Upon initial render / when products change, if there are products, render them.  If no more products, keep rendering products to finish last animation.  AnimateList component will set renderList back to False accordingly.
   useEffect(() => {
-    if (products?.length) setRenderList(true);
-  }, [products?.length]);
+    if (data?.products?.length) setRenderList(true);
+  }, [data?.products?.length]);
 
   const getCartContent = () => {
     if (isLoading || !hasLoaded)
@@ -53,8 +53,8 @@ const Cart = () => {
         <div className={styles['grid-wrapper']}>
           <ul className={styles['item-list']}>
             <AnimateList unmountList={() => setRenderList(false)}>
-              {products.map((p) => (
-                <Animate key={p.id} exitTime={200} animation="fade">
+              {data.products.map((p) => (
+                <Animate key={p.data.id} exitTime={200} animation="fade">
                   <CartItem product={p} />
                 </Animate>
               ))}

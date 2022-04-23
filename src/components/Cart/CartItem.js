@@ -13,7 +13,8 @@ import ModalContext from '../../context/modal-context';
 
 const CartItem = ({ product, className }) => {
   const dispatch = useDispatch();
-  const { id, title, price, image, quantity } = product;
+  const { id, title, price, image } = product.data;
+  const { quantity } = product;
   const subTotal = price * quantity;
 
   const modal = useContext(ModalContext);

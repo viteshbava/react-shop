@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useRef, useContext, EventHandler } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../redux/preTypedHooks';
 import SectionHeading from '../UI/SectionHeading/SectionHeading';
 import Icon, { ICON_TYPE } from '../UI/Icon/Icon';
 import NumberButtons from '../UI/Control/NumberButtons';
@@ -22,45 +23,56 @@ import styles from './ProductSingle.module.css';
 import ModalContext from '../../context/modal-context';
 import AddToCartSummary from './AddToCartSummary';
 import useSetDocumentTitle from '../../hooks/use-setDocumentTitle';
+import Product from '../../models/product';
 
 const ProductSingle = () => {
-  const id = +useParams().id;
-  const { isLoading, hasLoaded, error, product } = useSelector(
+  console.log('ProductSingle component start...');
+  // get ID of product from URL
+  const idStr: string = useParams()?.id ?? '';
+  const id: number = +idStr;
+
+  const { isLoading, hasLoaded, error, product } = useAppSelector(
     (state) => state.selectedProduct
   );
-  const wishlist = useSelector((state) => state.wishlist.products);
-  const { isLoading: cartLoading } = useSelector((state) => state.cart);
-  const { isLoading: wishlistLoading } = useSelector((state) => state.wishlist);
-  const dispatch = useDispatch();
-  const qtyRef = useRef();
+  const wishlist = useAppSelector((state) => state.wishlist.products);
+  const { isLoading: cartLoading } = useAppSelector((state) => state.cart);
+  const { isLoading: wishlistLoading } = useAppSelector(
+    (state) => state.wishlist
+  );
+  const dispatch = useAppDispatch();
+  const qtyRef = useRef<HTMLInputElement>();
   const modal = useContext(ModalContext);
   const [inWishlist, setInWishlist] = useState(false);
 
   useEffect(() => {
+    console.log('Use effect in ProductSingle to fetch product...');
     const { abort: abortFetchProduct } = dispatch(fetchProduct(id));
     return () => {
+      console.log('Unmounting ProductSingle...');
       abortFetchProduct();
       dispatch(clearProduct());
     };
   }, [id, dispatch]);
 
   useEffect(() => {
-    const foundProduct = wishlist.find((p) => p.id === id);
+    const foundProduct = wishlist.find((p: Product) => p.id === id);
     setInWishlist(!!foundProduct);
+    return () => console.log('Yep, unmounting all right...');
   }, [id, wishlist]);
 
   useSetDocumentTitle('Product Details', product?.title);
 
-  const addToCartSuccess = (qty) => {
-    modal.showModal({
-      type: 'custom',
-      customContent: <AddToCartSummary numItemsAdded={qty} />,
-    });
+  const addToCartSuccess = (qty: number) => {
+    // modal.showModal({
+    //   type: 'custom',
+    //   customContent: <AddToCartSummary numItemsAdded={qty} />,
+    // });
   };
 
-  const addToCartHandler = (e) => {
+  const addToCartHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    const qty = +qtyRef.current.value;
+    const qty = +qtyRef.current!.value;
+    if (!product) return;
     dispatch(
       addToCart({
         product,
@@ -76,9 +88,13 @@ const ProductSingle = () => {
   };
 
   const getProductContent = () => {
-    if (isLoading || !hasLoaded) return <PageLoader />;
-
-    if (error)
+    if (isLoading || !hasLoaded) {
+      console.log('Rendering page loader...');
+      return <PageLoader />;
+    }
+    if (error) {
+      console.log('Rendering error...');
+      console.log(error);
       return (
         <InfoError
           type={INFO_ERROR_TYPE.ERROR}
@@ -86,6 +102,7 @@ const ProductSingle = () => {
           message={error.message}
         />
       );
+    }
 
     if (!product)
       return (

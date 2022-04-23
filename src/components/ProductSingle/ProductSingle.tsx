@@ -26,7 +26,6 @@ import useSetDocumentTitle from '../../hooks/use-setDocumentTitle';
 import Product from '../../models/product';
 
 const ProductSingle = () => {
-  console.log('ProductSingle component start...');
   // get ID of product from URL
   const idStr: string = useParams()?.id ?? '';
   const id: number = +idStr;
@@ -45,19 +44,16 @@ const ProductSingle = () => {
   const [inWishlist, setInWishlist] = useState(false);
 
   useEffect(() => {
-    console.log('Use effect in ProductSingle to fetch product...');
     const { abort: abortFetchProduct } = dispatch(fetchProduct(id));
     return () => {
-      console.log('Unmounting ProductSingle...');
       abortFetchProduct();
       dispatch(clearProduct());
     };
-  }, [id, dispatch]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     const foundProduct = wishlist.find((p: Product) => p.id === id);
     setInWishlist(!!foundProduct);
-    return () => console.log('Yep, unmounting all right...');
   }, [id, wishlist]);
 
   useSetDocumentTitle('Product Details', product?.title);
@@ -71,7 +67,8 @@ const ProductSingle = () => {
 
   const addToCartHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    const qty = +qtyRef.current!.value;
+    if (!qtyRef.current) return;
+    const qty = +qtyRef.current.value;
     if (!product) return;
     dispatch(
       addToCart({
@@ -173,6 +170,7 @@ const ProductSingle = () => {
     );
   };
 
+  console.log('Rendering...');
   return <section>{getProductContent()}</section>;
 };
 

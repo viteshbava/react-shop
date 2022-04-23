@@ -15,11 +15,11 @@ const fakeStoreApi = {
         message: 'Empty product ID was supplied to fakeStoreApi!',
         statusCode: 400,
       });
-    console.log('Sending http request to get product now...');
     const product = sendHttpRequest({
       url: `${URL.PRODUCTS}/${productId}`,
       signal,
     });
+    console.log('fakeStoreApi - returning product: ', product);
     return product;
   },
 

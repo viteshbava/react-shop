@@ -1,13 +1,13 @@
 import React, { Suspense, useEffect } from 'react';
 import './App.css';
 
-import { useAppSelector, useAppDispatch } from './redux/preTypedHooks';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from './redux/preTypedHooks';
 import Feedback from './components/Feedback/Feedback';
 import Layout from './components/Layout/Layout';
 import PageLoader from './components/Feedback/PageLoader/PageLoader';

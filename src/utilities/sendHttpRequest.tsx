@@ -1,18 +1,18 @@
-interface HttpRequest {
+interface HttpRequest<BodyType, HeaderType> {
   method?: string;
-  body?: { [key: string]: any };
-  headers?: { [key: string]: any };
+  body?: BodyType;
+  headers?: HeaderType;
   signal?: AbortSignal | null;
   url: string;
 }
 
-const sendHttpRequest = async ({
+const sendHttpRequest = async <B, H>({
   method,
   body,
   headers,
   url,
   signal,
-}: HttpRequest) => {
+}: HttpRequest<B, H>) => {
   const init = {
     method: method || 'GET',
     body: body ? JSON.stringify(body) : null,

@@ -28,16 +28,16 @@ const fetchProduct = createAsyncThunk<
   Product,
   number,
   { rejectValue: MyKnownError }
->('allProducts/fetchProduct', async (productId, thunkAPI) => {
+>('selectedProduct/fetchProduct', async (productId, thunkAPI) => {
   try {
-    console.log('Getting product...');
+    // throw new Error('This is my error');
     const result = (await fakeStoreApi.getProduct(productId)) as Product;
     console.log('result: ', result);
     return result;
-  } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error?.message || (error.toString() as MyKnownError)
-    );
+  } catch (error) {
+    const myError = error as MyKnownError;
+    const message = myError?.message || myError.toString();
+    return thunkAPI.rejectWithValue({ message });
   }
 });
 
@@ -68,13 +68,13 @@ const selectedProductSlice = createSlice({
       })
       // FETCH PRODUCT - REJECTED
       .addCase(fetchProduct.rejected, (state, action) => {
-        console.log('Setting reject error now...');
-        state.product = null;
-        state.isLoading = false;
-        state.hasLoaded = true;
-        state.error = action.payload
-          ? action.payload
-          : { message: 'Unable to Fetch Product!' };
+        // This function will be called when createAsyncThunk is aborted (i.e. when the fetch has been aborted).  In this scenario, we do not wish to return an error, we want to force the state to go back to initial state.
+        if (action.error.name === 'AbortError') return { ...STATE_INIT };
+        return {
+          ...STATE_INIT,
+          hasLoaded: true,
+          error: action.payload ? action.payload : null,
+        };
       });
   },
 });

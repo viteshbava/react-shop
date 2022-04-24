@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react';
 
+interface PropTypes {
+  isMounted?: boolean;
+  enterTime?: number;
+  focusRef?: { current: HTMLElement } | null;
+}
+
 const useAnimateEnter = ({
   isMounted = true,
   enterTime = 0,
   focusRef = null,
-}) => {
+}: PropTypes) => {
   const [enterDone, setEnterDone] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
 
   useEffect(() => {
-    let enterTimeoutId;
+    let enterTimeoutId: ReturnType<typeof setTimeout>;
 
     // If the component has mounted and not yet gone through entering, start entering and timer
     if (isMounted && !enterDone) {

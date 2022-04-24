@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../redux/preTypedHooks';
 import SectionHeading from '../UI/SectionHeading/SectionHeading';
 import CartItem from './CartItem';
 import CartOrderSummary from './CartOrderSummary';
@@ -10,7 +10,7 @@ import Animate from '../UI/Animate/Animate';
 import AnimateList from '../UI/Animate/AnimateList';
 
 const Cart = () => {
-  const { isLoading, hasLoaded, error, data, totalQuantity } = useSelector(
+  const { isLoading, hasLoaded, error, data, totalQuantity } = useAppSelector(
     (state) => state.cart
   );
   const [renderList, setRenderList] = useState(false);
@@ -53,7 +53,7 @@ const Cart = () => {
         <div className={styles['grid-wrapper']}>
           <ul className={styles['item-list']}>
             <AnimateList unmountList={() => setRenderList(false)}>
-              {data.products.map((p) => (
+              {data?.products.map((p) => (
                 <Animate key={p.data.id} exitTime={200} animation="fade">
                   <CartItem product={p} />
                 </Animate>

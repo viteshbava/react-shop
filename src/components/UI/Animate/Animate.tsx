@@ -3,6 +3,16 @@ import useAnimateEnter from '../../../hooks/use-animateEnter';
 import useAnimateExit from '../../../hooks/use-animateExit';
 import styles from './Animate.module.css';
 
+interface AnimateProps {
+  isMounted?: boolean;
+  enterTime?: number;
+  exitTime?: number;
+  onClose?: () => void;
+  children: React.ReactNode;
+  animation: 'fade' | { [key: string]: string } | null;
+  focusRef?: { current: HTMLElement } | null;
+}
+
 const Animate = ({
   isMounted,
   enterTime = 0,
@@ -11,7 +21,7 @@ const Animate = ({
   children,
   animation = null,
   focusRef = null,
-}) => {
+}: AnimateProps) => {
   const child = Children.only(children);
 
   // Verify the wrapped child is a valid element
@@ -26,7 +36,7 @@ const Animate = ({
   let exitStyle;
 
   // Verify the supplied animation if either 'fade' or an object of classes to apply when animating
-  // 'fade' is the built in 'default' animatin (styles defined in Animate.module.css)
+  // 'fade' is the built in 'default' animation (styles defined in Animate.module.css)
   if (!animation || (animation !== 'fade' && typeof animation !== 'object')) {
     const errorMsg = `Invalid animation value supplied to Animation component: ${animation}.  Must be either "fade" or an object of css classes!`;
     console.error(errorMsg);

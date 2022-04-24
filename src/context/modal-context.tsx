@@ -1,18 +1,29 @@
 import React, { useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
+import ModalProps from '../models/modalProps';
 
-const ModalContext = React.createContext({
+interface ModalContextTypes {
+  show: boolean;
+  props: ModalProps | null;
+  showModal: (modalProps: ModalProps) => void;
+  hideModal: () => void;
+}
+
+const ModalContext = React.createContext<ModalContextTypes>({
   show: false,
   props: null,
   showModal: () => {},
   hideModal: () => {},
 });
 
-const ModalContextProvider = ({ children }) => {
+const ModalContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element => {
   const [show, setShow] = useState(false);
-  const [props, setProps] = useState(null);
+  const [props, setProps] = useState<ModalProps | null>(null);
 
-  const showModal = (modalProps) => {
+  const showModal = (modalProps: ModalProps) => {
     setShow(true);
     setProps(modalProps);
   };
@@ -22,7 +33,7 @@ const ModalContextProvider = ({ children }) => {
     setProps(null);
   };
 
-  const providerValues = useMemo(
+  const providerValues: ModalContextTypes = useMemo(
     () => ({ show, props, showModal, hideModal }),
     [show, props]
   );
@@ -32,10 +43,6 @@ const ModalContextProvider = ({ children }) => {
       {children}
     </ModalContext.Provider>
   );
-};
-
-ModalContextProvider.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default ModalContext;

@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef, useContext, EventHandler } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { useAppSelector, useAppDispatch } from '../../redux/preTypedHooks';
 import SectionHeading from '../UI/SectionHeading/SectionHeading';
 import Icon, { ICON_TYPE } from '../UI/Icon/Icon';
@@ -59,10 +58,10 @@ const ProductSingle = () => {
   useSetDocumentTitle('Product Details', product?.title);
 
   const addToCartSuccess = (qty: number) => {
-    // modal.showModal({
-    //   type: 'custom',
-    //   customContent: <AddToCartSummary numItemsAdded={qty} />,
-    // });
+    modal.showModal({
+      type: 'custom',
+      customContent: <AddToCartSummary numItemsAdded={qty} />,
+    });
   };
 
   const addToCartHandler = (e: React.FormEvent) => {

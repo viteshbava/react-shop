@@ -1,11 +1,19 @@
-import PropTypes from 'prop-types';
 import styles from './Modal.module.css';
 import setModalIconAndColor from './setModalIconAndColor';
 import setModalFooter from './setModalFooter';
 import Card from '../../UI/Card/Card';
 import Icon from '../../UI/Icon/Icon';
+import ModalProps from '../../../models/modalProps';
 
-const Modal = ({ modalProps, closeModal, className }) => {
+const Modal = ({
+  modalProps,
+  closeModal,
+  className = null,
+}: {
+  modalProps: ModalProps;
+  closeModal: () => void;
+  className?: string | null;
+}) => {
   const {
     type,
     variant = 'default',
@@ -62,22 +70,7 @@ const Modal = ({ modalProps, closeModal, className }) => {
   );
 };
 
-Modal.propTypes = {
-  modalProps: PropTypes.shape({
-    type: PropTypes.string.isRequired,
-    variant: PropTypes.string,
-    title: PropTypes.string,
-    body: PropTypes.string,
-    cancelText: PropTypes.string,
-    okText: PropTypes.string,
-    onCancel: PropTypes.func,
-    onConfirm: PropTypes.func,
-    customContent: PropTypes.element,
-  }).isRequired,
-  closeModal: PropTypes.func.isRequired,
-  className: PropTypes.string,
-};
-
+// Here to remove eslint error react/require-default-props
 Modal.defaultProps = {
   className: null,
 };

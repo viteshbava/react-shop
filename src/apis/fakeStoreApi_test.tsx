@@ -19,7 +19,6 @@ const fakeStoreApi = {
       url: `${URL.PRODUCTS}/${productId}`,
       signal,
     });
-    console.log('fakeStoreApi - returning product: ', product);
     return product;
   },
 

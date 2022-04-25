@@ -1,20 +1,11 @@
 import React, { useState, useEffect, cloneElement, useMemo } from 'react';
 
 interface PropTypes {
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
   unmountList: () => void;
 }
 
 const AnimateList = ({ children, unmountList }: PropTypes) => {
-  // const adjChildren: JSX.Element = React.Children.toArray(children);
-
-  // let adjChildren: JSX.Element[] = useMemo(() => [], []);
-  // if (!Array.isArray(children)) {
-  //   adjChildren.push(children);
-  // } else {
-  //   adjChildren = children;
-  // }
-
   // currentChildren are the actual children that are rendered, even if the external state is empty (because we want to wait for animating to finish)
   const [currentChildren, setCurrentChildren] = useState(children);
 
@@ -22,23 +13,24 @@ const AnimateList = ({ children, unmountList }: PropTypes) => {
 
   // When all animations have finished and there are no more children left to render, call unmountList function.  This should set state in the parent component to unmount the list.
   useEffect(() => {
-    if (Array.isArray(currentChildren) && !currentChildren?.length)
-      unmountList();
+    if (!(currentChildren as React.ReactNode[]).length) unmountList();
   }, [currentChildren, unmountList]);
+
+  // NOTE: this code not fully tested yet...
+  // Extract elements from children that are new (i.e. do not yet exist in currentChildren)
+  // Using a set here for efficency reasons
+  const currKeySet = new Set(
+    (currentChildren as React.ReactNode[]).map((child) => child?.key)
+  );
+  const newChildren = (children as React.ReactNode[]).filter(
+    (child) => !currKeySet.has(child?.key)
+  );
 
   // Add new children (if any) to currentChildren
   useEffect(() => {
-    // Extract elements from children that are new (i.e. do not yet exist in currentChildren)
-    // Using a set here for efficency reasons
-    const currKeySet = new Set(
-      React.Children.map(currentChildren, (child) => child.key)
-    );
-    const newChildren = React.Children.toArray(children).filter(
-      (child) => !currKeySet.has(child.key)
-    );
     if (newChildren.length > 0)
       setCurrentChildren((prev) => [...prev, ...newChildren]);
-  }, [children, currentChildren]);
+  }, [newChildren]);
 
   // get keySet for children
   // Using a set here for efficency reasons

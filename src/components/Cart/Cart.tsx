@@ -51,15 +51,15 @@ const Cart = () => {
       <>
         <SectionHeading>Cart ({totalQuantity})</SectionHeading>
         <div className={styles['grid-wrapper']}>
-          <ul className={styles['item-list']}>
-            <AnimateList unmountList={() => setRenderList(false)}>
+          <div className={styles['item-list']}>
+            <AnimateList unmountList={() => setRenderList(false)} wrapper="ul">
               {data?.products.map((p) => (
                 <Animate key={p.data.id} exitTime={200} animation="fade">
                   <CartItem product={p} />
                 </Animate>
               ))}
             </AnimateList>
-          </ul>
+          </div>
           <CartOrderSummary />
         </div>
       </>

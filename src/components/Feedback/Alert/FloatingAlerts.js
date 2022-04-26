@@ -19,7 +19,7 @@ const FloatingAlerts = () => {
 
   return ReactDOM.createPortal(
     <div className={styles.wrapper}>
-      <AnimateList unmountList={() => setRenderAlerts(false)}>
+      <AnimateList unmountList={() => setRenderAlerts(false)} wrapper="div">
         {alerts.map((alert) => (
           <Animate
             key={alert.id}

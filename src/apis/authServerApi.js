@@ -26,6 +26,7 @@ const authServerApi = {
       });
       return response;
     } catch (error) {
+      console.log(error);
       let niceErrMessage;
       console.error(error?.error?.message);
       switch (error?.error?.message) {

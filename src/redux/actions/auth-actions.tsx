@@ -41,11 +41,11 @@ export const register = createAsyncThunk<
       })
     );
     return response as User;
-  } catch (error: any) {
+  } catch (error) {
     thunkAPI.dispatch(uiActions.showLoadingState(false));
-    return thunkAPI.rejectWithValue(
-      error?.message || (error.toString() as MyKnownError)
-    );
+    const myError = error as MyKnownError;
+    const message = myError?.message || myError.toString();
+    return thunkAPI.rejectWithValue({ message });
   }
 });
 
@@ -72,17 +72,17 @@ export const login = createAsyncThunk<
     );
     if (onSuccess) onSuccess();
     return response as User;
-  } catch (error: any) {
+  } catch (error) {
     thunkAPI.dispatch(uiActions.showLoadingState(false));
-    return thunkAPI.rejectWithValue(
-      error?.message || (error.toString() as MyKnownError)
-    );
+    const myError = error as MyKnownError;
+    const message = myError?.message || myError.toString();
+    return thunkAPI.rejectWithValue({ message });
   }
 });
 
 // Logout user
 export const logout = createAsyncThunk<
-  {},
+  unknown,
   { onSuccess: () => void; onError: () => void },
   { state: RootState; rejectValue: MyKnownError }
 >(
@@ -104,17 +104,19 @@ export const logout = createAsyncThunk<
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       onSuccess();
       return thunkAPI.fulfillWithValue(null);
-    } catch (error: any) {
+    } catch (error) {
       thunkAPI.dispatch(uiActions.showLoadingState(false));
       onError();
-      return thunkAPI.rejectWithValue(error?.message || error.toString());
+      const myError = error as MyKnownError;
+      const message = myError?.message || myError.toString();
+      return thunkAPI.rejectWithValue({ message });
     }
   }
 );
 
 // Refresh access token
 export const startRefreshTokenCycle = createAsyncThunk<
-  {},
+  unknown,
   { immediately: boolean },
   { state: RootState }
 >('auth/startRefreshTokenCycle', async ({ immediately }, thunkAPI) => {
@@ -124,7 +126,7 @@ export const startRefreshTokenCycle = createAsyncThunk<
     if (typeof expiresIn === 'number') {
       value = expiresIn;
     } else {
-      if (isNaN(parseFloat(expiresIn)))
+      if (Number.isNaN(parseFloat(expiresIn)))
         throw new Error('expiresIn is not a valid number string!');
       value = parseFloat(expiresIn);
     }
@@ -132,7 +134,7 @@ export const startRefreshTokenCycle = createAsyncThunk<
   };
   const _refreshAccessToken = async () => {
     try {
-      const user = thunkAPI.getState().auth.user;
+      const { user } = thunkAPI.getState().auth;
       if (!user) throw new Error('No user to refresh!');
       const response = await authServerApi.refreshAccessToken(
         user.refreshToken
@@ -156,7 +158,7 @@ export const startRefreshTokenCycle = createAsyncThunk<
     }
   };
 
-  const user = thunkAPI.getState().auth.user;
+  const { user } = thunkAPI.getState().auth;
   if (!user) throw new Error('No user to refresh!');
   const timerId = setTimeout(
     () => _refreshAccessToken(),
@@ -175,7 +177,7 @@ export const changePassword = createAsyncThunk<
   async ({ newPassword, onSuccess = () => {} }, thunkAPI) => {
     thunkAPI.dispatch(uiActions.showLoadingState(true));
     try {
-      const user = thunkAPI.getState().auth.user;
+      const { user } = thunkAPI.getState().auth;
       if (!user) throw new Error('No user for changePassword!');
       const response = await authServerApi.changePassword({
         idToken: user.idToken,
@@ -206,11 +208,11 @@ export const changePassword = createAsyncThunk<
       localStorage.setItem('user', JSON.stringify(updatedUser));
       onSuccess();
       return updatedUser as User;
-    } catch (error: any) {
+    } catch (error) {
       thunkAPI.dispatch(uiActions.showLoadingState(false));
-      return thunkAPI.rejectWithValue(
-        error?.message || (error.toString() as MyKnownError)
-      );
+      const myError = error as MyKnownError;
+      const message = myError?.message || myError.toString();
+      return thunkAPI.rejectWithValue({ message });
     }
   }
 );

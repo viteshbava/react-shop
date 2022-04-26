@@ -30,7 +30,6 @@ const fetchProduct = createAsyncThunk<
   { rejectValue: MyKnownError }
 >('selectedProduct/fetchProduct', async (productId, thunkAPI) => {
   try {
-    // throw new Error('This is my error');
     const result = (await fakeStoreApi.getProduct(productId)) as Product;
     console.log('result: ', result);
     return result;

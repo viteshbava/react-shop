@@ -19,6 +19,7 @@ const sendHttpRequest = async <B, H>({
     headers: headers || {},
     signal,
   };
+  console.log(url);
   const response = await fetch(url, init);
   if (!response.ok) throw await response.json();
   const data = await response.json();

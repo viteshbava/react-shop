@@ -46,6 +46,7 @@ function App() {
   const { user, accessTokenReady, accessTokenTimer } = useAppSelector(
     (state) => state.auth
   );
+
   const isLoggedIn = !!user;
 
   const {

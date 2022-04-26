@@ -20,10 +20,10 @@ interface UserState {
 }
 
 // Get user from localStorage
-const localStorageUser: User = JSON.parse(localStorage.getItem('user') || '{}');
+const localStorageUser = localStorage.getItem('user');
 
 const STATE_INIT: UserState = {
-  user: localStorageUser || null,
+  user: localStorageUser ? JSON.parse(localStorageUser) : null,
   isLoading: false,
   error: null,
   accessTokenTimer: null,

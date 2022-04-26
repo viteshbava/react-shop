@@ -26,7 +26,6 @@ const authServerApi = {
       });
       return response;
     } catch (error) {
-      console.log(error);
       let niceErrMessage;
       console.error(error?.error?.message);
       switch (error?.error?.message) {
@@ -100,10 +99,12 @@ const authServerApi = {
       });
       return response;
     } catch (error) {
-      throw new ReactError({
-        statusCode: error.code || 500,
-        message: error?.error?.message || error?.error || error,
+      console.log(error);
+      const err = new ReactError({
+        statusCode: error.error.code || 500,
+        message: error.error.message,
       });
+      throw err;
     }
   },
   changePassword: async ({ idToken, password }) => {

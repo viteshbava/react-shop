@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
-import { useSelector } from 'react-redux';
 import Card from '../UI/Card/Card';
 import Button from '../UI/Button/Button';
 import toDollars from '../../utilities/toDollars';
 import styles from './CartOrderSummary.module.css';
+import { useAppSelector } from '../../redux/preTypedHooks';
 
 import ModalContext from '../../context/modal-context';
 
 const CartOrderSummary = () => {
-  const itemSubtotal = useSelector((state) => state.cart.totalItemPrice);
+  const itemSubtotal = useAppSelector((state) => state.cart.totalItemPrice);
   const modal = useContext(ModalContext);
 
   const orderTotal =

@@ -1,7 +1,5 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 import NumberButtons from '../UI/Control/NumberButtons';
 import toDollars from '../../utilities/toDollars';
 import styles from './CartItem.module.css';
@@ -10,9 +8,16 @@ import {
   changeQuantity,
 } from '../../redux/actions/cart-actions';
 import ModalContext from '../../context/modal-context';
+import Product from '../../models/product';
+import { useAppDispatch } from '../../redux/preTypedHooks';
 
-const CartItem = ({ product, className }) => {
-  const dispatch = useDispatch();
+interface PropTypes {
+  product: { data: Product; quantity: number };
+  className?: string;
+}
+
+const CartItem = ({ product, className }: PropTypes) => {
+  const dispatch = useAppDispatch();
   const { id, title, price, image } = product.data;
   const { quantity } = product;
   const subTotal = price * quantity;
@@ -30,7 +35,7 @@ const CartItem = ({ product, className }) => {
     });
   };
 
-  const qtyUpdateHandler = (newVal, undoUpdate) =>
+  const qtyUpdateHandler = (newVal: number, undoUpdate: () => void) =>
     dispatch(
       changeQuantity({
         productId: id,
@@ -83,20 +88,8 @@ const CartItem = ({ product, className }) => {
   );
 };
 
-CartItem.propTypes = {
-  product: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    quantity: PropTypes.number,
-  }).isRequired,
-  className: PropTypes.string,
-};
 CartItem.defaultProps = {
   className: null,
 };
-
-// const { id, title, price, image, quantity } = product;
 
 export default CartItem;
